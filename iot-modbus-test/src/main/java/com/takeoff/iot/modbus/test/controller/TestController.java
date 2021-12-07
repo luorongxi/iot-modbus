@@ -60,7 +60,7 @@ public class TestController {
      */
     @RequestMapping("/barcode/{deviceGroup}/{device}")
     public R barcode(@PathVariable("deviceGroup") String deviceGroup, @PathVariable("device") Integer device) {
-        iotModbusNettyConfig.getMiiServer().sender().backlight(deviceGroup, device, MiiData.ALWAYS);
+        iotModbusNettyConfig.getMiiServer().sender().backlight(deviceGroup, device, MiiData.ONCE);
         return R.ok();
     }
 
