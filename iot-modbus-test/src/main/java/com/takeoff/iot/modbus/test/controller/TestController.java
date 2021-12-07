@@ -53,6 +53,18 @@ public class TestController {
     }
 
     /**
+     * 发送设置扫码模式指令
+     * @param deviceGroup
+     * @param device
+     * @return
+     */
+    @RequestMapping("/barcode/{deviceGroup}/{device}")
+    public R barcode(@PathVariable("deviceGroup") String deviceGroup, @PathVariable("device") Integer device) {
+        iotModbusNettyConfig.getMiiServer().sender().backlight(deviceGroup, device, MiiData.ONCE);
+        return R.ok();
+    }
+
+    /**
      * 发送背光灯指令
      * @param deviceGroup
      * @param device
