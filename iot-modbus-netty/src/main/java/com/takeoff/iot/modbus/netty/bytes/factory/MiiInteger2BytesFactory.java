@@ -1,5 +1,10 @@
 package com.takeoff.iot.modbus.netty.bytes.factory;
 
+/**
+ * 类功能说明：整型指令工厂<br/>
+ * 公司名称：takeoff开源 <br/>
+ * 作者：luorongxi <br/>
+ */
 public class MiiInteger2BytesFactory<E extends Number> implements MiiBytesFactory<E> {
 	
 	private int byteSize,startPos;

@@ -15,6 +15,10 @@
 	
 	<properties>
 		<hutool.version>5.6.2</hutool.version>
+		<iot-modbus-netty.version>0.0.1-SNAPSHOT</iot-modbus-netty.version>
+		<commons.lang.version>2.6</commons.lang.version>
+		<joda.time.version>2.9.9</joda.time.version>
+		<bcprov-jdk15on.version>1.68</bcprov-jdk15on.version>
 	</properties>
 	
 	<dependencies>
@@ -52,6 +56,26 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.takeoff.iot</groupId>
+			<artifactId>iot-modbus-netty</artifactId>
+			<version>${iot-modbus-netty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>${commons.lang.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${joda.time.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>${bcprov-jdk15on.version}</version>
 		</dependency>
 	</dependencies>
 	

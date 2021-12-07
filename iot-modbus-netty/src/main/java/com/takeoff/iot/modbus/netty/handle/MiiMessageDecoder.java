@@ -1,0 +1,44 @@
+package com.takeoff.iot.modbus.netty.handle;
+
+import java.util.List;
+
+import com.takeoff.iot.modbus.netty.channel.MiiChannel;
+import com.takeoff.iot.modbus.netty.data.factory.MiiDataFactory;
+import com.takeoff.iot.modbus.netty.message.MiiInMessage;
+import org.bouncycastle.util.encoders.Hex;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.ByteToMessageDecoder;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * 类功能说明：自定义解码器，主要是用来解决半包积累的问题<br/>
+ * 公司名称：takeoff开源 <br/>
+ * 作者：luorongxi <br/>
+ */
+@Slf4j
+public class MiiMessageDecoder extends ByteToMessageDecoder {
+	
+	private MiiChannel channel;
+	private MiiDataFactory dataFactory;
+
+	public MiiMessageDecoder(MiiChannel channel, MiiDataFactory dataFactory) {
+		this.channel = channel;
+		this.dataFactory = dataFactory;
+	}
+
+	@Override
+	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+		try {
+			byte[] array = new byte[in.readableBytes()];
+			in.readBytes(array);
+			log.info("接收到待处理指令："+Hex.toHexString(array));
+			MiiInMessage msg = new MiiInMessage(channel.name(),array,dataFactory);
+			out.add(msg);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw e;
+		}
+	}
+}

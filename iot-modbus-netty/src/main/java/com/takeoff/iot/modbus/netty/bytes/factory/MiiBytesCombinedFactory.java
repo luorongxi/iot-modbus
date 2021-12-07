@@ -5,7 +5,11 @@ import java.util.Arrays;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-
+/**
+ * 类功能说明：组合指令工厂<br/>
+ * 公司名称：takeoff开源 <br/>
+ * 作者：luorongxi <br/>
+ */
 public class MiiBytesCombinedFactory<E> implements MiiBytesFactory<E> {
 	
 	private MiiBytesFactory<E>[] factorys;
