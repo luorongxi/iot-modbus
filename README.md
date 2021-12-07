@@ -23,7 +23,7 @@
 2.  配置文件查看iot-modbus-test子工程resources目录下的application.yml文件；
 3.  启动文件查看iot-modbus-test子工程App.java文件；
 4.  服务启动后，服务端端口默认为：8080，netty通讯端口默认为：4000；
-5.   **创作不易，请点亮Star。** 
+5.   **创作不易，别忘了点亮Star。** 
 
 #### 参与贡献
 
