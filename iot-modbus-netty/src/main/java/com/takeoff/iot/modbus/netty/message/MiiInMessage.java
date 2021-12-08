@@ -35,7 +35,6 @@ public class MiiInMessage implements MiiMessage {
 		}
 		byte[] datas = ArrayUtils.subarray(msg, COMMAND_INDEX, msg.length - 3);
 		byte[] dataLength = ArrayUtils.subarray(msg, DATA_INDEX, COMMAND_INDEX);
-		int num = datas.length;
 		if(datas.length != IntegerByteTransform.bytesToInt(dataLength)){
 			throw new DecoderException(String.format("报文长短异常:%s", Hex.toHexString(msg)));
 		}
