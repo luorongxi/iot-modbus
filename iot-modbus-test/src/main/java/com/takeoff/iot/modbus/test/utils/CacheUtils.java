@@ -20,7 +20,6 @@ public class CacheUtils {
  
     /**
      * 添加缓存
-     *
      * @param key  键
      * @param data 值
      */
@@ -30,7 +29,6 @@ public class CacheUtils {
  
     /**
      * 添加缓存
-     *
      * @param key    键
      * @param data   值
      * @param expire 过期时间，单位：毫秒， 0表示无限长
@@ -58,7 +56,6 @@ public class CacheUtils {
  
     /**
      * 读取缓存
-     *
      * @param key 键
      * @return
      */
@@ -69,7 +66,6 @@ public class CacheUtils {
  
     /**
      * 读取缓存
-     *
      * @param key 键
      *            * @param clazz 值类型
      * @return
@@ -80,7 +76,6 @@ public class CacheUtils {
  
     /**
      * 清除缓存
-     *
      * @param key
      * @return
      */
@@ -100,7 +95,6 @@ public class CacheUtils {
  
     /**
      * 查询当前缓存的键值对数量
-     *
      * @return
      */
     public synchronized static int size() {
@@ -123,7 +117,6 @@ public class CacheUtils {
  
         /**
          * 获取值
-         *
          * @return
          */
         public Object getValue() {
@@ -132,7 +125,6 @@ public class CacheUtils {
  
         /**
          * 获取Future对象
-         *
          * @return
          */
         public Future getFuture() {
