@@ -19,10 +19,12 @@
 - iot-modbus                //物联网通讯父工程
 - ├── doc                   //文档管理
 - ├── iot-modbus-netty      //netty通讯子工程
-- └── iot-modbus-test       //使用样例子工程
+- ├── iot-modbus-test       //使用样例子工程
+- └── tools                 //通讯指令调试工具
 2.  配置文件查看iot-modbus-test子工程resources目录下的application.yml文件；
 3.  启动文件查看iot-modbus-test子工程App.java文件；
 4.  服务启动后，服务端端口默认为：8080，netty通讯端口默认为：4000；
+5.  通讯指令调试工具，查看tools目录下的NetAssist.exe。
 
 #### 参与贡献
 
