@@ -13,6 +13,11 @@ import org.bouncycastle.util.encoders.Hex;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 类功能说明：指令下发接口实现<br/>
+ * 公司名称：takeoff开源 <br/>
+ * 作者：luorongxi <br/>
+ */
 @Slf4j
 public class MiiServerMessageSender implements ServerMessageSender {
 	
