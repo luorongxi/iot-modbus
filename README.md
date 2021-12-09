@@ -9,7 +9,8 @@
 
 #### 安装教程
 
-1.  安装Jdk1.8以上；
+1.  系统Windows7以上；
+2.  安装Jdk1.8以上；
 2.  安装Maven3.6以上；
 3.  代码以Maven工程导入Eclipse或Idea。
 
@@ -71,7 +72,7 @@
 1.  找到iot-modbus-test子工程App.java文件启动服务端，如下图所示：
 - ![输入图片说明](doc/picture/1%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8.png)
 - 说明：项目启动成功后，控制台日志输出服务端的端口为：8080；项目服务名为：iot-modbus-test；服务端开启socket通讯端口为：4000。
-2.  将工程tools目录下通讯指令调试工具NetAssist拷贝到windows桌面，双击打开，并配置参数，如下图所示：
+2.  将工程tools目录下通讯指令调试工具NetAssist拷贝到Windows桌面，双击打开，并配置参数，如下图所示：
 - ![输入图片说明](doc/picture/2NetAssist%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE.png)
 - 说明：协议类型选择TCP Client（调试工具作为模拟硬件通讯的客服端）；远程主机地址输入本地电脑的IP地址；远程主机端口输入服务端端口4000；接收和发送的编码选择HEX；最后点击连接按钮进行连接，连接成功后服务端控制台日志输出如下图所示：
 - ![输入图片说明](doc/picture/3%E8%BF%9E%E6%8E%A5%E6%88%90%E5%8A%9F.png)
