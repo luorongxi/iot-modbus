@@ -66,13 +66,26 @@
 - FF FF FF为指令做兼容填补位，后面 01 00 05 02 00 01是数据位，其中：01表示1号锁，00表示上锁，05表示传感器状态码；02表示2号锁，00表示上锁，01表示传感器状态码。
 9. 指静脉和温湿度指令（不作说明，详细查看代码）。
 
-#### 特技
+#### 调试说明
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+1.  找到iot-modbus-test子工程App.java文件启动服务端，如下图所示：
+- ![输入图片说明](doc/picture/1%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8.png)
+- 说明：项目启动成功后，控制台日志输出服务端的端口为：8080；项目服务名为：iot-modbus-test；服务端开启socket通讯端口为：4000。
+2.  将工程tools目录下通讯指令调试工具NetAssist拷贝到windows桌面，双击打开，并配置参数，如下图所示：
+- ![输入图片说明](doc/picture/2NetAssist%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE.png)
+- 说明：协议类型选择TCP Client（调试工具作为模拟硬件通讯的客服端）；远程主机地址输入本地电脑的IP地址；远程主机端口输入服务端端口4000；接收和发送的编码选择HEX；最后点击连接按钮进行连接，连接成功后服务端控制台日志输出如下图所示：
+- ![输入图片说明](doc/picture/3%E8%BF%9E%E6%8E%A5%E6%88%90%E5%8A%9F.png)
+3.  客户端往服务端上传心跳指令，如下图所示：
+- ![输入图片说明](doc/picture/4%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BF%83%E8%B7%B3%E6%8C%87%E4%BB%A4%E4%B8%8A%E4%BC%A0.png)
+- 说明：拷贝心跳指令到通讯指令调试工具NetAssist的数据发送窗口粘贴进来，然后点击发送按钮；此时服务端将接收到心跳指令，如下图所示：
+- ![输入图片说明](doc/picture/5%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%8E%A5%E6%94%B6%E5%88%B0%E5%BF%83%E8%B7%B3%E6%8C%87%E4%BB%A4.png)
+- 说明：客服端与服务端的通讯连接需要通过客户端定时往服务端发送心跳指令来维持，在生产环境中发送频率一般可设置为每5秒一次，如果通讯连接断开则客服端与服务端无法通讯。注意：在调试的过程中，如果通讯指令调试工具NetAssist与服务端通讯连接断开，则要手动点击NetAssist的连接按钮，重新往服务端发送一条心跳的指令。
+4.  使用Postman请求服务端往客户端下发控制单锁指令，如下图所示：
+- ![输入图片说明](doc/picture/6postman%E8%AF%B7%E6%B1%82%E4%B8%8B%E5%8F%91%E6%8E%A7%E5%88%B6%E5%8D%95%E9%94%81%E6%8C%87%E4%BB%A4.png)
+- 说明：在Postman输入服务端发送控制单锁指令接口，填入请求地址和参数：http://127.0.0.1:8080/iot-modbus-test/test/openlock/1/1，服务端控制台日志输出入下图所示：
+- ![输入图片说明](doc/picture/7%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%8B%E5%8F%91%E6%8E%A7%E5%88%B6%E5%8D%95%E9%94%81%E6%8C%87%E4%BB%A4.png)
+- 客服端指令调试工具NetAssist接收到控制单锁指令，如下图所示：
+- ![输入图片说明](doc/picture/8%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%8E%A5%E6%94%B6%E5%88%B0%E6%8E%A7%E5%88%B6%E5%8D%95%E9%94%81%E6%8C%87%E4%BB%A4.png)
+5.  其他上传和下发的指令不作详细介绍，感兴趣的同学可以参考通讯指令和工程目录doc/postman目录下的请求样例。
 
 #### 创作不易，别忘了点亮Star，你们的支持，是我源源不断的动力。
