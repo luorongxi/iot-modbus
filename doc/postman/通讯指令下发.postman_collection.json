@@ -1,0 +1,124 @@
+{
+	"info": {
+		"_postman_id": "9be67c1c-e10e-4d93-ad22-fde874a2af9c",
+		"name": "通讯指令下发",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://127.0.0.1:8080/iot-modbus-test/test/openlock/1/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/iot-modbus-test/test/openlock/1/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"iot-modbus-test",
+						"test",
+						"openlock",
+						"1",
+						"1"
+					]
+				},
+				"description": "发送控制单锁指令"
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8080/iot-modbus-test/test/openmultilock",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceGroup\":\"1\",\r\n    \"device\":1,\r\n    \"lockNo1\":1,\r\n    \"lockStatus1\":0,\r\n    \"lockNo2\":2,\r\n    \"lockStatus2\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/iot-modbus-test/test/openmultilock",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"iot-modbus-test",
+						"test",
+						"openmultilock"
+					]
+				},
+				"description": "发送控制多开锁指令"
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8080/iot-modbus-test/test/barcode/1/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/iot-modbus-test/test/barcode/1/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"iot-modbus-test",
+						"test",
+						"barcode",
+						"1",
+						"1"
+					]
+				},
+				"description": "发送设置扫码模式指令"
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8080/iot-modbus-test/test/backlight/1/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/iot-modbus-test/test/backlight/1/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"iot-modbus-test",
+						"test",
+						"backlight",
+						"1",
+						"1"
+					]
+				},
+				"description": "发送背光灯指令"
+			},
+			"response": []
+		}
+	]
+}

@@ -26,7 +26,7 @@ public class TestController {
     private IotModbusNettyConfig iotModbusNettyConfig;
 
     /**
-     * 发送开锁指令
+     * 发送控制单锁指令
      * @param deviceGroup
      * @param device
      * @return
@@ -38,7 +38,7 @@ public class TestController {
     }
 
     /**
-     * 发送多门开锁指令
+     * 发送控制多开锁指令
      * @param map
      * @return
      */

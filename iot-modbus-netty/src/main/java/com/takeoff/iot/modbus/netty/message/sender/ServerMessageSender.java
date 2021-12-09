@@ -8,14 +8,14 @@ package com.takeoff.iot.modbus.netty.message.sender;
 public interface ServerMessageSender {
 	
 	/**
-	 * 发送开锁指令.
+	 * 发送控制单锁指令.
 	 * @param deviceGroup 设备组编码
 	 * @param device 设备号
 	 */
 	void unlock(String deviceGroup, int device);
 	
 	/**
-	 * 发送多门开锁指令.
+	 * 发送控制多开锁指令.
 	 * @param deviceGroup 设备组编码
 	 * @param device 设备号
 	 * @param arr 数组（门锁号、门锁状态、门锁号、门锁状态...）
