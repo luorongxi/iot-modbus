@@ -1,12 +1,13 @@
-package com.takeoff.iot.modbus.netty.message.sender;
+package com.takeoff.iot.modbus.server;
 
 import com.takeoff.iot.modbus.netty.message.MiiMessage;
+import com.takeoff.iot.modbus.server.message.sender.MiiServerMessageSender;
+import com.takeoff.iot.modbus.server.message.sender.ServerMessageSender;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.bouncycastle.util.encoders.Hex;
 import org.junit.Assert;
 import org.junit.Test;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ServerMessageSenderTest {

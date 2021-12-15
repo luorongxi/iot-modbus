@@ -4,7 +4,7 @@
 
 	<groupId>com.takeoff.iot</groupId>
 	<artifactId>iot-modbus</artifactId>
-	<version>1.0.0-RELEASE</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>iot-modbus</name>
@@ -28,8 +28,10 @@
 		<commons-lang3.version>3.5</commons-lang3.version>
 		<commons-collections.version>3.2.1</commons-collections.version>
 		<lombok.version>1.16.20</lombok.version>
+		<slf4j-api.version>1.7.32</slf4j-api.version>
 		<fastjson.version>1.2.7</fastjson.version>
 		<commons-codec.version>1.6</commons-codec.version>
+		<bcprov-jdk15on.version>1.68</bcprov-jdk15on.version>
 	</properties>
 
 	<dependencies>
@@ -55,6 +57,11 @@
 			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-api.version}</version>
+		</dependency>
 		<!--添加fastjson依赖 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -65,6 +72,11 @@
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>${commons-codec.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>${bcprov-jdk15on.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -82,8 +94,10 @@
 		</snapshotRepository>
 	</distributionManagement>
 
-  <modules>
-    <module>iot-modbus-netty</module>
-    <module>iot-modbus-test</module>
-  </modules>
+    <modules>
+		<module>iot-modbus-netty</module>
+		<module>iot-modbus-server</module>
+		<module>iot-modbus-client</module>
+        <module>iot-modbus-test</module>
+    </modules>
 </project>

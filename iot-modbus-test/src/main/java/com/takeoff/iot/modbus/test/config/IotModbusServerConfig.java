@@ -1,10 +1,8 @@
 package com.takeoff.iot.modbus.test.config;
-
-import com.takeoff.iot.modbus.netty.MiiServer;
 import com.takeoff.iot.modbus.netty.message.MiiMessage;
+import com.takeoff.iot.modbus.server.MiiServer;
 import com.takeoff.iot.modbus.test.listener.*;
-import com.takeoff.iot.modbus.test.properties.IotModbusNettyProperties;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.takeoff.iot.modbus.test.properties.IotModbusServerProperties;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +19,10 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Configuration
-public class IotModbusNettyConfig implements ApplicationRunner {
+public class IotModbusServerConfig implements ApplicationRunner {
 
 	@Resource
-	private IotModbusNettyProperties iotModbusNettyProperties;
+	private IotModbusServerProperties iotModbusServerProperties;
 
 	@Resource
 	private CardListener cardListener;
@@ -49,15 +47,15 @@ public class IotModbusNettyConfig implements ApplicationRunner {
 
 	@Override
     public void run(ApplicationArguments args) throws Exception {
-		if(iotModbusNettyProperties.getOpen()){
-			miiServer = new MiiServer(iotModbusNettyProperties.getPort(), iotModbusNettyProperties.getThread());
+		if(iotModbusServerProperties.getOpen()){
+			miiServer = new MiiServer(iotModbusServerProperties.getPort(), iotModbusServerProperties.getThread());
 			miiServer.addListener(MiiMessage.BACKLIGHT, backLightListener);
 			miiServer.addListener(MiiMessage.LOCK, lockListener);
 			miiServer.addListener(MiiMessage.CARD, cardListener);
 			miiServer.addListener(MiiMessage.BARCODE, barCodeListener);
 			miiServer.addListener(MiiMessage.FINGER, fingerListener);
 			miiServer.addListener(MiiMessage.HM, humitureListener);
-			log.info("IOT通讯协议已开启Socket服务，占用端口： " + iotModbusNettyProperties.getPort() + ",执行线程池线程数:" + iotModbusNettyProperties.getThread());
+			log.info("IOT通讯协议已开启Socket服务，占用端口： " + iotModbusServerProperties.getPort() + ",执行线程池线程数:" + iotModbusServerProperties.getThread());
 			miiServer.start();
 		}else{
 			log.info("IOT通讯协议未开启Socket服务");

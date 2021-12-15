@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.takeoff.iot</groupId>
 		<artifactId>iot-modbus</artifactId>
-		<version>1.0.0-RELEASE</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>iot-modbus-netty</artifactId>
 	<packaging>jar</packaging>
@@ -33,6 +33,10 @@
 					<!--被排除的依赖包坐标 -->
 					<groupId>io.netty</groupId>
 					<artifactId>*</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bouncycastle</groupId>
+					<artifactId>bcprov-jdk15on</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>

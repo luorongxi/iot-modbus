@@ -1,4 +1,4 @@
-package com.takeoff.iot.modbus.netty;
+package com.takeoff.iot.modbus.server;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -17,8 +17,8 @@ import com.takeoff.iot.modbus.netty.handle.MiiMessageDecoder;
 import com.takeoff.iot.modbus.netty.handle.MiiMessageEncoder;
 import com.takeoff.iot.modbus.netty.listener.MiiListener;
 import com.takeoff.iot.modbus.netty.message.MiiMessage;
-import com.takeoff.iot.modbus.netty.message.sender.MiiServerMessageSender;
-import com.takeoff.iot.modbus.netty.message.sender.ServerMessageSender;
+import com.takeoff.iot.modbus.server.message.sender.MiiServerMessageSender;
+import com.takeoff.iot.modbus.server.message.sender.ServerMessageSender;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;

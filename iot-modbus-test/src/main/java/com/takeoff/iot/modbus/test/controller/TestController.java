@@ -1,7 +1,7 @@
 package com.takeoff.iot.modbus.test.controller;
 
 import com.takeoff.iot.modbus.netty.data.base.MiiData;
-import com.takeoff.iot.modbus.test.config.IotModbusNettyConfig;
+import com.takeoff.iot.modbus.test.config.IotModbusServerConfig;
 import com.takeoff.iot.modbus.test.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +23,7 @@ import java.util.Map;
 public class TestController {
 
     @Resource
-    private IotModbusNettyConfig iotModbusNettyConfig;
+    private IotModbusServerConfig iotModbusServerConfig;
 
     /**
      * 发送控制单锁指令
@@ -33,7 +33,7 @@ public class TestController {
      */
     @RequestMapping("/openlock/{deviceGroup}/{device}")
     public R openLock(@PathVariable("deviceGroup") String deviceGroup, @PathVariable("device") Integer device) {
-        iotModbusNettyConfig.getMiiServer().sender().unlock(deviceGroup, device);
+        iotModbusServerConfig.getMiiServer().sender().unlock(deviceGroup, device);
         return R.ok();
     }
 
@@ -44,7 +44,7 @@ public class TestController {
      */
     @RequestMapping("/openmultilock")
     public R openMultiLock(@RequestBody Map map) {
-        iotModbusNettyConfig.getMiiServer().sender().unlock(
+        iotModbusServerConfig.getMiiServer().sender().unlock(
                 map.get("deviceGroup").toString(), Integer.valueOf(map.get("device").toString()),
                 Integer.valueOf(map.get("lockNo1").toString()), Integer.valueOf(map.get("lockStatus1").toString()),
                 Integer.valueOf(map.get("lockNo2").toString()), Integer.valueOf(map.get("lockStatus2").toString())
@@ -60,7 +60,7 @@ public class TestController {
      */
     @RequestMapping("/barcode/{deviceGroup}/{device}")
     public R barcode(@PathVariable("deviceGroup") String deviceGroup, @PathVariable("device") Integer device) {
-        iotModbusNettyConfig.getMiiServer().sender().backlight(deviceGroup, device, MiiData.ONCE);
+        iotModbusServerConfig.getMiiServer().sender().backlight(deviceGroup, device, MiiData.ONCE);
         return R.ok();
     }
 
@@ -72,7 +72,7 @@ public class TestController {
      */
     @RequestMapping("/backlight/{deviceGroup}/{device}")
     public R backLight(@PathVariable("deviceGroup") String deviceGroup, @PathVariable("device") Integer device) {
-        iotModbusNettyConfig.getMiiServer().sender().backlight(deviceGroup, device, MiiData.ON);
+        iotModbusServerConfig.getMiiServer().sender().backlight(deviceGroup, device, MiiData.ON);
         return R.ok();
     }
 }

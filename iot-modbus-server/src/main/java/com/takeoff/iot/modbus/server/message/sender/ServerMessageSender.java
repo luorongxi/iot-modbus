@@ -1,4 +1,4 @@
-package com.takeoff.iot.modbus.netty.message.sender;
+package com.takeoff.iot.modbus.server.message.sender;
 
 /**
  * 类功能说明：指令下发接口<br/>

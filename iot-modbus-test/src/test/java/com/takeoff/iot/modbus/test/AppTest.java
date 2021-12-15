@@ -1,6 +1,6 @@
 package com.takeoff.iot.modbus.test;
 
-import com.takeoff.iot.modbus.test.config.IotModbusNettyConfig;
+import com.takeoff.iot.modbus.test.config.IotModbusServerConfig;
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -20,10 +20,10 @@ public class AppTest extends TestCase {
     private static final Integer CABINET_CODE = 1;
 
     @Resource
-    private IotModbusNettyConfig iotModbusNettyConfig;
+    private IotModbusServerConfig iotModbusServerConfig;
 
     @Test
     public void openLockTest(){
-        iotModbusNettyConfig.getMiiServer().sender().unlock(CABINET_GROUP_CODE, CABINET_CODE);
+        iotModbusServerConfig.getMiiServer().sender().unlock(CABINET_GROUP_CODE, CABINET_CODE);
     }
 }

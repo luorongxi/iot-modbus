@@ -12,8 +12,8 @@ import lombok.Data;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "iot.netty")
-public class IotModbusNettyProperties {
+@ConfigurationProperties(prefix = "iot.netty.server")
+public class IotModbusServerProperties {
 	
 	/**
 	 * 是否开启Socket服务
