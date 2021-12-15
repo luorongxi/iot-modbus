@@ -29,6 +29,7 @@
 		<commons-collections.version>3.2.1</commons-collections.version>
 		<lombok.version>1.16.20</lombok.version>
 		<slf4j-api.version>1.7.32</slf4j-api.version>
+		<slf4j-simple.version>1.7.32</slf4j-simple.version>
 		<fastjson.version>1.2.7</fastjson.version>
 		<commons-codec.version>1.6</commons-codec.version>
 		<bcprov-jdk15on.version>1.68</bcprov-jdk15on.version>
@@ -61,6 +62,12 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j-simple.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<!--添加fastjson依赖 -->
 		<dependency>
