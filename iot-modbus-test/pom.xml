@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.takeoff.iot</groupId>
 		<artifactId>iot-modbus</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0-RELEASE</version>
 	</parent>
 	<artifactId>iot-modbus-test</artifactId>
 	<packaging>jar</packaging>
@@ -15,7 +15,7 @@
 	
 	<properties>
 		<hutool.version>5.6.2</hutool.version>
-		<iot-modbus-netty.version>0.0.1-SNAPSHOT</iot-modbus-netty.version>
+		<iot-modbus-netty.version>1.0.0-RELEASE</iot-modbus-netty.version>
 		<commons.lang.version>2.6</commons.lang.version>
 		<joda.time.version>2.9.9</joda.time.version>
 		<bcprov-jdk15on.version>1.68</bcprov-jdk15on.version>

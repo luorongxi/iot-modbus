@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.takeoff.iot</groupId>
 		<artifactId>iot-modbus</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0-RELEASE</version>
 	</parent>
 	<artifactId>iot-modbus-netty</artifactId>
 	<packaging>jar</packaging>
