@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import lombok.Data;
 
 /**
- * 类功能说明：netty通讯参数配置<br/>
+ * 类功能说明：netty通讯服务端参数配置<br/>
  * 公司名称：takeoff开源 <br/>
  * 作者：luorongxi <br/>
  */

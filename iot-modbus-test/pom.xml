@@ -15,9 +15,10 @@
 	
 	<properties>
 		<hutool.version>5.6.2</hutool.version>
-		<iot-modbus-server.version>1.0.1-SNAPSHOT</iot-modbus-server.version>
 		<commons.lang.version>2.6</commons.lang.version>
 		<joda.time.version>2.9.9</joda.time.version>
+		<iot-modbus-server.version>1.0.1-SNAPSHOT</iot-modbus-server.version>
+		<iot-modbus-client.version>1.0.1-SNAPSHOT</iot-modbus-client.version>
 	</properties>
 	
 	<dependencies>
@@ -57,11 +58,6 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>com.takeoff.iot</groupId>
-			<artifactId>iot-modbus-server</artifactId>
-			<version>${iot-modbus-server.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>${commons.lang.version}</version>
@@ -70,6 +66,16 @@
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>${joda.time.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.takeoff.iot</groupId>
+			<artifactId>iot-modbus-server</artifactId>
+			<version>${iot-modbus-server.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.takeoff.iot</groupId>
+			<artifactId>iot-modbus-client</artifactId>
+			<version>${iot-modbus-client.version}</version>
 		</dependency>
 	</dependencies>
 	

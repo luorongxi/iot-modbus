@@ -1,4 +1,4 @@
-package com.takeoff.iot.modbus.netty.message.sender;
+package com.takeoff.iot.modbus.client.message.sender;
 
 import com.takeoff.iot.modbus.netty.channel.MiiChannel;
 import com.takeoff.iot.modbus.netty.service.Mappings;

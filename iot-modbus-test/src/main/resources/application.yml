@@ -11,6 +11,12 @@ server:
 iot:
   netty: # netty通讯
     server:
-      open: true
+      open: false
       port: 4000
       thread: 10
+    client:
+      open: true
+      ip: 127.0.0.1
+      port: 5000
+      thread: 10
+      device-group: 1

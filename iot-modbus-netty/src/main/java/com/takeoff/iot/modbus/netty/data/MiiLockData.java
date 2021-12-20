@@ -33,6 +33,9 @@ public class MiiLockData extends MiiSlotData implements MiiData {
 			if (i % 3 == 0){
 				lockStatus = new LockStatus();
 				lockStatus.setLockNo(content);
+				if(dataByte.length == 1){
+					list.add(lockStatus);
+				}
 			}else if ((i+1)%3 == 0){
 				lockStatus.setSensorStatus(content);
 				list.add(lockStatus);

@@ -1,7 +1,7 @@
-package com.takeoff.iot.modbus.netty.message.sender;
+package com.takeoff.iot.modbus.client.message.sender;
 
-import com.takeoff.iot.modbus.netty.device.MiiControlCentre;
 import com.takeoff.iot.modbus.netty.channel.MiiChannel;
+import com.takeoff.iot.modbus.netty.device.MiiControlCentre;
 
 import java.util.Arrays;
 import java.util.List;
