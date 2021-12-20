@@ -6,7 +6,7 @@
     <parent>
         <artifactId>iot-modbus</artifactId>
         <groupId>com.takeoff.iot</groupId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>2.0.0-RELEASE</version>
     </parent>
     <artifactId>iot-modbus-client</artifactId>
     <packaging>jar</packaging>
@@ -14,7 +14,7 @@
     <description>物联网通讯协议客户端模块</description>
 
     <properties>
-        <iot-modbus-netty.version>2.0.0-SNAPSHOT</iot-modbus-netty.version>
+        <iot-modbus-netty.version>2.0.0-RELEASE</iot-modbus-netty.version>
     </properties>
 
     <dependencies>
