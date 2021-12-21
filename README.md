@@ -23,7 +23,9 @@
 1.  工程结构说明：
 - iot-modbus                //物联网通讯父工程
 - ├── doc                   //文档管理
+- ├── iot-modbus-client     //netty通讯客户端
 - ├── iot-modbus-netty      //netty通讯子工程
+- ├── iot-modbus-server     //netty通讯服务端
 - ├── iot-modbus-test       //使用样例子工程
 - └── tools                 //通讯指令调试工具
 2.  配置文件查看iot-modbus-test子工程resources目录下的application.yml文件；
