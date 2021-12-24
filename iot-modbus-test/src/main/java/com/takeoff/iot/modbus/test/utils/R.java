@@ -11,6 +11,7 @@ import cn.hutool.http.HttpStatus;
  * 作者：luorongxi <br/>
  */
 public class R extends HashMap<String, Object> {
+
 	private static final long serialVersionUID = 1L;
 	
 	private static final String CODE_TAG = "code"; //返回码
