@@ -13,7 +13,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 类功能说明：为信息监听器 {@link MiiListener} 加读写锁.统一分组下写锁与写锁或者读锁之间互斥，读锁与读锁之间可以同时获得锁<br/>
- * 公司名称：takeoff开源 <br/>
+ * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
 public class MiiReadWriteLock {

@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 类功能说明：简单内存缓存工具类<br/>
- * 公司名称：takeoff开源 <br/>
+ * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
 public class CacheUtils {

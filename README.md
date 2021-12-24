@@ -23,7 +23,9 @@
 1.  工程结构说明：
 - iot-modbus                //物联网通讯父工程
 - ├── doc                   //文档管理
+- ├── iot-modbus-client     //netty通讯客户端
 - ├── iot-modbus-netty      //netty通讯子工程
+- ├── iot-modbus-server     //netty通讯服务端
 - ├── iot-modbus-test       //使用样例子工程
 - └── tools                 //通讯指令调试工具
 2.  配置文件查看iot-modbus-test子工程resources目录下的application.yml文件；
@@ -94,3 +96,8 @@
 5.  其他上传和下发的指令不作详细介绍，感兴趣的同学可以参考通讯指令和工程目录doc/postman目录下的请求样例。
 
 #### 创作不易，别忘了点亮Star，你们的支持，是我源源不断的动力。
+
+#### 欢迎加入交流群
+
+- QQ群
+- ![输入图片说明](doc/picture/9%E7%89%A9%E8%81%94%E7%BD%91%E9%80%9A%E8%AE%AF%E5%8D%8F%E8%AE%AE%EF%BC%88iot-modbus%EF%BC%89%E4%BA%A4%E6%B5%81%E7%BE%A4%E7%BE%A4%E4%BA%8C%E7%BB%B4%E7%A0%81.png)

@@ -7,7 +7,7 @@ import com.takeoff.iot.modbus.netty.message.MiiMessage;
 
 /**
  * 类功能说明：指令数据处理工厂<br/>
- * 公司名称：takeoff开源 <br/>
+ * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
 public class MiiServerDataFactory implements MiiDataFactory {

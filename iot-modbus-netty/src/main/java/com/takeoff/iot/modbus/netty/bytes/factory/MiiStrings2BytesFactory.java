@@ -4,7 +4,7 @@ import com.takeoff.iot.modbus.netty.utils.BytesHexTransform;
 
 /**
  * 类功能说明：字符串类型指令工厂<br/>
- * 公司名称：takeoff开源 <br/>
+ * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
 public class MiiStrings2BytesFactory implements MiiBytesFactory<String> {

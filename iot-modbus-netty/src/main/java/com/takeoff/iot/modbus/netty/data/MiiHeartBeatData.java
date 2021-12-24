@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * 类功能说明：心跳指令数据<br/>
- * 公司名称：takeoff开源 <br/>
+ * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
 public class MiiHeartBeatData extends MiiStringData {

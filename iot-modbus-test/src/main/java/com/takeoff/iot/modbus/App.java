@@ -1,4 +1,4 @@
-package com.takeoff.iot.modbus.test;
+package com.takeoff.iot.modbus;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

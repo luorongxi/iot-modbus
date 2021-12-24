@@ -5,7 +5,7 @@ import com.takeoff.iot.modbus.netty.service.NameValue;
 
 /**
  * 类功能说明：通讯通道<br/>
- * 公司名称：takeoff开源 <br/>
+ * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
 public interface MiiChannel extends NameValue {

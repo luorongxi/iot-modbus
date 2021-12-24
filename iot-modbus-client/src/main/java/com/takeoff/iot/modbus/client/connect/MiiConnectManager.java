@@ -16,7 +16,7 @@ import io.netty.util.TimerTask;
 
 /**
  * 类功能说明：客户端链接管理器<br/>
- * 公司名称：takeoff开源 <br/>
+ * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
 @Sharable

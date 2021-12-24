@@ -2,7 +2,7 @@ package com.takeoff.iot.modbus.server.message.sender;
 
 /**
  * 类功能说明：指令下发接口<br/>
- * 公司名称：takeoff开源 <br/>
+ * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
 public interface ServerMessageSender {

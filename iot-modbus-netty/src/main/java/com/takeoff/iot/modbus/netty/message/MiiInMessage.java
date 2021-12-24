@@ -13,7 +13,7 @@ import io.netty.handler.codec.DecoderException;
 
 /**
  * 类功能说明：对接收到的指令数据进行校验<br/>
- * 公司名称：takeoff开源 <br/>
+ * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
 public class MiiInMessage implements MiiMessage {

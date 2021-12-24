@@ -14,7 +14,7 @@ import org.bouncycastle.util.encoders.Hex;
 
 /**
  * 类功能说明：指令下发接口实现<br/>
- * 公司名称：takeoff开源 <br/>
+ * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
 @Slf4j

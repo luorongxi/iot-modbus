@@ -15,8 +15,13 @@ iot:
       port: 4000
       thread: 10
     client:
-      open: true
+      open: false
       ip: 127.0.0.1
       port: 5000
       thread: 10
       device-group: 1
+  serialport: #串口通讯
+    open: true
+    port: COM1
+    timeout: 5000
+    baudrate: 115200
