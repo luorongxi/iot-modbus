@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  * 类功能说明：日期处理<br/>
- * 公司名称：takeoff开源 <br/>
+ * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
 public class DateUtils {

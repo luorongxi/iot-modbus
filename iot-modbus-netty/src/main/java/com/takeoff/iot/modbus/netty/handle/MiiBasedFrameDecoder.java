@@ -7,7 +7,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 /**
  * 类功能说明：自定义解码器长度，解决TCP粘包黏包问题<br/>
- * 公司名称：takeoff开源 <br/>
+ * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
 public class MiiBasedFrameDecoder extends LengthFieldBasedFrameDecoder {
