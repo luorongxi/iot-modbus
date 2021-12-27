@@ -1,10 +1,11 @@
 package com.takeoff.iot.modbus.serialport.data;
 
-import com.takeoff.iot.modbus.netty.data.MiiLockData;
-import com.takeoff.iot.modbus.netty.data.entity.LockStatus;
-import lombok.Getter;
-
 import java.util.List;
+
+import com.takeoff.iot.modbus.common.data.MiiLockData;
+import com.takeoff.iot.modbus.common.entity.LockStatus;
+
+import lombok.Getter;
 
 /**
  * 类功能说明：门锁数据<br/>

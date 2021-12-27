@@ -1,9 +1,17 @@
 package com.takeoff.iot.modbus.netty.data.factory;
 
+import com.takeoff.iot.modbus.common.bytes.factory.MiiDataFactory;
+import com.takeoff.iot.modbus.common.data.MiiBackLightData;
+import com.takeoff.iot.modbus.common.data.MiiBarcodeData;
+import com.takeoff.iot.modbus.common.data.MiiCardData;
+import com.takeoff.iot.modbus.common.data.MiiData;
+import com.takeoff.iot.modbus.common.data.MiiFingerData;
+import com.takeoff.iot.modbus.common.data.MiiHeartBeatData;
+import com.takeoff.iot.modbus.common.data.MiiHumitureData;
+import com.takeoff.iot.modbus.common.data.MiiInData;
+import com.takeoff.iot.modbus.common.data.MiiLockData;
+import com.takeoff.iot.modbus.common.message.MiiMessage;
 import com.takeoff.iot.modbus.netty.data.*;
-import com.takeoff.iot.modbus.netty.data.base.MiiData;
-import com.takeoff.iot.modbus.netty.data.base.MiiInData;
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
 
 /**
  * 类功能说明：指令数据处理工厂<br/>

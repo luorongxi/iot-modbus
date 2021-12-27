@@ -1,6 +1,6 @@
 package com.takeoff.iot.modbus.netty.channel;
 
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
+import com.takeoff.iot.modbus.common.message.MiiMessage;
 import com.takeoff.iot.modbus.netty.service.NameValue;
 
 /**

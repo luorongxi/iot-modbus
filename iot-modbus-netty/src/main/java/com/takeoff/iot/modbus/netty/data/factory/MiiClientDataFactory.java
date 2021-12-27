@@ -1,9 +1,10 @@
 package com.takeoff.iot.modbus.netty.data.factory;
 
-import com.takeoff.iot.modbus.netty.data.MiiLockData;
-import com.takeoff.iot.modbus.netty.data.base.MiiData;
-import com.takeoff.iot.modbus.netty.data.base.MiiInData;
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
+import com.takeoff.iot.modbus.common.bytes.factory.MiiDataFactory;
+import com.takeoff.iot.modbus.common.data.MiiData;
+import com.takeoff.iot.modbus.common.data.MiiInData;
+import com.takeoff.iot.modbus.common.data.MiiLockData;
+import com.takeoff.iot.modbus.common.message.MiiMessage;
 
 public class MiiClientDataFactory implements MiiDataFactory {
 

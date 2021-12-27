@@ -4,10 +4,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.takeoff.iot.modbus.netty.device.MiiControlCentre;
+import com.takeoff.iot.modbus.common.message.MiiMessage;
 import com.takeoff.iot.modbus.netty.channel.MiiChannel;
 import com.takeoff.iot.modbus.netty.channel.MiiContextChannel;
 import com.takeoff.iot.modbus.netty.listener.MiiListener;
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
+
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

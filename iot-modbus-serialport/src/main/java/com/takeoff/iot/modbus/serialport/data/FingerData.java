@@ -1,9 +1,10 @@
 package com.takeoff.iot.modbus.serialport.data;
 
-import com.takeoff.iot.modbus.netty.data.MiiFingerData;
-import lombok.Getter;
-
 import java.util.List;
+
+import com.takeoff.iot.modbus.common.data.MiiFingerData;
+
+import lombok.Getter;
 
 /**
  * 类功能说明：指静脉数据<br/>

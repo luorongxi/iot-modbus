@@ -1,7 +1,8 @@
 package com.takeoff.iot.modbus.netty.handle;
 
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
 import org.bouncycastle.util.encoders.Hex;
+
+import com.takeoff.iot.modbus.common.message.MiiMessage;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

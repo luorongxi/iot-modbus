@@ -1,8 +1,9 @@
 package com.takeoff.iot.modbus.client;
 
+import com.takeoff.iot.modbus.common.message.MiiMessage;
 import com.takeoff.iot.modbus.netty.channel.MiiChannel;
 import com.takeoff.iot.modbus.netty.listener.MiiListener;
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
+
 import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.util.encoders.Hex;
 import org.junit.AfterClass;

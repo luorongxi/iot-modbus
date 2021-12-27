@@ -2,7 +2,8 @@ package com.takeoff.iot.modbus.netty.handle;
 
 import java.nio.ByteOrder;
 
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
+import com.takeoff.iot.modbus.common.message.MiiMessage;
+
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 /**

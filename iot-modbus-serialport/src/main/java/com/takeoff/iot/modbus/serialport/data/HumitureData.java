@@ -1,6 +1,7 @@
 package com.takeoff.iot.modbus.serialport.data;
 
-import com.takeoff.iot.modbus.netty.data.MiiHumitureData;
+import com.takeoff.iot.modbus.common.data.MiiHumitureData;
+
 import lombok.Getter;
 
 /**

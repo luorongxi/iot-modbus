@@ -1,10 +1,9 @@
 package com.takeoff.iot.modbus.test.listener;
 
+import com.takeoff.iot.modbus.common.data.MiiFingerData;
+import com.takeoff.iot.modbus.common.message.MiiMessage;
 import com.takeoff.iot.modbus.netty.channel.MiiChannel;
-import com.takeoff.iot.modbus.netty.data.MiiFingerData;
 import com.takeoff.iot.modbus.netty.listener.MiiListener;
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
-
 import com.takeoff.iot.modbus.serialport.data.FingerData;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;

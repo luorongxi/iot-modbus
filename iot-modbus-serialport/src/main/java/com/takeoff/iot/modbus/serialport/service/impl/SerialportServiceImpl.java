@@ -1,7 +1,7 @@
 package com.takeoff.iot.modbus.serialport.service.impl;
 
 import com.google.common.primitives.Bytes;
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
+import com.takeoff.iot.modbus.common.message.MiiMessage;
 import com.takeoff.iot.modbus.serialport.data.factory.SerialportDataFactory;
 import com.takeoff.iot.modbus.serialport.enums.DatebitsEnum;
 import com.takeoff.iot.modbus.serialport.enums.ParityEnum;

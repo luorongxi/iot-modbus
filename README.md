@@ -7,6 +7,7 @@
 1.  V1.0.0版本仅支持TCP服务端通讯模式；
 2.  V2.0.0版本支持TCP服务端和客户端两种模式，客户端模式还增加了心跳重连机制。
 3.  V3.0.0版本支持COM（串口）和TCP协议，增加logback日志按文件大小和时间切割输出。
+4.  V3.1.0版本代码优化，抽取公共模块子工程。
 
 #### 软件架构
 软件架构说明
@@ -25,6 +26,7 @@
 - iot-modbus                //物联网通讯父工程
 - ├── doc                   //文档管理
 - ├── iot-modbus-client     //netty通讯客户端
+- ├── iot-modbus-common     //公共模块子工程
 - ├── iot-modbus-netty      //netty通讯子工程
 - ├── iot-modbus-serialport //串口通讯子工程
 - ├── iot-modbus-server     //netty通讯服务端

@@ -1,6 +1,6 @@
 package com.takeoff.iot.modbus.server;
 
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
+import com.takeoff.iot.modbus.common.message.MiiMessage;
 import com.takeoff.iot.modbus.server.message.sender.MiiServerMessageSender;
 import com.takeoff.iot.modbus.server.message.sender.ServerMessageSender;
 import lombok.extern.slf4j.Slf4j;

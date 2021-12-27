@@ -26,7 +26,7 @@ public interface ServerMessageSender {
 	 * 发送设置扫码模式指令.
 	 * @param deviceGroup 设备组编码
 	 * @param device 设备号
-	 * @param mode  扫码模式 {@link com.takeoff.iot.modbus.netty.data.base.MiiData} ONCE ALWAYS NEVER
+	 * @param mode  扫码模式 {@link com.takeoff.iot.modbus.common.data.MiiData} ONCE ALWAYS NEVER
 	 */
 	void barcode(String deviceGroup, int device, int mode);
 	
@@ -34,7 +34,7 @@ public interface ServerMessageSender {
 	 * 发送背光灯指令.
 	 * @param deviceGroup 设备组编码
 	 * @param device 设备号
-	 * @param status 开关状态 {@link com.takeoff.iot.modbus.netty.data.base.MiiData} ON OFF
+	 * @param status 开关状态 {@link com.takeoff.iot.modbus.common.data.MiiData} ON OFF
 	 */
 	void backlight(String deviceGroup, int device, int status);
 	

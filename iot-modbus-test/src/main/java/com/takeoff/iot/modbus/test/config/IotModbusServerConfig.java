@@ -1,5 +1,5 @@
 package com.takeoff.iot.modbus.test.config;
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
+import com.takeoff.iot.modbus.common.message.MiiMessage;
 import com.takeoff.iot.modbus.server.MiiServer;
 import com.takeoff.iot.modbus.test.listener.*;
 import com.takeoff.iot.modbus.test.properties.IotModbusServerProperties;
