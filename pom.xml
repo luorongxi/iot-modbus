@@ -107,5 +107,5 @@
 		<module>iot-modbus-client</module>
 		<module>iot-modbus-serialport</module>
         <module>iot-modbus-test</module>
-	</modules>
+    </modules>
 </project>
