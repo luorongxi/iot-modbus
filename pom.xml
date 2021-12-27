@@ -84,11 +84,11 @@
 	</distributionManagement>
 
     <modules>
+		<module>iot-modbus-common</module>
 		<module>iot-modbus-netty</module>
 		<module>iot-modbus-server</module>
 		<module>iot-modbus-client</module>
 		<module>iot-modbus-serialport</module>
         <module>iot-modbus-test</module>
-    <module>iot-modbus-common</module>
   </modules>
 </project>

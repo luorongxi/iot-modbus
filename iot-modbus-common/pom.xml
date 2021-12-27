@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>iot-modbus-common</artifactId>
 	<packaging>jar</packaging>
-	<name>iot-modbus-client</name>
+	<name>iot-modbus-common</name>
 	<description>物联网通讯协议公共模块</description>
 
 	<properties>
