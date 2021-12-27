@@ -1,6 +1,7 @@
 package com.takeoff.iot.modbus.serialport.data;
 
-import com.takeoff.iot.modbus.netty.data.MiiCardData;
+import com.takeoff.iot.modbus.common.data.MiiCardData;
+
 import lombok.Getter;
 
 /**

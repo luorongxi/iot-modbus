@@ -2,12 +2,13 @@ package com.takeoff.iot.modbus.client.message.sender;
 
 import java.util.ArrayList;
 
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.bouncycastle.util.encoders.Hex;
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.takeoff.iot.modbus.common.message.MiiMessage;
 
 /**
  * 类功能说明：上传指令测试<br/>

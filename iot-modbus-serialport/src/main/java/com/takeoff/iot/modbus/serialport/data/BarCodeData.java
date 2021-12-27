@@ -1,6 +1,7 @@
 package com.takeoff.iot.modbus.serialport.data;
 
-import com.takeoff.iot.modbus.netty.data.MiiBarcodeData;
+import com.takeoff.iot.modbus.common.data.MiiBarcodeData;
+
 import lombok.Getter;
 
 /**

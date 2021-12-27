@@ -1,9 +1,9 @@
 package com.takeoff.iot.modbus.netty.listener;
 
 import com.takeoff.iot.modbus.netty.device.MiiDevice;
+import com.takeoff.iot.modbus.common.data.MiiSlotData;
+import com.takeoff.iot.modbus.common.message.MiiMessage;
 import com.takeoff.iot.modbus.netty.channel.MiiChannel;
-import com.takeoff.iot.modbus.netty.data.base.MiiSlotData;
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
 
 import java.util.HashMap;
 import java.util.Map;

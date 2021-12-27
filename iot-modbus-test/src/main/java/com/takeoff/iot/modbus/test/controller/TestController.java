@@ -1,6 +1,6 @@
 package com.takeoff.iot.modbus.test.controller;
 
-import com.takeoff.iot.modbus.netty.data.base.MiiData;
+import com.takeoff.iot.modbus.common.data.MiiData;
 import com.takeoff.iot.modbus.serialport.service.SerialportSendService;
 import com.takeoff.iot.modbus.test.config.IotModbusServerConfig;
 import com.takeoff.iot.modbus.test.properties.IotModbusSerialportProperties;

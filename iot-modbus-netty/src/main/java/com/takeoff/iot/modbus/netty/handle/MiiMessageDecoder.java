@@ -2,8 +2,8 @@ package com.takeoff.iot.modbus.netty.handle;
 
 import java.util.List;
 
+import com.takeoff.iot.modbus.common.bytes.factory.MiiDataFactory;
 import com.takeoff.iot.modbus.netty.channel.MiiChannel;
-import com.takeoff.iot.modbus.netty.data.factory.MiiDataFactory;
 import com.takeoff.iot.modbus.netty.message.MiiInMessage;
 import org.bouncycastle.util.encoders.Hex;
 

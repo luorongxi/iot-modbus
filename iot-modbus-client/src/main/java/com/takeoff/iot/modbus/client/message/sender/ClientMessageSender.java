@@ -1,8 +1,8 @@
 package com.takeoff.iot.modbus.client.message.sender;
 
-import com.takeoff.iot.modbus.netty.data.Finger;
-
 import java.util.List;
+
+import com.takeoff.iot.modbus.common.data.Finger;
 
 /**
  * 类功能说明：上传指令接口<br/>

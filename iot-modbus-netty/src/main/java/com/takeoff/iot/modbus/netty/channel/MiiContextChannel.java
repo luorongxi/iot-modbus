@@ -2,7 +2,7 @@ package com.takeoff.iot.modbus.netty.channel;
 
 import java.net.InetSocketAddress;
 
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
+import com.takeoff.iot.modbus.common.message.MiiMessage;
 import com.takeoff.iot.modbus.netty.service.NameValueImpl;
 import io.netty.channel.ChannelHandlerContext;
 

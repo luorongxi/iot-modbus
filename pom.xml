@@ -4,7 +4,7 @@
 
 	<groupId>com.takeoff.iot</groupId>
 	<artifactId>iot-modbus</artifactId>
-	<version>3.0.0-SNAPSHOT</version>
+	<version>3.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>iot-modbus</name>
@@ -25,13 +25,10 @@
 		<maven-source-plugin.version>2.1</maven-source-plugin.version>
 		<java.version>1.8</java.version>
 		<junit.version>4.12</junit.version>
-		<commons-lang3.version>3.5</commons-lang3.version>
-		<commons-collections.version>3.2.1</commons-collections.version>
 		<lombok.version>1.16.20</lombok.version>
 		<slf4j-api.version>1.7.32</slf4j-api.version>
 		<slf4j-simple.version>1.7.32</slf4j-simple.version>
 		<fastjson.version>1.2.7</fastjson.version>
-		<commons-codec.version>1.6</commons-codec.version>
 		<bcprov-jdk15on.version>1.68</bcprov-jdk15on.version>
 	</properties>
 
@@ -41,16 +38,6 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>${commons-collections.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -74,11 +61,6 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>${commons-codec.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
@@ -107,5 +89,6 @@
 		<module>iot-modbus-client</module>
 		<module>iot-modbus-serialport</module>
         <module>iot-modbus-test</module>
-	</modules>
+    <module>iot-modbus-common</module>
+  </modules>
 </project>

@@ -2,10 +2,12 @@ package com.takeoff.iot.modbus.netty.message;
 
 import java.util.Arrays;
 
-import com.takeoff.iot.modbus.netty.data.base.MiiData;
-import com.takeoff.iot.modbus.netty.data.factory.MiiDataFactory;
-import com.takeoff.iot.modbus.netty.utils.IntegerByteTransform;
-import com.takeoff.iot.modbus.netty.utils.ModbusCrc16Utils;
+import com.takeoff.iot.modbus.common.bytes.factory.MiiDataFactory;
+import com.takeoff.iot.modbus.common.data.MiiData;
+import com.takeoff.iot.modbus.common.message.MiiMessage;
+import com.takeoff.iot.modbus.common.utils.IntegerByteTransform;
+import com.takeoff.iot.modbus.common.utils.ModbusCrc16Utils;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.bouncycastle.util.encoders.Hex;
 

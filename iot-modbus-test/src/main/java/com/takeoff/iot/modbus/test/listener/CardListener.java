@@ -1,10 +1,9 @@
 package com.takeoff.iot.modbus.test.listener;
 
+import com.takeoff.iot.modbus.common.data.MiiCardData;
+import com.takeoff.iot.modbus.common.message.MiiMessage;
 import com.takeoff.iot.modbus.netty.channel.MiiChannel;
-import com.takeoff.iot.modbus.netty.data.MiiCardData;
 import com.takeoff.iot.modbus.netty.listener.MiiListener;
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
-
 import com.takeoff.iot.modbus.serialport.data.CardData;
 import com.takeoff.iot.modbus.serialport.data.ReceiveDataEvent;
 import org.springframework.context.event.EventListener;

@@ -1,6 +1,7 @@
 package com.takeoff.iot.modbus.serialport.data;
 
-import com.takeoff.iot.modbus.netty.data.MiiBackLightData;
+import com.takeoff.iot.modbus.common.data.MiiBackLightData;
+
 import lombok.Getter;
 
 /**

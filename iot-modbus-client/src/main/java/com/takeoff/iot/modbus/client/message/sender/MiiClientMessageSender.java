@@ -1,15 +1,19 @@
 package com.takeoff.iot.modbus.client.message.sender;
 
-import com.takeoff.iot.modbus.netty.bytes.factory.*;
-import com.takeoff.iot.modbus.netty.channel.MiiChannel;
-import com.takeoff.iot.modbus.netty.data.base.MiiData;
-import com.takeoff.iot.modbus.netty.message.MiiMessage;
-import com.takeoff.iot.modbus.netty.message.factory.MiiMessageFactory;
-import com.takeoff.iot.modbus.netty.message.factory.MiiOutMessageFactory;
-import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.util.encoders.Hex;
 
-import java.util.List;
+import com.takeoff.iot.modbus.common.bytes.factory.MiiBytesCombinedFactory;
+import com.takeoff.iot.modbus.common.bytes.factory.MiiBytesFactory;
+import com.takeoff.iot.modbus.common.bytes.factory.MiiBytesFactorySubWrapper;
+import com.takeoff.iot.modbus.common.bytes.factory.MiiSlotBytesFactory;
+import com.takeoff.iot.modbus.common.bytes.factory.MiiStrings2BytesFactory;
+import com.takeoff.iot.modbus.common.data.MiiData;
+import com.takeoff.iot.modbus.common.message.MiiMessage;
+import com.takeoff.iot.modbus.common.message.factory.MiiMessageFactory;
+import com.takeoff.iot.modbus.common.message.factory.MiiOutMessageFactory;
+import com.takeoff.iot.modbus.netty.channel.MiiChannel;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 类功能说明：指令下发接口实现<br/>
