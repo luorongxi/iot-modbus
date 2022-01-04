@@ -26,7 +26,7 @@ import com.takeoff.iot.modbus.serialport.data.HeartBeatData;
 import com.takeoff.iot.modbus.serialport.data.HumitureData;
 import com.takeoff.iot.modbus.serialport.data.LockData;
 import com.takeoff.iot.modbus.serialport.data.ReceiveDataEvent;
-import com.takeoff.iot.modbus.serialport.utils.JudgeEmptyUtils;
+import com.takeoff.iot.modbus.common.utils.JudgeEmptyUtils;
 import com.takeoff.iot.modbus.serialport.utils.SpringContextUtils;
 
 import lombok.extern.slf4j.Slf4j;

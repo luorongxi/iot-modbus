@@ -1,4 +1,4 @@
-package com.takeoff.iot.modbus.serialport.utils;
+package com.takeoff.iot.modbus.common.utils;
 
 import java.util.List;
 import java.util.Map;
@@ -77,9 +77,6 @@ public final class 	JudgeEmptyUtils{
     public static boolean isEmpty(Set<?> obj) {
         return null == obj || obj.isEmpty();
     }
-
-    
-
 
 
 }

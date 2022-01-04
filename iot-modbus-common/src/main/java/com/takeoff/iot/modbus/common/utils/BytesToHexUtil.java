@@ -1,4 +1,4 @@
-package com.takeoff.iot.modbus.serialport.utils;
+package com.takeoff.iot.modbus.common.utils;
 
 /**
  * 类功能说明：Bytes与Hex转换工具类<br/>
@@ -42,18 +42,30 @@ public class BytesToHexUtil {
     }
 
     /**
-     * 数组转换成十六进制字符串
-     * @param bArray
-     * @return
+     * 字节转十六进制
+     * @param b 需要进行转换的byte字节
+     * @return  转换后的Hex字符串
      */
-    public static final String bytesToHexString(byte[] bArray) {
+    public static String byteToHex(byte b){
+        String hex = Integer.toHexString(b & 0xFF);
+        if(hex.length() < 2){
+            hex = "0" + hex;
+        }
+        return hex;
+    }
+
+    /**
+     * 数组转换成十六进制字符串
+     * @param bArray 需要转换的byte数组
+     * @return 转换后的Hex字符串
+     */
+    public static String bytesToHexString(byte[] bArray) {
         StringBuffer sb = new StringBuffer(bArray.length);
-        String sTemp;
         for (int i = 0; i < bArray.length; i++) {
-            sTemp = Integer.toHexString(0xFF & bArray[i]);
-            if (sTemp.length() < 2)
+            String hexStr = Integer.toHexString(0xFF & bArray[i]);
+            if (hexStr.length() < 2)
                 sb.append(0);
-            sb.append(sTemp.toUpperCase());
+            sb.append(hexStr.toUpperCase());
         }
         return sb.toString();
     }

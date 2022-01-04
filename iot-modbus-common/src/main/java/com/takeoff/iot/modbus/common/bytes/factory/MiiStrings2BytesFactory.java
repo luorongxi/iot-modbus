@@ -1,6 +1,6 @@
 package com.takeoff.iot.modbus.common.bytes.factory;
 
-import com.takeoff.iot.modbus.common.utils.BytesHexTransform;
+import com.takeoff.iot.modbus.common.utils.BytesToHexUtil;
 
 /**
  * 类功能说明：字符串类型指令工厂<br/>
@@ -14,6 +14,6 @@ public class MiiStrings2BytesFactory implements MiiBytesFactory<String> {
 	@Override
 	public byte[] toBytes(String... contents) {
 		String content = contents[START_POS];
-		return BytesHexTransform.hexToByteArray(content);
+		return BytesToHexUtil.hexToByteArray(content);
 	}
 }
