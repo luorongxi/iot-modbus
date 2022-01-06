@@ -101,14 +101,23 @@ public class SerialportServiceImpl implements SerialportService, SerialPortEvent
     public void serialEvent(SerialPortEvent ev) {
         switch (ev.getEventType()) {
             case SerialPortEvent.BI: // 通讯中断
+                log.error("串口通讯：中断");
             case SerialPortEvent.OE: // 溢位错误
+                log.error("串口通讯：溢位错误");
             case SerialPortEvent.FE: // 帧错误
+                log.error("串口通讯：帧错误");
             case SerialPortEvent.PE: // 奇偶校验错误
+                log.error("串口通讯：奇偶校验错误");
             case SerialPortEvent.CD: // 载波检测
+                log.error("串口通讯：载波检测");
             case SerialPortEvent.CTS: // 清除发送
+                log.error("串口通讯：清除发送");
             case SerialPortEvent.DSR: // 数据设备准备好
+                log.error("串口通讯：数据设备准备好");
             case SerialPortEvent.RI: // 响铃侦测
+                log.error("串口通讯：响铃侦测");
             case SerialPortEvent.OUTPUT_BUFFER_EMPTY: // 输出缓冲区已清空
+                log.error("串口通讯：输出缓冲区已清空");
                 break;
             case SerialPortEvent.DATA_AVAILABLE: // 有数据到达
                 // 调用读取数据的方法
