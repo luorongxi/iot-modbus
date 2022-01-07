@@ -68,7 +68,7 @@ public class SerialportServiceImpl implements SerialportService, SerialPortEvent
                     // 打开串口
                     try {
                         // open:（应用程序名【随意命名】，阻塞时等待的毫秒数）
-                        serialPort = (SerialPort) commPortId.open(Object.class.getSimpleName(), 2000);
+                        serialPort = (SerialPort) commPortId.open(Object.class.getSimpleName(), timeout);
                         // 设置串口监听
                         serialPort.addEventListener(this);
                         // 设置串口数据时间有效(可监听)
