@@ -5,7 +5,7 @@ import java.util.Arrays;
 import com.takeoff.iot.modbus.common.bytes.factory.MiiDataFactory;
 import com.takeoff.iot.modbus.common.data.MiiData;
 import com.takeoff.iot.modbus.common.message.MiiMessage;
-import com.takeoff.iot.modbus.common.utils.IntegerByteTransform;
+import com.takeoff.iot.modbus.common.utils.IntegerToByteUtil;
 import com.takeoff.iot.modbus.common.utils.ModbusCrc16Utils;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -37,7 +37,7 @@ public class MiiInMessage implements MiiMessage {
 		}
 		byte[] datas = ArrayUtils.subarray(msg, COMMAND_INDEX, msg.length - 3);
 		byte[] dataLength = ArrayUtils.subarray(msg, DATA_INDEX, COMMAND_INDEX);
-		if(datas.length != IntegerByteTransform.bytesToInt(dataLength)){
+		if(datas.length != IntegerToByteUtil.bytesToInt(dataLength)){
 			throw new DecoderException(String.format("报文长短异常:%s", Hex.toHexString(msg)));
 		}
 		byte[] checkcode = {msg[msg.length - 3],msg[msg.length - 2]};
@@ -59,7 +59,7 @@ public class MiiInMessage implements MiiMessage {
 	
 	public int length() {
 		byte[] dataLength = ArrayUtils.subarray(msg, DATA_INDEX, COMMAND_INDEX);
-		return IntegerByteTransform.bytesToInt(dataLength);
+		return IntegerToByteUtil.bytesToInt(dataLength);
 	}
 	
 	public MiiData data() {

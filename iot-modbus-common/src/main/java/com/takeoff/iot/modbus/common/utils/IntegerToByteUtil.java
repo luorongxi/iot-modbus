@@ -1,6 +1,6 @@
 package com.takeoff.iot.modbus.common.utils;
 
-public class IntegerByteTransform {
+public class IntegerToByteUtil {
 
 	/**
 	 * 函数功能说明 ：将整数转换为byte数组并指定长度 <br/>

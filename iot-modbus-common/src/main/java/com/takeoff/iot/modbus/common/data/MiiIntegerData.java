@@ -2,7 +2,7 @@ package com.takeoff.iot.modbus.common.data;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import com.takeoff.iot.modbus.common.utils.IntegerByteTransform;
+import com.takeoff.iot.modbus.common.utils.IntegerToByteUtil;
 
 /**
  * 类功能说明：包含整型的指令数据处理<br/>
@@ -17,7 +17,7 @@ public class MiiIntegerData extends MiiSlotData {
 		super(datas);
 		if(length() > CONTENT_INDEX){
 			byte[] countByte = ArrayUtils.subarray(datas, CONTENT_INDEX, datas.length);
-			content = IntegerByteTransform.bytesToInt(countByte);
+			content = IntegerToByteUtil.bytesToInt(countByte);
 		}else{
 			content = null;
 		}

@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import com.takeoff.iot.modbus.common.utils.IntegerByteTransform;
+import com.takeoff.iot.modbus.common.utils.IntegerToByteUtil;
 
 /**
  * 类功能说明：指静脉特征组合指令工厂<br/>
@@ -40,10 +40,10 @@ public class MiiFingerFeatureBytesCombinedFactory <E> implements MiiBytesFactory
 		byte[] cmdBytes = ArrayUtils.subarray(fingerBytes, fingerBytes.length - 7, fingerBytes.length);
 		byte[] dataBytes = new byte[cmdBytes.length + 2];
 		System.arraycopy(cmdBytes, 1, dataBytes, 1, cmdBytes.length - 4);
-		byte[] lengthBytes = IntegerByteTransform.intToBytes(featureBytes.length);
+		byte[] lengthBytes = IntegerToByteUtil.intToBytes(featureBytes.length);
 		System.arraycopy(lengthBytes, 0, dataBytes, dataBytes.length - 5, lengthBytes.length);
 		System.arraycopy(cmdBytes, cmdBytes.length -2, dataBytes, dataBytes.length - 3, 1);
-		dataBytes[dataBytes.length - 2] = IntegerByteTransform.checkout(dataBytes, 0);
+		dataBytes[dataBytes.length - 2] = IntegerToByteUtil.checkout(dataBytes, 0);
 		System.arraycopy(cmdBytes, cmdBytes.length -1, dataBytes, dataBytes.length - 1, 1);
 		ArrayList<Byte> fingerFeatureList = new ArrayList<>();
         for (byte b : cmdBytes) {
@@ -67,7 +67,7 @@ public class MiiFingerFeatureBytesCombinedFactory <E> implements MiiBytesFactory
         	bytes.add(b);
         }
         byte[] crcData = getList2byteArrary(bytes);
-        bytes.add(IntegerByteTransform.checkout(crcData, 0));
+        bytes.add(IntegerToByteUtil.checkout(crcData, 0));
         bytes.add(0, (byte) 0x3E);
         bytes.add((byte) 0x0D);
         return bytes;

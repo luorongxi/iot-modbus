@@ -16,7 +16,7 @@ import com.takeoff.iot.modbus.common.data.MiiHeartBeatData;
 import com.takeoff.iot.modbus.common.data.MiiHumitureData;
 import com.takeoff.iot.modbus.common.data.MiiLockData;
 import com.takeoff.iot.modbus.common.message.MiiMessage;
-import com.takeoff.iot.modbus.common.utils.IntegerByteTransform;
+import com.takeoff.iot.modbus.common.utils.IntegerToByteUtil;
 import com.takeoff.iot.modbus.common.utils.ModbusCrc16Utils;
 import com.takeoff.iot.modbus.serialport.data.BackLightData;
 import com.takeoff.iot.modbus.serialport.data.BarCodeData;
@@ -49,7 +49,7 @@ public class SerialportDataReceiveFactory implements SerialportDataFactory {
         }
         byte[] datas = ArrayUtils.subarray(msg, MiiMessage.COMMAND_INDEX, msg.length - 3);
         byte[] dataLength = ArrayUtils.subarray(msg, MiiMessage.DATA_INDEX, MiiMessage.COMMAND_INDEX);
-        if(datas.length != IntegerByteTransform.bytesToInt(dataLength)){
+        if(datas.length != IntegerToByteUtil.bytesToInt(dataLength)){
             log.error(String.format("报文长短异常:%s", Hex.toHexString(msg)));
             return;
         }

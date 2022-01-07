@@ -2,7 +2,7 @@ package com.takeoff.iot.modbus.common.bytes.factory;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import com.takeoff.iot.modbus.common.utils.IntegerByteTransform;
+import com.takeoff.iot.modbus.common.utils.IntegerToByteUtil;
 
 /**
  * 类功能说明：指静脉组合指令工厂<br/>
@@ -24,10 +24,10 @@ public class MiiFingerBytesCombinedFactory<E> implements MiiBytesFactory<E> {
 		byte[] cmdBytes = ArrayUtils.subarray(bytes, bytes.length - 7, bytes.length);
 		byte[] dataBytes = new byte[cmdBytes.length + 2];
 		System.arraycopy(cmdBytes, 1, dataBytes, 1, cmdBytes.length - 4);
-		byte[] fingerBytes = IntegerByteTransform.intToBytes(cmdBytes[cmdBytes.length - 3]);
+		byte[] fingerBytes = IntegerToByteUtil.intToBytes(cmdBytes[cmdBytes.length - 3]);
 		System.arraycopy(fingerBytes, 0, dataBytes, dataBytes.length - 5, fingerBytes.length);
 		System.arraycopy(cmdBytes, cmdBytes.length -2, dataBytes, dataBytes.length - 3, 1);
-		dataBytes[dataBytes.length - 2] = IntegerByteTransform.checkout(dataBytes, 0);
+		dataBytes[dataBytes.length - 2] = IntegerToByteUtil.checkout(dataBytes, 0);
 		System.arraycopy(cmdBytes, cmdBytes.length -1, dataBytes, dataBytes.length - 1, 1);
 		//最后赋值，以免干扰crc校验，切勿移到最前方
 		System.arraycopy(cmdBytes, 0, dataBytes, 0, 1);

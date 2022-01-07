@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.takeoff.iot.modbus.common.entity.LockStatus;
-import com.takeoff.iot.modbus.common.utils.IntegerByteTransform;
+import com.takeoff.iot.modbus.common.utils.IntegerToByteUtil;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -28,7 +28,7 @@ public class MiiLockData extends MiiSlotData implements MiiData {
 		for(int i = 0; i < dataByte.length; i++){
 			byte[] bytes = new byte[1];
 			bytes[0] = dataByte[i];
-			Integer content = IntegerByteTransform.bytesToInt(bytes);
+			Integer content = IntegerToByteUtil.bytesToInt(bytes);
 			if (i % 3 == 0){
 				lockStatus = new LockStatus();
 				lockStatus.setLockNo(content);

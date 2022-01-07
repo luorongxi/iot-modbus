@@ -2,7 +2,7 @@ package com.takeoff.iot.modbus.common.message;
 
 import com.takeoff.iot.modbus.common.data.MiiByteArrayData;
 import com.takeoff.iot.modbus.common.data.MiiData;
-import com.takeoff.iot.modbus.common.utils.IntegerByteTransform;
+import com.takeoff.iot.modbus.common.utils.IntegerToByteUtil;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -26,7 +26,7 @@ public class MiiByteArrayMessage implements MiiMessage {
 	@Override
 	public int length() {
 		byte[] dataLength = ArrayUtils.subarray(bytes, DATA_INDEX, COMMAND_INDEX);
-		return IntegerByteTransform.bytesToInt(dataLength);
+		return IntegerToByteUtil.bytesToInt(dataLength);
 	}
 
 	@Override

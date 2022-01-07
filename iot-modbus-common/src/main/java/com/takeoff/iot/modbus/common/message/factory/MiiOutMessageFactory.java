@@ -3,7 +3,7 @@ package com.takeoff.iot.modbus.common.message.factory;
 import com.takeoff.iot.modbus.common.bytes.factory.MiiBytesFactory;
 import com.takeoff.iot.modbus.common.message.MiiByteArrayMessage;
 import com.takeoff.iot.modbus.common.message.MiiMessage;
-import com.takeoff.iot.modbus.common.utils.IntegerByteTransform;
+import com.takeoff.iot.modbus.common.utils.IntegerToByteUtil;
 import com.takeoff.iot.modbus.common.utils.ModbusCrc16Utils;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -26,7 +26,7 @@ public class MiiOutMessageFactory<E> implements MiiMessageFactory<E> {
 		byte[] bytes = factory.toBytes(datas);
 		byte[] msg = new byte[MiiMessage.BEGIN_SIZE + MiiMessage.DATA_SIZE + bytes.length + MiiMessage.CHECKCODE_SIZE + MiiMessage.END_SIZE];
 		msg[MiiMessage.BEGIN_INDEX] = MiiMessage.BEGIN_BYTES[MiiMessage.BEGIN_INDEX];
-		byte[] lengthBytes = IntegerByteTransform.intToByteArray(bytes.length, MiiMessage.DATA_SIZE);
+		byte[] lengthBytes = IntegerToByteUtil.intToByteArray(bytes.length, MiiMessage.DATA_SIZE);
 		System.arraycopy(lengthBytes, 0, msg, MiiMessage.DATA_INDEX, lengthBytes.length);
 		System.arraycopy(bytes, 0, msg , MiiMessage.COMMAND_INDEX, bytes.length);
 		byte[] checkData = ArrayUtils.subarray(msg, MiiMessage.DATA_INDEX, msg.length - 3);

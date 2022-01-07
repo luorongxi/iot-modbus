@@ -3,7 +3,7 @@ package com.takeoff.iot.modbus.common.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.takeoff.iot.modbus.common.utils.IntegerByteTransform;
+import com.takeoff.iot.modbus.common.utils.IntegerToByteUtil;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.bouncycastle.util.encoders.Hex;
@@ -36,7 +36,7 @@ public class MiiFingerData extends MiiSlotData implements Finger {
         case WDH320S_USER_Veri_GetID:
         	log.info("WDH320S_USER_Veri_GetID：" +Hex.toHexString(datas));
             byte[] fingerByte = ArrayUtils.subarray(datas, 8, datas.length - 3);
-            fingerId = IntegerByteTransform.bytesToInt(fingerByte);
+            fingerId = IntegerToByteUtil.bytesToInt(fingerByte);
             break;
         case WDH320S_USER_Tran:
         	log.info("WDH320S_USER_Tran：" +Hex.toHexString(datas));
@@ -56,14 +56,14 @@ public class MiiFingerData extends MiiSlotData implements Finger {
             case CMD_UPLOAD_ALL_ID://上传所有手指 ID
             	log.info("CMD_UPLOAD_ALL_ID：" +Hex.toHexString(datas));
                 byte[] fingerCountByte = ArrayUtils.subarray(datas, 16, 18);
-                int fingerCount = IntegerByteTransform.bytesToInt(fingerCountByte);
+                int fingerCount = IntegerToByteUtil.bytesToInt(fingerCountByte);
                 byte[] fingerIds = ArrayUtils.subarray(datas, 18, 18 + fingerCount * 3);
                 fingerIdList = new ArrayList();
                 for (int i = 0; i < fingerIds.length; i += 3) {
                     byte[] fingerIdByte = new byte[2];
                     fingerIdByte[0] = fingerIds[i];
                     fingerIdByte[1] = fingerIds[i + 1];
-                    fingerId = IntegerByteTransform.bytesToInt(fingerIdByte);
+                    fingerId = IntegerToByteUtil.bytesToInt(fingerIdByte);
                     fingerIdList.add(fingerId);
                 }
                 break;
@@ -72,7 +72,7 @@ public class MiiFingerData extends MiiSlotData implements Finger {
                 //大于9说明有附加指令
                 if (datas.length > 9) {
                     byte[] fingerIdByte = ArrayUtils.subarray(datas, 16, 18);
-                    fingerId = IntegerByteTransform.bytesToInt(fingerIdByte);
+                    fingerId = IntegerToByteUtil.bytesToInt(fingerIdByte);
                     fingerTemplate = ArrayUtils.subarray(datas, 16, datas.length - 2);
                 }
                 break;
