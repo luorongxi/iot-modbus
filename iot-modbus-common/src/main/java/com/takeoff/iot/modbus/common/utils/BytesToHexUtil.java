@@ -69,4 +69,30 @@ public class BytesToHexUtil {
         }
         return sb.toString();
     }
+
+    /**
+     * 函数功能说明 ： Ascii编码byte数组转换字符串<br/>
+     * 修改者名字： <br/>
+     * 修改日期： <br/>
+     * 修改内容：<br/>
+     * 作者：Lion <br/>
+     * 参数：@param bArray
+     * 参数：@return <br/>
+     * return：String <br/>
+     */
+    public static String asciiToString(byte[] bArray) {
+        StringBuilder sbu = new StringBuilder();
+        byte b;
+        int i;
+        byte[] arrayOfByte;
+        for (i = (arrayOfByte = bArray).length, b = 0; b < i; ) {
+            byte b1 = arrayOfByte[b];
+            if (b1 == 0)
+                break;
+            sbu.append((char)Integer.parseInt(String.valueOf(b1)));
+            b++;
+        }
+        //去除转义字符、回车等范围
+        return sbu.toString().replaceAll("[\\u0000-\\u001f\b]","");
+    }
 }

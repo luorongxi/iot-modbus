@@ -11,7 +11,7 @@ server:
 iot:
   netty: # netty通讯
     server:
-      open: false
+      open: true
       port: 4000
       thread: 10
     client:
@@ -21,7 +21,7 @@ iot:
       thread: 10
       device-group: 1
   serialport: #串口通讯
-    open: true
+    open: false
     port: COM1
     timeout: 5000
     baudrate: 115200
