@@ -276,7 +276,7 @@ public interface MiiData {
 	final int NULL = 0x00, ONE = 0x01, ALL = 0xFF;
 	
 	/**
-	 * statusCode() 控制LED灯和背光灯的状态.<br>
+	 * statusCode() 控制LCD灯和背光灯的状态.<br>
 	 * <table border="1" >
 	 * <tr> <th>OFF</th> <th>RED</th> <th>BULE</th> <th>STR</th> </tr>
 	 * <tr> <td>关闭</td>  <td>红色</td> <td>蓝色</td> <td>字符</td> </tr>
@@ -287,6 +287,31 @@ public interface MiiData {
 	 */
 	final int OFF = 0x00,ON = 0x01,STR = 0x05,BATCH = 0x06,
 			RED = 0x01, GREEN = 0x02, BULE = 0x03, RGB = 0x04;
+
+	/**
+	 * lcdData() LCD数据标识.<br>
+	 * <table border="1" >
+	 * <tr> <th>AMP_LCD_PARA_NONE</th> <th>AMP_LCD_PARA_NAME</th> <th>AMP_LCD_PARA_SPEC</th> <th>AMP_LCD_PARA_NUM</th> </tr>
+	 * <tr> <td>不支持的命令/空指令</td>  <td>商品名</td> <td>规格参数</td> <td>数量参数（库存）</td> </tr>
+	 * <tr> <th>AMP_LCD_PARA_BY_NAME</th> <th>AMP_LCD_PARA_VENDER</th> <th>AMP_LCD_PARA_CODE</th> <th>AMP_LCD_PARA_UNIT</th> </tr>
+	 * <tr> <td>别名</td>  <td>厂家名称</td> <td>商品编码</td> <td>数量单位</td> </tr>
+	 * <tr> <th>AMP_LCD_PARA_MODEL</th> <th>AMP_LCD_PARA_EX1</th> <th>AMP_LCD_PARA_EX2</th> <th>AMP_LCD_PARA_EX3</th> </tr>
+	 * <tr> <td>型号</td>  <td>扩展1（上架/拣选数量）</td> <td>扩展2</td> <td>扩展3</td> </tr>
+	 * <tr> <th>AMP_LCD_PARA_EX4</th> <th>AMP_LCD_PARA_EX5</th> <th>AMP_LCD_PARA_EX6</th> <th>AMP_LCD_PARA_EX7</th> </tr>
+	 * <tr> <td>扩展4</td>  <td>扩展5</td> <td>扩展6</td> <td>扩展7</td> </tr>
+	 * <tr> <th>AMP_LCD_PARA_EX8</th> <th>AMP_LCD_PARA_EX9</th> <th>AMP_LCD_PARA_SN</th> <th>AMP_LCD_PARA_MT</th> </tr>
+	 * <tr> <td>扩展8</td>  <td>扩展9</td> <td>识别码</td> <td>此条显示内容使用的模板（模板编号1-5）</td> </tr>
+	 * <tr> <th>AMP_LCD_PARA_SET</th> <th></th> <th></th> <th></th> </tr>
+	 * <tr> <td>显示模式</td>  <td></td> <td></td> <td></td> </tr>
+	 * </table><br>
+	 * <br>
+	 */
+	final int AMP_LCD_PARA_NONE = 0x00, AMP_LCD_PARA_NAME = 0x01, AMP_LCD_PARA_SPEC = 0x02, AMP_LCD_PARA_NUM = 0x03,
+			AMP_LCD_PARA_BY_NAME = 0x04, AMP_LCD_PARA_VENDER = 0x05, AMP_LCD_PARA_CODE = 0x06, AMP_LCD_PARA_UNIT = 0x07,
+			AMP_LCD_PARA_MODEL = 0x08, AMP_LCD_PARA_EX1 = 0x09, AMP_LCD_PARA_EX2 = 0x0A, AMP_LCD_PARA_EX3 = 0x0B,
+			AMP_LCD_PARA_EX4 = 0x0C, AMP_LCD_PARA_EX5 = 0x0D, AMP_LCD_PARA_EX6 = 0x0E, AMP_LCD_PARA_EX7 = 0x0F,
+			AMP_LCD_PARA_EX8 = 0x10, AMP_LCD_PARA_EX9 = 0x11, AMP_LCD_PARA_SN = 0x12, AMP_LCD_PARA_MT = 0xFB,
+			AMP_LCD_PARA_SET = 0xFF;
 	
 	/**
 	 * statusCode() 扫描器模式.<br>

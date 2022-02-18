@@ -1,5 +1,9 @@
 package com.takeoff.iot.modbus.server.message.sender;
 
+import com.takeoff.iot.modbus.common.entity.LcdData;
+
+import java.util.List;
+
 /**
  * 类功能说明：指令下发接口<br/>
  * 公司名称：TF（腾飞）开源 <br/>
@@ -83,5 +87,10 @@ public interface ServerMessageSender {
 	 * @param fingerId 手指ID
 	 */
 	void writeFingerFeature(String deviceGroup, int device, int fingerId, byte[] feature);
-	
+
+	/**
+	 * 按柜体批量发送lCD数据
+	 * 参数：@param lcdDataList 下发lcd显示内容
+	 */
+	void lcdBatch(List<LcdData> lcdDataList);
 }

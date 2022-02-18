@@ -1,6 +1,7 @@
 package com.takeoff.iot.modbus.test.controller;
 
 import com.takeoff.iot.modbus.common.data.MiiData;
+import com.takeoff.iot.modbus.common.entity.LcdData;
 import com.takeoff.iot.modbus.serialport.service.SerialportSendService;
 import com.takeoff.iot.modbus.test.config.IotModbusServerConfig;
 import com.takeoff.iot.modbus.test.properties.IotModbusSerialportProperties;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -101,4 +103,20 @@ public class TestController {
         }
         return R.ok();
     }
+
+    /**
+     * 发送背光灯指令
+     * @param lcdDataList
+     * @return
+     */
+    @RequestMapping("/lcdbatch")
+    public R lcdBatch(@RequestBody List<LcdData> lcdDataList) {
+        if(iotModbusSerialportProperties.getOpen()){
+
+        }else{
+            iotModbusServerConfig.getMiiServer().sender().lcdBatch(lcdDataList);
+        }
+        return R.ok();
+    }
+
 }
