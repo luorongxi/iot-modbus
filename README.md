@@ -8,7 +8,7 @@
 2.  V2.0.0版本支持TCP服务端和客户端两种模式，客户端模式还增加了心跳重连机制。
 3.  V3.0.0版本支持COM（串口）和TCP协议，增加logback日志按文件大小和时间切割输出。
 4.  V3.1.0版本代码优化，抽取公共模块子工程。
-5.  V3.2.0版本支持LCD显示屏控制，支持批量控制LCD显示屏。
+5.  V3.2.0版本支持LCD显示屏控制指令，支持批量控制LCD显示屏。
 
 #### 软件架构
 软件架构说明
@@ -38,7 +38,8 @@
 4.  服务启动后，服务端端口默认为：8080，网口通讯端口默认为：4000，串口通讯默认串口为：COM1；
 5.  通讯指令调试工具，TCP通讯模式使用tools目录下的NetAssist.exe，串口通讯模式使用tools目录下的UartAssist.exe；
 6.  通讯指令采用Hex编码（十六进制）；
-7.  串口通讯依赖文件查看doc/serialport目录，Windows环境下rxtxParallel.dll和rxtxSerial.dll文件拷贝到JDK安装的bin目录下，Linux环境将librxtxParallel.so和librxtxSerial.so文件拷贝到JDK安装的bin目录下。
+7.  串口通讯依赖文件查看doc/serialport目录，Windows环境下rxtxParallel.dll和rxtxSerial.dll文件拷贝到JDK安装的bin目录下，Linux环境将librxtxParallel.so和librxtxSerial.so文件拷贝到JDK安装的bin目录下；
+8.  postman指令下发样例请查看doc/postman/通讯指令下发.postman_collection.json文件，包括门锁（单锁/多锁）、扫码、背光灯、LCD显示屏灯指令。
 
 #### 指令格式
 
