@@ -84,7 +84,7 @@ private static final Charset DEFAULT_CHARSET = Charset.forName("GBK");
 		//显示模式
 		byte[] setByte = new byte[0];
 		if(lcdData.getShowType() >= 0){
-			byte[] bytes = toBytes(String.valueOf(lcdData.getShowType()));
+			byte[] bytes = IntegerToByteUtil.intToByteArray(lcdData.getShowType(), 1);
 			setByte = getDataBytes(bytes, MiiData.AMP_LCD_PARA_SET);
 		}
 		//所有LCD显示数据
