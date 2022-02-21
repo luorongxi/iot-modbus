@@ -112,7 +112,7 @@ public class TestController {
     @RequestMapping("/lcdbatch")
     public R lcdBatch(@RequestBody List<LcdData> lcdDataList) {
         if(iotModbusSerialportProperties.getOpen()){
-
+            serialportSendService.lcdBatch(lcdDataList);
         }else{
             iotModbusServerConfig.getMiiServer().sender().lcdBatch(lcdDataList);
         }

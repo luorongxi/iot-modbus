@@ -1,5 +1,9 @@
 package com.takeoff.iot.modbus.serialport.service;
 
+import com.takeoff.iot.modbus.common.entity.LcdData;
+
+import java.util.List;
+
 /**
  * 类功能说明：串口发送指令接口<br/>
  * 公司名称：TF（腾飞）开源 <br/>
@@ -37,5 +41,11 @@ public interface SerialportSendService {
      * @param status 开关状态 {@link com.takeoff.iot.modbus.common.data.MiiData} ON OFF
      */
     void backlight(String deviceGroup, int device, int status);
+
+    /**
+     * 按柜体批量发送lCD数据
+     * @param lcdDataList 下发lcd显示内容
+     */
+    void lcdBatch(List<LcdData> lcdDataList);
 
 }
