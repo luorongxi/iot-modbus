@@ -89,7 +89,7 @@ public class SerialportSendServiceImpl implements SerialportSendService {
     public void lcdBatch(List<LcdData> lcdDataList) {
         if(!JudgeEmptyUtils.isEmpty(lcdDataList)){
             for(LcdData lcdData : lcdDataList){
-                MiiLcdData2BytesFactory lcdData2BytesFactory = new MiiLcdData2BytesFactory();
+                MiiLcdDataBytesFactory lcdData2BytesFactory = new MiiLcdDataBytesFactory();
                 String lcdDataStr = Hex.toHexString(lcdData2BytesFactory.toBytes(lcdData));
                 sendMessage(LCD_BATCH, lcdData.getDeviceGroup(), MiiMessage.LCD, lcdData.getDevice(), lcdData.getShelf(), lcdData.getSlot(), lcdDataStr);
             }

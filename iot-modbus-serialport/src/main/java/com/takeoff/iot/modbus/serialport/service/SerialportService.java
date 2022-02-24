@@ -22,8 +22,8 @@ public interface SerialportService {
 
     /**
      * 发送数据到串口
-     * @param writerBuffer
+     * @param bytes
      */
-    void serialportSendData(byte[] writerBuffer);
+    void serialportSendData(byte[] bytes);
 
 }
