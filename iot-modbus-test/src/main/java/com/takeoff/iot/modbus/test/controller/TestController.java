@@ -1,6 +1,7 @@
 package com.takeoff.iot.modbus.test.controller;
 
 import com.takeoff.iot.modbus.common.data.MiiData;
+import com.takeoff.iot.modbus.common.entity.AlarmLampData;
 import com.takeoff.iot.modbus.common.entity.LcdData;
 import com.takeoff.iot.modbus.serialport.service.SerialportSendService;
 import com.takeoff.iot.modbus.test.config.IotModbusServerConfig;
@@ -105,7 +106,7 @@ public class TestController {
     }
 
     /**
-     * 发送背光灯指令
+     * 批量发送lCD控制指令
      * @param lcdDataList
      * @return
      */
@@ -117,6 +118,20 @@ public class TestController {
             iotModbusServerConfig.getMiiServer().sender().lcdBatch(lcdDataList);
         }
         return R.ok();
+    }
+
+    /**
+     * 发送三色报警灯指令
+     * @param alarmLampData
+     * @return
+     */
+    @RequestMapping("/alarmlamp")
+    public void alarmLamp(@RequestBody AlarmLampData alarmLampData) {
+        if(iotModbusSerialportProperties.getOpen()){
+
+        }else{
+            iotModbusServerConfig.getMiiServer().sender().alarmLamp(alarmLampData);
+        }
     }
 
 }

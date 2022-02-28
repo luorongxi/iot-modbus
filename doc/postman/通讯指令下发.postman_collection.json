@@ -149,7 +149,42 @@
 						"test",
 						"lcdbatch"
 					]
-				}
+				},
+				"description": "批量发送lCD控制指令"
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8080/iot-modbus-test/test/alarmlamp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceGroup\": \"1\",\r\n    \"device\": \"2\",\r\n    \"shelf\": 4,\r\n    \"slot\": 1,\r\n    \"alarmTime\": 500,\r\n    \"lampColorDataList\": [\r\n        {\r\n            \"tyte\": 0,\r\n            \"onOff\": 1,\r\n            \"onTime\": 500,\r\n            \"offTime\": 500\r\n        },\r\n        {\r\n            \"tyte\": 1,\r\n            \"onOff\": 1,\r\n            \"onTime\": 500,\r\n            \"offTime\": 500\r\n        },\r\n        {\r\n            \"tyte\": 2,\r\n            \"onOff\": 1,\r\n            \"onTime\": 500,\r\n            \"offTime\": 500\r\n        },\r\n        {\r\n            \"tyte\": 3,\r\n            \"onOff\": 1,\r\n            \"onTime\": 500,\r\n            \"offTime\": 500\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/iot-modbus-test/test/alarmlamp",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"iot-modbus-test",
+						"test",
+						"alarmlamp"
+					]
+				},
+				"description": "发送三色报警灯指令"
 			},
 			"response": []
 		}
