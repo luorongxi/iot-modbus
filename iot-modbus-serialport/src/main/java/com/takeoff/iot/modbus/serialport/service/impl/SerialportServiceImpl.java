@@ -2,6 +2,7 @@ package com.takeoff.iot.modbus.serialport.service.impl;
 
 import com.google.common.primitives.Bytes;
 import com.takeoff.iot.modbus.common.message.MiiMessage;
+import com.takeoff.iot.modbus.common.utils.IntegerToByteUtil;
 import com.takeoff.iot.modbus.serialport.data.factory.SerialportDataFactory;
 import com.takeoff.iot.modbus.serialport.entity.ReceiveData;
 import com.takeoff.iot.modbus.serialport.enums.DatebitsEnum;
@@ -13,6 +14,7 @@ import com.takeoff.iot.modbus.common.utils.JudgeEmptyUtils;
 import com.takeoff.iot.modbus.serialport.utils.SerialPortUtil;
 import gnu.io.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -92,11 +94,11 @@ public class SerialportServiceImpl implements SerialportService {
                 //校验指令数据
                 ReceiveData data = checkData(buffList);
                 flag = data.isFlag();
-                if(data.getBeginIndex() >= 0 && data.getEndIndex() > data.getBeginIndex()){
+                if(data.getBeginIndex() >= 0 && data.getInstructLength() > data.getBeginIndex()){
                     //截取指令数据(从起始符到结束符)
-                    List<Byte> dataBuff = data.getBuffList().subList(data.getBeginIndex(), data.getEndIndex() + 1);
+                    List<Byte> dataBuff = data.getBuffList().subList(data.getBeginIndex(), data.getInstructLength() + 1);
                     //剩余的指令数据
-                    buffList = data.getBuffList().subList(data.getEndIndex() + 1, buffList.size());
+                    buffList = data.getBuffList().subList(data.getInstructLength() + 1, buffList.size());
                     byte[] msg = Bytes.toArray(dataBuff);
                     if(msg.length > 0){
                         log.info("待处理的指令："+ BytesToHexUtil.bytesToHexString(msg));
@@ -122,10 +124,19 @@ public class SerialportServiceImpl implements SerialportService {
     private ReceiveData checkData(List buffList) {
         ReceiveData data = new ReceiveData();
         data.setFlag(true);
-        //获取起始符下标
+        //获取第一个起始符下标
         int beginIndex = buffList.indexOf(MiiMessage.BEGIN_BYTES[0]);
-        //获取结束符下标
+        //获取第一个结束符下标
         int endIndex = buffList.indexOf(MiiMessage.END_BYTES[0]);
+        //计算指令数据长度
+        byte[] buffListByte = Bytes.toArray(buffList);
+        byte[] dataLength = getDataLength(buffListByte, beginIndex);
+        //指令总长度
+        int instructLength = getInstructLength(dataLength);
+        //获取指令结束符
+        byte[] endByte = getEndByte(buffListByte, beginIndex, instructLength);
+        //获取最后一个起始符下标
+        int lastBeginIndex = buffList.lastIndexOf(MiiMessage.BEGIN_BYTES[0]);
         //如果是异常指令直接丢弃
         if(beginIndex == -1){
             log.info("接收到不合法指令，直接丢弃不处理：buffList-->" +buffList+"");
@@ -133,15 +144,25 @@ public class SerialportServiceImpl implements SerialportService {
             buffList = null;
             buffList = new ArrayList<>();
             data.setFlag(false);
-        }else if(beginIndex != -1 && endIndex == -1){
-            cacheBuffs.addAll(buffList);
-            log.info("接收到有起始符没有结束符的指令，暂不处理，放入缓存：cacheBuffs-->" +cacheBuffs+"");
-            data.setFlag(false);
-        }else if(endIndex != -1 && beginIndex > endIndex){
+        }else if(beginIndex != -1 && !BytesToHexUtil.bytesToHexString(endByte).equals(BytesToHexUtil.bytesToHexString(MiiMessage.END_BYTES))){
             //去掉不合法指令
-            buffList = buffList.subList(beginIndex, buffList.size());
+            buffList = buffList.subList(lastBeginIndex, buffList.size());
+            buffListByte = Bytes.toArray(buffList);
+            beginIndex = buffList.indexOf(MiiMessage.BEGIN_BYTES[0]);
+            dataLength = getDataLength(buffListByte, beginIndex);
+            instructLength = getInstructLength(dataLength);
+            if(buffList.size() != instructLength + 1){
+                cacheBuffs.addAll(buffList);
+                log.info("接收到有起始符没有结束符的指令，暂不处理，放入缓存：cacheBuffs-->" +cacheBuffs+"");
+                data.setFlag(false);
+            }
+        }else if(endIndex != -1 && beginIndex > endIndex){
+            buffList = buffList.subList(lastBeginIndex, buffList.size());
+            buffListByte = Bytes.toArray(buffList);
             //确保起始符下标小于结束符下标
             beginIndex = buffList.indexOf(MiiMessage.BEGIN_BYTES[0]);
+            dataLength = getDataLength(buffListByte, beginIndex);
+            instructLength = getInstructLength(dataLength);
             endIndex = buffList.indexOf(MiiMessage.END_BYTES[0]);
             if(endIndex == -1){
                 cacheBuffs.addAll(buffList);
@@ -150,9 +171,65 @@ public class SerialportServiceImpl implements SerialportService {
             }
         }
         data.setBeginIndex(beginIndex);
-        data.setEndIndex(endIndex);
+        data.setInstructLength(instructLength);
         data.setBuffList(buffList);
         return data;
+    }
+
+    /**
+     * 函数功能说明 ： 获取指令结束符 <br/>
+     * 修改者名字： <br/>
+     * 修改日期： <br/>
+     * 修改内容：<br/>
+     * 作者：Lion <br/>
+     * 参数：@param buffListByte
+     * 参数：@param beginIndex
+     * 参数：@param instructLength
+     * 参数：@return <br/>
+     * return：byte[] <br/>
+     */
+    private byte[] getEndByte(byte[] buffListByte, int beginIndex, int instructLength) {
+        byte[] endByte = new byte[0];
+        if(beginIndex > 0){
+            endByte = ArrayUtils.subarray(buffListByte, beginIndex + instructLength, beginIndex + instructLength + 1);
+        }else{
+            endByte = ArrayUtils.subarray(buffListByte, instructLength, instructLength + 1);
+        }
+        return endByte;
+    }
+
+    /**
+     * 函数功能说明 ： 计算指令数据长度<br/>
+     * 修改者名字： <br/>
+     * 修改日期： <br/>
+     * 修改内容：<br/>
+     * 作者：Lion <br/>
+     * 参数：@param buffListByte
+     * 参数：@param beginIndex
+     * 参数：@return <br/>
+     * return：byte[] <br/>
+     */
+    private byte[] getDataLength(byte[] buffListByte, int beginIndex) {
+        return ArrayUtils.subarray(buffListByte, beginIndex + MiiMessage.BEGIN_SIZE, beginIndex + MiiMessage.DATA_SIZE);
+    }
+
+    /**
+     * 函数功能说明 ： 指令总长度 <br/>
+     * 修改者名字： <br/>
+     * 修改日期： <br/>
+     * 修改内容：<br/>
+     * 作者：Lion <br/>
+     * 参数：@param dataLength
+     * 参数：@return <br/>
+     * return：int <br/>
+     */
+    private int getInstructLength(byte[] dataLength) {
+        int instructLength = 0;
+        if(dataLength.length > 0){
+            //指令数据下标从0开始，总长度需要减1
+            instructLength = MiiMessage.BEGIN_SIZE + MiiMessage.DATA_SIZE + IntegerToByteUtil.bytesToInt(dataLength) + MiiMessage.CHECKCODE_SIZE + MiiMessage.END_SIZE - 1;
+        }
+        return instructLength;
     }
 
     /**

@@ -11,11 +11,11 @@ public class ReceiveData {
 	 * 获取起始符下标
 	 */
 	private int beginIndex;
-	
+
 	/**
-	 * 获取结束符下标
+	 * 指令总长度
 	 */
-	private int endIndex;
+	private int instructLength;
 	
 	/**
 	 * 接收到的数据

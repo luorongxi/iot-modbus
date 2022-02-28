@@ -8,7 +8,7 @@ import lombok.Data;
  * 作者：luorongxi <br/>
  */
 @Data
-public class LcdData {
+public class LcdData extends DeviceData {
 
 	/**
 	 * 任务id（识别码）
@@ -24,27 +24,7 @@ public class LcdData {
 	 * 标题
 	 */
 	private String title;
-	
-	/**
-	 * 设备组编码
-	 */
-	private String deviceGroup;
-	
-	/**
-	 * 设备号
-	 */
-	private int device;
-	
-	/**
-	 * 层号
-	 */
-	private int shelf;
-	
-	/**
-	 * 槽位号
-	 */
-	private int slot;
-	
+
 	/**
 	 * 商品编码
 	 */

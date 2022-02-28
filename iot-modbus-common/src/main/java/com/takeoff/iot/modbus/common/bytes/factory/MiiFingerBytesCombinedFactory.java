@@ -24,7 +24,7 @@ public class MiiFingerBytesCombinedFactory<E> implements MiiBytesFactory<E> {
 		byte[] cmdBytes = ArrayUtils.subarray(bytes, bytes.length - 7, bytes.length);
 		byte[] dataBytes = new byte[cmdBytes.length + 2];
 		System.arraycopy(cmdBytes, 1, dataBytes, 1, cmdBytes.length - 4);
-		byte[] fingerBytes = IntegerToByteUtil.intToBytes(cmdBytes[cmdBytes.length - 3]);
+		byte[] fingerBytes = IntegerToByteUtil.intToBytes(cmdBytes[cmdBytes.length - 3] & 0xFF);
 		System.arraycopy(fingerBytes, 0, dataBytes, dataBytes.length - 5, fingerBytes.length);
 		System.arraycopy(cmdBytes, cmdBytes.length -2, dataBytes, dataBytes.length - 3, 1);
 		dataBytes[dataBytes.length - 2] = IntegerToByteUtil.checkout(dataBytes, 0);

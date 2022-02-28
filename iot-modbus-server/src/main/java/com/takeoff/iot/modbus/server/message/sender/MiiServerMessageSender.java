@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.takeoff.iot.modbus.common.bytes.factory.*;
+import com.takeoff.iot.modbus.common.entity.AlarmLampData;
 import com.takeoff.iot.modbus.common.entity.LcdData;
 import com.takeoff.iot.modbus.common.utils.JudgeEmptyUtils;
 import org.apache.commons.collections.ListUtils;
@@ -28,14 +29,18 @@ public class MiiServerMessageSender implements ServerMessageSender {
 	private static final MiiBytesFactory<Integer> BYTESFACTORY_SLOT = new MiiSlotBytesFactory();
 	
 	private static final MiiBytesFactory<String> BYTESFACTORY_STRING = new MiiStrings2BytesFactory();
+
+	private static final MiiBytesFactory<Integer> BYTESFACTORY_MULTI_LOCK = new MiiMultiLockBytesFactory();
+
+	private static final MiiBytesFactory<Integer> BYTESFACTORY_BARCODE = new MiiBarcodeBytesFactory();
 	
 	private static final MiiBytesFactory<Integer> BYTESFACTORY_FINGER = new MiiFingerBytesFactory();
 	
 	private static final MiiBytesFactory<Integer> BYTESFACTORY_FINGER_FEATURE = new MiiFingerFeatureBytesFactory();
-	
-	private static final MiiBytesFactory<Integer> BYTESFACTORY_MULTI_LOCK = new MiiMultiLockBytesFactory();
 
 	private static final MiiBytesFactory<Integer> BYTESFACTORY_LCD = new MiiLcdBatchBytesFactory();
+
+	private static final MiiBytesFactory<Integer> BYTESFACTORY_ALARM_LAMP = new MiiAlarmLampDataBytesFactory();
 
 	private static final MiiMessageFactory<Integer> SINGLE_LOCK = new MiiOutMessageFactory<>(BYTESFACTORY_SLOT);
 	
@@ -45,7 +50,7 @@ public class MiiServerMessageSender implements ServerMessageSender {
 					,new MiiBytesFactorySubWrapper<Integer, Object>(new MiiMultiLockDataBytesFactory(), 4, -1)
 					));
 	
-	private static final MiiMessageFactory<Integer> BARCODE = new MiiOutMessageFactory<>(BYTESFACTORY_SLOT);
+	private static final MiiMessageFactory<Integer> BARCODE = new MiiOutMessageFactory<>(BYTESFACTORY_BARCODE);
 	
 	private static final MiiMessageFactory<Integer> BACKLIGHT = new MiiOutMessageFactory<>(BYTESFACTORY_SLOT);
 	
@@ -63,6 +68,11 @@ public class MiiServerMessageSender implements ServerMessageSender {
 					,new MiiBytesFactorySubWrapper<String, Object>(BYTESFACTORY_STRING, 4, -1)
 			));
 
+	private static final MiiMessageFactory<Object> ALARM_LAMP = new MiiOutMessageFactory<>(
+			new MiiBytesCombinedFactory<Object>(
+					new MiiBytesFactorySubWrapper<Integer, Object>(BYTESFACTORY_ALARM_LAMP, 0, 4)
+					,new MiiBytesFactorySubWrapper<String, Object>(BYTESFACTORY_STRING, 4, -1)
+			));
 	
 	private MiiControlCentre centre;
 	
@@ -89,7 +99,7 @@ public class MiiServerMessageSender implements ServerMessageSender {
 	
 	@Override
 	public void barcode(String deviceGroup, int device, int mode) {
-		sendMessage(BARCODE, deviceGroup, MiiMessage.BARCODE, device, MiiData.NULL, MiiData.NULL, mode);
+		sendMessage(BARCODE, deviceGroup, MiiMessage.BARCODE, device, MiiData.NULL, MiiData.NULL, mode, MiiData.CODE_7E);
 	}
 	
 	@Override
@@ -138,10 +148,19 @@ public class MiiServerMessageSender implements ServerMessageSender {
 	public void lcdBatch(List<LcdData> lcdDataList) {
 		if(!JudgeEmptyUtils.isEmpty(lcdDataList)){
 			for(LcdData lcdData : lcdDataList){
-				MiiLcdData2BytesFactory lcdData2BytesFactory = new MiiLcdData2BytesFactory();
-				String lcdDataStr = Hex.toHexString(lcdData2BytesFactory.toBytes(lcdData));
+				MiiLcdDataBytesFactory lcdDataBytesFactory = new MiiLcdDataBytesFactory();
+				String lcdDataStr = Hex.toHexString(lcdDataBytesFactory.toBytes(lcdData));
 				sendMessage(LCD_BATCH, lcdData.getDeviceGroup(), MiiMessage.LCD, lcdData.getDevice(), lcdData.getShelf(), lcdData.getSlot(), lcdDataStr);
 			}
+		}
+	}
+
+	@Override
+	public void alarmLamp(AlarmLampData alarmLampData) {
+		if(!JudgeEmptyUtils.isEmpty(alarmLampData)){
+			MiiLampColorDataBytesFactory alarmLampDataBytesFactory = new MiiLampColorDataBytesFactory();
+			String alarmLampDataStr = Hex.toHexString(alarmLampDataBytesFactory.toBytes(alarmLampData));
+			sendMessage(ALARM_LAMP, alarmLampData.getDeviceGroup(), MiiMessage.WLED, alarmLampData.getDevice(), alarmLampData.getShelf(), alarmLampData.getSlot(), alarmLampDataStr);
 		}
 	}
 

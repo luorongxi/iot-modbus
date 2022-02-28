@@ -312,16 +312,26 @@ public interface MiiData {
 			AMP_LCD_PARA_EX4 = 0x0C, AMP_LCD_PARA_EX5 = 0x0D, AMP_LCD_PARA_EX6 = 0x0E, AMP_LCD_PARA_EX7 = 0x0F,
 			AMP_LCD_PARA_EX8 = 0x10, AMP_LCD_PARA_EX9 = 0x11, AMP_LCD_PARA_SN = 0x12, AMP_LCD_PARA_MT = 0xFB,
 			AMP_LCD_PARA_SET = 0xFF;
-	
+
 	/**
-	 * statusCode() 扫描器模式.<br>
+	 * lampColor() 三色报警灯.<br>
 	 * <table border="1" >
-	 * <tr> <th>ONCE</th> <th>ALWAYS</th> <th>NEVER</th> </tr>
-	 * <tr> <td>触发</td>  <td>长亮</td> <td>关闭</td> </tr>
+	 * <tr> <th>LAMP_RED</th> <th>LAMP_GREEN</th> <th>LAMP_YELLOW</th> <th>BUZZER</th> </tr>
+	 * <tr> <td>红色灯</td>  <td>绿色灯</td> <td>黄色灯</td> <td>蜂鸣器</td> </tr>
 	 * </table><br>
 	 * <br>
 	 */
-	final int ONCE = 0x00,ALWAYS = 0x01,NEVER = 0x02;
+	final int LAMP_RED = 0, LAMP_GREEN = 1, LAMP_YELLOW = 2, BUZZER = 3;
+
+	/**
+	 * statusCode() 扫描器模式.<br>
+	 * <table border="1" >
+	 * <tr> <th>ONCE</th> <th>CODE_7E</th> <th>CODE_DATA</th> <th>UP_STATUS</th> </tr>
+	 * <tr> <td>触发扫码</td>  <td>数据位</td> <td>状态上报</td> </tr>
+	 * </table><br>
+	 * <br>
+	 */
+	final int ONCE = 0x02,CODE_7E = 0x7e,CODE_DATA = 0x01,UP_STATUS = 0x33;
 	
 	/**
 	 * 返回数据的字节数组

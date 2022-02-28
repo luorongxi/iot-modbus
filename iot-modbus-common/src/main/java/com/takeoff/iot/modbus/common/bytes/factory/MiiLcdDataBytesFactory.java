@@ -17,17 +17,17 @@ import org.apache.commons.lang3.ArrayUtils;
  * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
-public class MiiLcdData2BytesFactory implements MiiEntityBytesFactory<LcdData> {
+public class MiiLcdDataBytesFactory implements MiiEntityBytesFactory<LcdData> {
 
 private static final Charset DEFAULT_CHARSET = Charset.forName("GBK");
 	
 	private Charset charset;
 	
-	public MiiLcdData2BytesFactory(Charset charset){
+	public MiiLcdDataBytesFactory(Charset charset){
 		this.charset = charset;
 	}
 	
-	public MiiLcdData2BytesFactory(){
+	public MiiLcdDataBytesFactory(){
 		this(DEFAULT_CHARSET);
 	}
 	
