@@ -1,5 +1,6 @@
 package com.takeoff.iot.modbus.serialport.service;
 
+import com.takeoff.iot.modbus.common.entity.AlarmLampData;
 import com.takeoff.iot.modbus.common.entity.LcdData;
 
 import java.util.List;
@@ -47,5 +48,11 @@ public interface SerialportSendService {
      * @param lcdDataList 下发lcd显示内容
      */
     void lcdBatch(List<LcdData> lcdDataList);
+
+    /**
+     * 下发控制三色报警灯数据
+     * 参数：@param alarmLampData 下发报警灯数据
+     */
+    void alarmLamp(AlarmLampData alarmLampData);
 
 }

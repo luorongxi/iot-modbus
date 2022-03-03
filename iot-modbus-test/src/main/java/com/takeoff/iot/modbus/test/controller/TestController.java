@@ -128,7 +128,7 @@ public class TestController {
     @RequestMapping("/alarmlamp")
     public void alarmLamp(@RequestBody AlarmLampData alarmLampData) {
         if(iotModbusSerialportProperties.getOpen()){
-
+            serialportSendService.alarmLamp(alarmLampData);
         }else{
             iotModbusServerConfig.getMiiServer().sender().alarmLamp(alarmLampData);
         }

@@ -2,6 +2,7 @@ package com.takeoff.iot.modbus.serialport.service.impl;
 
 import com.takeoff.iot.modbus.common.bytes.factory.*;
 import com.takeoff.iot.modbus.common.data.MiiData;
+import com.takeoff.iot.modbus.common.entity.AlarmLampData;
 import com.takeoff.iot.modbus.common.entity.LcdData;
 import com.takeoff.iot.modbus.common.message.MiiMessage;
 import com.takeoff.iot.modbus.common.message.factory.MiiMessageFactory;
@@ -40,6 +41,8 @@ public class SerialportSendServiceImpl implements SerialportSendService {
 
     private static final MiiBytesFactory<Integer> BYTESFACTORY_LCD = new MiiLcdBatchBytesFactory();
 
+    private static final MiiBytesFactory<Integer> BYTESFACTORY_ALARM_LAMP = new MiiAlarmLampDataBytesFactory();
+
     private static final MiiMessageFactory<Integer> BARCODE = new MiiOutMessageFactory<>(BYTESFACTORY_SLOT);
 
     private static final MiiMessageFactory<Integer> BACKLIGHT = new MiiOutMessageFactory<>(BYTESFACTORY_SLOT);
@@ -53,6 +56,12 @@ public class SerialportSendServiceImpl implements SerialportSendService {
     private static final MiiMessageFactory<Object> LCD_BATCH = new MiiOutMessageFactory<>(
             new MiiBytesCombinedFactory<Object>(
                     new MiiBytesFactorySubWrapper<Integer, Object>(BYTESFACTORY_LCD, 0, 4)
+                    ,new MiiBytesFactorySubWrapper<String, Object>(BYTESFACTORY_STRING, 4, -1)
+            ));
+
+    private static final MiiMessageFactory<Object> ALARM_LAMP = new MiiOutMessageFactory<>(
+            new MiiBytesCombinedFactory<Object>(
+                    new MiiBytesFactorySubWrapper<Integer, Object>(BYTESFACTORY_ALARM_LAMP, 0, 4)
                     ,new MiiBytesFactorySubWrapper<String, Object>(BYTESFACTORY_STRING, 4, -1)
             ));
 
@@ -93,6 +102,15 @@ public class SerialportSendServiceImpl implements SerialportSendService {
                 String lcdDataStr = Hex.toHexString(lcdData2BytesFactory.toBytes(lcdData));
                 sendMessage(LCD_BATCH, lcdData.getDeviceGroup(), MiiMessage.LCD, lcdData.getDevice(), lcdData.getShelf(), lcdData.getSlot(), lcdDataStr);
             }
+        }
+    }
+
+    @Override
+    public void alarmLamp(AlarmLampData alarmLampData) {
+        if(!JudgeEmptyUtils.isEmpty(alarmLampData)){
+            MiiLampColorDataBytesFactory alarmLampDataBytesFactory = new MiiLampColorDataBytesFactory();
+            String alarmLampDataStr = Hex.toHexString(alarmLampDataBytesFactory.toBytes(alarmLampData));
+            sendMessage(ALARM_LAMP, alarmLampData.getDeviceGroup(), MiiMessage.WLED, alarmLampData.getDevice(), alarmLampData.getShelf(), alarmLampData.getSlot(), alarmLampDataStr);
         }
     }
 }

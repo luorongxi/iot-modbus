@@ -53,19 +53,21 @@ public class SerialportServiceImpl implements SerialportService {
         }
         if (JudgeEmptyUtils.isEmpty(serialPort)) {
             serialPort = SerialPortUtil.openPort(port, timeout, baudrate, DatebitsEnum.EIGHT.getKey(), StopbitsEnum.ONE.getKey(), ParityEnum.ZERO.getKey());
-            //设置串口监听
-            SerialPortUtil.addListener(serialPort, new SerialPortEventListener() {
-                @Override
-                public void serialEvent(SerialPortEvent serialPortEvent) {
-                    if (serialPortEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
-                        //读取串口数据
-                        byte[] bytes = SerialPortUtil.readFromPort(serialPort);
-                        log.info("接收到的原始数据：" + BytesToHexUtil.bytesToHexString(bytes));
-                        //数据拆包处理
-                        unpackHandle(bytes);
+            if (!JudgeEmptyUtils.isEmpty(serialPort)) {
+                //设置串口监听
+                SerialPortUtil.addListener(serialPort, new SerialPortEventListener() {
+                    @Override
+                    public void serialEvent(SerialPortEvent serialPortEvent) {
+                        if (serialPortEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
+                            //读取串口数据
+                            byte[] bytes = SerialPortUtil.readFromPort(serialPort);
+                            log.info("接收到的原始数据：" + BytesToHexUtil.bytesToHexString(bytes));
+                            //数据拆包处理
+                            unpackHandle(bytes);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
@@ -91,19 +93,24 @@ public class SerialportServiceImpl implements SerialportService {
         boolean flag = true;
         while (flag == true) {
             if(buffList.size() > 0){
-                //校验指令数据
-                ReceiveData data = checkData(buffList);
-                flag = data.isFlag();
-                if(data.getBeginIndex() >= 0 && data.getInstructLength() > data.getBeginIndex()){
-                    //截取指令数据(从起始符到结束符)
-                    List<Byte> dataBuff = data.getBuffList().subList(data.getBeginIndex(), data.getInstructLength() + 1);
-                    //剩余的指令数据
-                    buffList = data.getBuffList().subList(data.getInstructLength() + 1, buffList.size());
-                    byte[] msg = Bytes.toArray(dataBuff);
-                    if(msg.length > 0){
-                        log.info("待处理的指令："+ BytesToHexUtil.bytesToHexString(msg));
-                        serialportDataFactory.buildData(msg);
+                try {
+                    //校验指令数据
+                    ReceiveData data = checkData(buffList);
+                    flag = data.isFlag();
+                    if(data.isFlag() && data.getBeginIndex() >= 0 && data.getInstructLength() > data.getBeginIndex()){
+                        //截取指令数据(从起始符到结束符)
+                        List<Byte> dataBuff = data.getBuffList().subList(data.getBeginIndex(), data.getInstructLength() + 1);
+                        //剩余的指令数据
+                        buffList = data.getBuffList().subList(data.getInstructLength() + 1, data.getBuffList().size());
+                        byte[] msg = Bytes.toArray(dataBuff);
+                        if(msg.length > 0){
+                            log.info("待处理的指令："+ BytesToHexUtil.bytesToHexString(msg));
+                            serialportDataFactory.buildData(msg);
+                        }
                     }
+                } catch (Exception e) {
+                    flag = false;
+                    log.error("指令数据处理异常："+e.getMessage());
                 }
             }else{
                 flag = false;
