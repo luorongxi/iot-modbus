@@ -21,6 +21,8 @@ import javax.annotation.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 类功能说明：串口通讯接口实现类<br/>
@@ -42,10 +44,11 @@ public class SerialportServiceImpl implements SerialportService {
      * @param port
      * @param baudrate
      * @param timeout
+     * @param thread
      * @return
      */
     @Override
-    public void openComPort(String port, Integer baudrate, Integer timeout) {
+    public void openComPort(String port, Integer baudrate, Integer timeout, Integer thread) {
         //确保串口已被关闭，未关闭会导致重新监听串口失败
         if (!JudgeEmptyUtils.isEmpty(serialPort)) {
             SerialPortUtil.closePort(serialPort);
@@ -59,11 +62,19 @@ public class SerialportServiceImpl implements SerialportService {
                     @Override
                     public void serialEvent(SerialPortEvent serialPortEvent) {
                         if (serialPortEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
-                            //读取串口数据
-                            byte[] bytes = SerialPortUtil.readFromPort(serialPort);
-                            log.info("接收到的原始数据：" + BytesToHexUtil.bytesToHexString(bytes));
-                            //数据拆包处理
-                            unpackHandle(bytes);
+                            //使用线程池管理
+                            ExecutorService executorService = Executors.newFixedThreadPool(thread);
+                            executorService.submit(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //读取串口数据
+                                    byte[] bytes = SerialPortUtil.readFromPort(serialPort);
+                                    log.info("接收到的原始数据：" + BytesToHexUtil.bytesToHexString(bytes));
+                                    //数据拆包处理
+                                    unpackHandle(bytes);
+                                }
+                            });
+                            executorService.shutdown();
                         }
                     }
                 });

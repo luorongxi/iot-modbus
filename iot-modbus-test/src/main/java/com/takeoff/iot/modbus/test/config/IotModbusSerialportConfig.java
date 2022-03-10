@@ -27,7 +27,7 @@ public class IotModbusSerialportConfig implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         if(iotModbusSerialportProperties.getOpen()){
-            serialportService.openComPort(iotModbusSerialportProperties.getPort(), iotModbusSerialportProperties.getBaudrate(), iotModbusSerialportProperties.getTimeout());
+            serialportService.openComPort(iotModbusSerialportProperties.getPort(), iotModbusSerialportProperties.getBaudrate(), iotModbusSerialportProperties.getTimeout(), iotModbusSerialportProperties.getThread());
         }
     }
 }

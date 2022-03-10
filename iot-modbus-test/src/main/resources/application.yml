@@ -25,3 +25,4 @@ iot:
     port: COM1
     timeout: 5000
     baudrate: 115200
+    thread: 10

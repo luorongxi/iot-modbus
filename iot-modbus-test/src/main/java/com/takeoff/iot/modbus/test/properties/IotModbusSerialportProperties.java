@@ -33,4 +33,9 @@ public class IotModbusSerialportProperties {
      * 波特率
      */
     private Integer baudrate;
+
+    /**
+     * Socket服务执行线程数
+     */
+    private Integer thread;
 }
