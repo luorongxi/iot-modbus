@@ -44,6 +44,52 @@ public interface SerialportSendService {
     void backlight(String deviceGroup, int device, int status);
 
     /**
+     * 注册指静脉.
+     * @param deviceGroup 设备组编码
+     * @param device 设备号
+     * @param fingerId 手指ID
+     */
+    void registerFinger(String deviceGroup, int device, int fingerId);
+
+    /**
+     * 单条删除指静脉.
+     * @param deviceGroup 设备组编码
+     * @param device 设备号
+     * @param fingerId 手指ID
+     */
+    void deleteFinger(String deviceGroup, int device, int fingerId);
+
+    /**
+     * 批量删除指静脉.
+     * @param deviceGroup 设备组编码
+     * @param device 设备号
+     */
+    void deleteAllFinger(String deviceGroup, int device);
+
+    /**
+     * 查询所有指静脉.
+     * @param deviceGroup 设备组编码
+     * @param device 设备号
+     */
+    void getFingerList(String deviceGroup, int device);
+
+    /**
+     * 获取手指ID指静脉特征.
+     * @param deviceGroup 设备组编码
+     * @param device 设备号
+     * @param fingerId 手指ID
+     */
+    void getFingerFeature(String deviceGroup, int device, int fingerId);
+
+    /**
+     * 写入指静脉特征.
+     * @param deviceGroup 设备组编码
+     * @param device 设备号
+     * @param fingerId 手指ID
+     */
+    void writeFingerFeature(String deviceGroup, int device, int fingerId, byte[] feature);
+
+    /**
      * 按柜体批量发送lCD数据
      * @param lcdDataList 下发lcd显示内容
      */

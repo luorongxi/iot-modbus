@@ -25,7 +25,12 @@ public class IotModbusSerialportProperties {
     private String port;
 
     /**
-     * 超时时间
+     * 是否使用netty对数据进行拆包处理
+     */
+    private Boolean netty;
+
+    /**
+     * 链接超时时间，不使用netty对数据进行拆包处理时必填
      */
     private Integer timeout;
 
@@ -35,7 +40,7 @@ public class IotModbusSerialportProperties {
     private Integer baudrate;
 
     /**
-     * Socket服务执行线程数
+     * 设置通讯服务执行线程数
      */
     private Integer thread;
 }

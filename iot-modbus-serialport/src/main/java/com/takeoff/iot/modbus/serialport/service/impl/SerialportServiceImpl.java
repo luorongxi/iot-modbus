@@ -11,6 +11,7 @@ import com.takeoff.iot.modbus.serialport.enums.StopbitsEnum;
 import com.takeoff.iot.modbus.serialport.service.SerialportService;
 import com.takeoff.iot.modbus.common.utils.BytesToHexUtil;
 import com.takeoff.iot.modbus.common.utils.JudgeEmptyUtils;
+import com.takeoff.iot.modbus.serialport.utils.NettyRxtxClientUtil;
 import com.takeoff.iot.modbus.serialport.utils.SerialPortUtil;
 import gnu.io.*;
 import lombok.extern.slf4j.Slf4j;
@@ -80,6 +81,17 @@ public class SerialportServiceImpl implements SerialportService {
                 });
             }
         }
+    }
+
+    /**
+     * netty连接串口
+     * @param port
+     * @param baudrate
+     * @param thread
+     */
+    @Override
+    public void openComPort(String port, Integer baudrate, Integer thread) {
+        NettyRxtxClientUtil.start(port, baudrate, thread);
     }
 
     /**
@@ -290,6 +302,8 @@ public class SerialportServiceImpl implements SerialportService {
     public void serialportSendData(byte[] bytes) {
         if (!JudgeEmptyUtils.isEmpty(serialPort)) {
             SerialPortUtil.sendToPort(serialPort, bytes);
+        }else{
+            NettyRxtxClientUtil.writeAndFlush(bytes);
         }
     }
 }

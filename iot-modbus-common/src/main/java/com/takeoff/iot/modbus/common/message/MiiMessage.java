@@ -66,11 +66,11 @@ public interface MiiMessage {
 	/**
 	 * 指静脉数据常量.  <br>
 	 * <table border="1" >
-	 * <tr> <th>USER_CODE</th> <th>STATUS_CODE</th> <th>DEVID</th> <th>GID</th> </tr>
-	 * <tr> <th>用户码</th> <th>状态码</th> <th>Devid</th> <th>GID(分组)</th> </tr>
+	 * <tr> <th>USER_CODE</th> <th>STATUS_CODE</th> <th>DEVID</th> <th>GID</th> <th>STATUS_CODE_EX</th> </tr>
+	 * <tr> <th>用户码</th> <th>状态码</th> <th>Devid</th> <th>GID(分组)</th> <th>指静脉模板状态码</th> </tr>
 	 * </table><br>
 	 */
-	final int USER_CODE = 0x00, STATUS_CODE = 0x40, DEVID = 0xFF, GID = 0x00, END_CODE = 0x0D;
+	final int USER_CODE = 0x00, STATUS_CODE = 0x40, DEVID = 0xFF, GID = 0x00, END_CODE = 0x0D, STATUS_CODE_EX = 0x3E;
 	
 	/**
 	 * type() 信息类型. <br>

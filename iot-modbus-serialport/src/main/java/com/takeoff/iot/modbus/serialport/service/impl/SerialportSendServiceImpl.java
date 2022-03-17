@@ -7,6 +7,7 @@ import com.takeoff.iot.modbus.common.entity.LcdData;
 import com.takeoff.iot.modbus.common.message.MiiMessage;
 import com.takeoff.iot.modbus.common.message.factory.MiiMessageFactory;
 import com.takeoff.iot.modbus.common.message.factory.MiiOutMessageFactory;
+import com.takeoff.iot.modbus.common.utils.IntegerToByteUtil;
 import com.takeoff.iot.modbus.common.utils.JudgeEmptyUtils;
 import com.takeoff.iot.modbus.serialport.service.SerialportSendService;
 import com.takeoff.iot.modbus.serialport.service.SerialportService;
@@ -35,22 +36,39 @@ public class SerialportSendServiceImpl implements SerialportSendService {
 
     private static final MiiBytesFactory<String> BYTESFACTORY_STRING = new MiiStrings2BytesFactory();
 
-    private static final MiiMessageFactory<Integer> SINGLE_LOCK = new MiiOutMessageFactory<>(BYTESFACTORY_SLOT);
-
     private static final MiiBytesFactory<Integer> BYTESFACTORY_MULTI_LOCK = new MiiMultiLockBytesFactory();
+
+    private static final MiiBytesFactory<Integer> BYTESFACTORY_FINGER = new MiiFingerBytesFactory();
+
+    private static final MiiBytesFactory<Integer> BYTESFACTORY_FINGER_FEATURE = new MiiFingerFeatureBytesFactory();
 
     private static final MiiBytesFactory<Integer> BYTESFACTORY_LCD = new MiiLcdBatchBytesFactory();
 
     private static final MiiBytesFactory<Integer> BYTESFACTORY_ALARM_LAMP = new MiiAlarmLampDataBytesFactory();
 
-    private static final MiiMessageFactory<Integer> BARCODE = new MiiOutMessageFactory<>(BYTESFACTORY_SLOT);
-
-    private static final MiiMessageFactory<Integer> BACKLIGHT = new MiiOutMessageFactory<>(BYTESFACTORY_SLOT);
+    private static final MiiMessageFactory<Integer> SINGLE_LOCK = new MiiOutMessageFactory<>(BYTESFACTORY_SLOT);
 
     private static final MiiMessageFactory<Object> MULTI_LOCK = new MiiOutMessageFactory<>(
             new MiiBytesCombinedFactory<Object>(
                     new MiiBytesFactorySubWrapper<Integer, Object>(BYTESFACTORY_MULTI_LOCK, 0, 4)
                     ,new MiiBytesFactorySubWrapper<Integer, Object>(new MiiMultiLockDataBytesFactory(), 4, -1)
+            ));
+
+    private static final MiiMessageFactory<Integer> BARCODE = new MiiOutMessageFactory<>(BYTESFACTORY_SLOT);
+
+    private static final MiiMessageFactory<Integer> BACKLIGHT = new MiiOutMessageFactory<>(BYTESFACTORY_SLOT);
+
+    private static final MiiMessageFactory<Object> FINGER = new MiiOutMessageFactory<>(
+            new MiiFingerBytesCombinedFactory<Object>(
+                    new MiiBytesFactorySubWrapper<Integer, Object>(BYTESFACTORY_FINGER, 0, 10)
+                    ,new MiiBytesFactorySubWrapper<String, Object>(BYTESFACTORY_STRING, 10, -1)
+            ));
+
+    private static final MiiMessageFactory<Object> FINGER_FEATURE = new MiiOutMessageFactory<>(
+            new MiiFingerFeatureBytesCombinedFactory<Object>(
+                    new MiiBytesFactorySubWrapper<Integer, Object>(BYTESFACTORY_FINGER_FEATURE, 0, 11)
+                    ,new MiiBytesFactorySubWrapper<String, Object>(BYTESFACTORY_STRING, 11, 12)
+                    ,new MiiBytesFactorySubWrapper<String, Object>(BYTESFACTORY_STRING, 12, -1)
             ));
 
     private static final MiiMessageFactory<Object> LCD_BATCH = new MiiOutMessageFactory<>(
@@ -92,6 +110,49 @@ public class SerialportSendServiceImpl implements SerialportSendService {
     @Override
     public void backlight(String deviceGroup, int device, int status) {
         sendMessage(BACKLIGHT, deviceGroup, MiiMessage.BACKLIGHT, device, MiiData.NULL, MiiData.NULL, status);
+    }
+
+    @Override
+    public void registerFinger(String cabinetGroup, int cabinet, int fingerId) {
+        String fingerIdStr = Hex.toHexString(IntegerToByteUtil.intToBytes(fingerId));
+        sendMessage(FINGER, cabinetGroup, MiiMessage.FINGER, cabinet, MiiData.NULL, MiiData.NULL,
+                MiiMessage.USER_CODE, MiiMessage.STATUS_CODE, MiiData.CMD_REGISTER, MiiMessage.DEVID, MiiMessage.GID, MiiMessage.END_CODE, fingerIdStr);
+    }
+
+    @Override
+    public void deleteFinger(String cabinetGroup, int cabinet, int fingerId) {
+        String fingerIdStr = Hex.toHexString(IntegerToByteUtil.intToBytes(fingerId));
+        sendMessage(FINGER, cabinetGroup, MiiMessage.FINGER, cabinet, MiiData.NULL, MiiData.NULL,
+                MiiMessage.USER_CODE, MiiMessage.STATUS_CODE, MiiData.CMD_DELETE_ONE, MiiMessage.DEVID, MiiMessage.GID, MiiMessage.END_CODE, fingerIdStr);
+    }
+
+    @Override
+    public void deleteAllFinger(String cabinetGroup, int cabinet) {
+        String fingerIdStr = Hex.toHexString(IntegerToByteUtil.intToBytes(MiiData.NULL));
+        sendMessage(FINGER, cabinetGroup, MiiMessage.FINGER, cabinet, MiiData.NULL, MiiData.NULL,
+                MiiMessage.USER_CODE, MiiMessage.STATUS_CODE, MiiData.CMD_DELETE_ALL, MiiMessage.DEVID, MiiData.NULL, MiiMessage.GID, MiiMessage.END_CODE, fingerIdStr);
+    }
+
+    @Override
+    public void getFingerList(String cabinetGroup, int cabinet) {
+        String fingerIdStr = Hex.toHexString(IntegerToByteUtil.intToBytes(MiiData.NULL));
+        sendMessage(FINGER, cabinetGroup, MiiMessage.FINGER, cabinet, MiiData.NULL, MiiData.NULL,
+                MiiData.WDH320S_USER_Tran, MiiMessage.STATUS_CODE, MiiData.CMD_UPLOAD_ALL_ID, MiiMessage.DEVID, MiiData.NULL, MiiMessage.GID, MiiMessage.END_CODE, fingerIdStr);
+    }
+
+    @Override
+    public void getFingerFeature(String cabinetGroup, int cabinet, int fingerId) {
+        String fingerIdStr = Hex.toHexString(IntegerToByteUtil.intToBytes(fingerId));
+        sendMessage(FINGER, cabinetGroup, MiiMessage.FINGER, cabinet, MiiData.ONE, MiiData.ONE,
+                MiiData.WDH320S_USER_Tran, MiiMessage.STATUS_CODE, MiiData.CMD_UPLOAD_INFOR_TEMPLATES, MiiMessage.DEVID, MiiMessage.GID, MiiMessage.END_CODE, fingerIdStr);
+    }
+
+    @Override
+    public void writeFingerFeature(String cabinetGroup, int cabinet, int fingerId, byte[] feature) {
+        String fingerIdStr = Hex.toHexString(IntegerToByteUtil.intToBytes(fingerId));
+        String featureStr = Hex.toHexString(feature);
+        sendMessage(FINGER_FEATURE, cabinetGroup, MiiMessage.FINGER, cabinet, MiiData.ONE, MiiData.ONE,
+                MiiData.WDH320S_USER_Tran, MiiMessage.STATUS_CODE, MiiData.CMD_DOWNLOAD_INFOR_TEMPLATES, MiiMessage.DEVID, MiiMessage.GID, MiiMessage.END_CODE, MiiMessage.STATUS_CODE_EX, fingerIdStr, featureStr);
     }
 
     @Override

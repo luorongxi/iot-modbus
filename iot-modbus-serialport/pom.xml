@@ -6,7 +6,7 @@
     <parent>
         <artifactId>iot-modbus</artifactId>
         <groupId>com.takeoff.iot</groupId>
-        <version>3.2.3-SNAPSHOT</version>
+        <version>3.2.4-SNAPSHOT</version>
     </parent>
     <artifactId>iot-modbus-serialport</artifactId>
     <packaging>jar</packaging>
@@ -15,8 +15,9 @@
 
     <properties>
         <rxtxcomm.version>2.2</rxtxcomm.version>
-        <iot-modbus-common.version>3.2.3-SNAPSHOT</iot-modbus-common.version>
+        <iot-modbus-common.version>3.2.4-SNAPSHOT</iot-modbus-common.version>
         <guava.version>18.0</guava.version>
+        <netty.version>4.1.39.Final</netty.version>
     </properties>
 
     <dependencies>
@@ -42,6 +43,16 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-handler</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-transport-rxtx</artifactId>
+            <version>${netty.version}</version>
         </dependency>
     </dependencies>
 

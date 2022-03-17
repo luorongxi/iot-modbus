@@ -5,11 +5,15 @@ package com.takeoff.iot.modbus.common.bytes.factory;
  * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
-public class MiiFingerBytesFactory extends MiiFingerBytesCombinedFactory<Integer> implements MiiBytesFactory<Integer> {
-	
-	private static final int FINGER_BYTES = 1,FINGER_COUNT = 11,FINGER_STARTPOS = 0;
-	
+public class MiiFingerBytesFactory extends MiiInteger2BytesFactory<Integer> implements MiiBytesFactory<Integer> {
+
+	private static final int FINGER_BYTES = 1,FINGER_COUNT = 10;
+
 	public MiiFingerBytesFactory() {
-		super(new MiiInteger2BytesFactory<Integer>(FINGER_BYTES, FINGER_COUNT, FINGER_STARTPOS));
+		this(0);
+	}
+
+	public MiiFingerBytesFactory(int startPos) {
+		super(FINGER_BYTES, FINGER_COUNT, startPos);
 	}
 }
