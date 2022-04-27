@@ -41,7 +41,7 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 
 	private static final int IDLE_TIMEOUT = 60;
 	private EventLoopGroup workerGroup;
-	
+
 	private String deviceGroup;
 	private int nThread;
 	private MiiListenerHandler handler;
@@ -80,7 +80,7 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 		    cm = new MiiConnectManager(boot, address){
 				@Override
 				public void afterSuccess() {
-					sender().registerGroup(deviceGroup);
+					sender().registerGroup(serverHost, deviceGroup);
 				}
 		    };
 		    future = cm.connect();
@@ -114,7 +114,7 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 			@Override
 			public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
 				if(evt instanceof IdleStateEvent){
-					sender().registerGroup(deviceGroup);
+					sender().registerGroup(channel.name(), deviceGroup);
 				} else {
 					super.userEventTriggered(ctx, evt);
 				}

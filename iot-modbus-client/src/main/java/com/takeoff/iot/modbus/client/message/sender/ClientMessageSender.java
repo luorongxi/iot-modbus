@@ -13,16 +13,18 @@ public interface ClientMessageSender {
 
 	/**
 	 * 上传设备组指令.
+	 * @param ip 设备IP
 	 * @param deviceGroup 设备组号
 	 */
-	void registerGroup(String deviceGroup);
+	void registerGroup(String ip, String deviceGroup);
 
 	/**
 	 * 上传控制单锁指令.
+	 * @param ip 设备IP
 	 * @param device 设备号
-	 * @param status 锁状态
+	 * @param status 锁状态（0：上锁；1：开锁）
 	 */
-	void unlock(int device, int status);
+	void unlock(String ip, int device, int status);
 
 
 }

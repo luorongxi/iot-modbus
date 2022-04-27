@@ -187,6 +187,40 @@
 				"description": "发送三色报警灯指令"
 			},
 			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8080/iot-modbus-test/test/clienttest",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"ip\": \"127.0.0.1\",\r\n        \"device\": \"1\",\r\n        \"status\": \"0\"\r\n    },\r\n    {\r\n        \"ip\": \"192.168.1.157\",\r\n        \"device\": \"2\",\r\n        \"status\": \"1\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/iot-modbus-test/test/clienttest",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"iot-modbus-test",
+						"test",
+						"clienttest"
+					]
+				},
+				"description": "客户端往多个服务端下发消息"
+			},
+			"response": []
 		}
 	]
 }

@@ -1,10 +1,14 @@
 package com.takeoff.iot.modbus.test.controller;
 
+import com.takeoff.iot.modbus.client.entity.OpenLock;
 import com.takeoff.iot.modbus.common.data.MiiData;
 import com.takeoff.iot.modbus.common.entity.AlarmLampData;
 import com.takeoff.iot.modbus.common.entity.LcdData;
+import com.takeoff.iot.modbus.common.utils.JudgeEmptyUtils;
 import com.takeoff.iot.modbus.serialport.service.SerialportSendService;
+import com.takeoff.iot.modbus.test.config.IotModbusClientConfig;
 import com.takeoff.iot.modbus.test.config.IotModbusServerConfig;
+import com.takeoff.iot.modbus.test.properties.IotModbusClientProperties;
 import com.takeoff.iot.modbus.test.properties.IotModbusSerialportProperties;
 import com.takeoff.iot.modbus.test.utils.R;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +36,9 @@ public class TestController {
 
     @Resource
     private IotModbusSerialportProperties iotModbusSerialportProperties;
+
+    @Resource
+    private IotModbusClientConfig iotModbusClientConfig;
 
     @Resource
     private SerialportSendService serialportSendService;
@@ -148,6 +155,19 @@ public class TestController {
             serialportSendService.alarmLamp(alarmLampData);
         }else{
             iotModbusServerConfig.getMiiServer().sender().alarmLamp(alarmLampData);
+        }
+    }
+
+    /**
+     * 测试客户端往多个服务端下发消息
+     * @param openLockList
+     */
+    @RequestMapping("/clienttest")
+    public void clientTest(@RequestBody List<OpenLock> openLockList) {
+        if(!JudgeEmptyUtils.isEmpty(openLockList)){
+            for (OpenLock openLock : openLockList){
+                iotModbusClientConfig.getMiiClient().sender().unlock(openLock.getIp(), openLock.getDevice(), openLock.getStatus());
+            }
         }
     }
 

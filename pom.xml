@@ -4,7 +4,7 @@
 
 	<groupId>com.takeoff.iot</groupId>
 	<artifactId>iot-modbus</artifactId>
-	<version>3.2.4-SNAPSHOT</version>
+	<version>3.2.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>iot-modbus</name>

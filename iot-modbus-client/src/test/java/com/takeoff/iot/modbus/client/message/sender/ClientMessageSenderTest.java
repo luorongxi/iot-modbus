@@ -18,6 +18,8 @@ import com.takeoff.iot.modbus.common.message.MiiMessage;
 @Slf4j
 public class ClientMessageSenderTest {
 
+	private static final String IP = "127.0.0.1";
+
 	@Test
 	public void testRegoGroup(){
 		ClientMessageSender sender = sender(MiiMessage.ACK,
@@ -25,7 +27,7 @@ public class ClientMessageSenderTest {
 						0x00, 0x00, 0x00, 0x00,
 						0x00, 0x01,
 						0x01, (byte) 0xE1, (byte) 0x7F});
-		sender.registerGroup("1");
+		sender.registerGroup(IP,"1");
 	}
 		
 	@Test
@@ -36,7 +38,7 @@ public class ClientMessageSenderTest {
 						0x01,
 						(byte) 0xCA, (byte) 0x3C, (byte) 0x7F}
 			);
-		sender.unlock(1, 1);
+		sender.unlock(IP,1, 1);
 	}
 	
 	private ClientMessageSender sender(int command, byte[] expecteds){

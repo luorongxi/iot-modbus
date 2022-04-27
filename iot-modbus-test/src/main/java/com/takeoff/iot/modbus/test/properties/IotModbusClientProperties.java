@@ -20,9 +20,9 @@ public class IotModbusClientProperties {
     private Boolean open;
 
     /**
-     * 服务IP
+     * 服务IP,多个使用英文逗号隔开
      */
-    private String ip;
+    private String ips;
 
     /**
      * 服务端口

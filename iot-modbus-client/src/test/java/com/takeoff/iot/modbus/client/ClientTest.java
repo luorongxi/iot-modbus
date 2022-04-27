@@ -15,12 +15,13 @@ import org.junit.Test;
 public class ClientTest implements MiiListener {
 
 	private static final String GROUPNAME = "1";
+	private static final String IP = "127.0.0.1";
 	private static MiiClient client;
 	
 	@BeforeClass
 	public static void testStart() {
 		client = new MiiClient(GROUPNAME);
-		client.connect("127.0.0.1", 5000);
+		client.connect(IP, 5000);
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
@@ -47,7 +48,7 @@ public class ClientTest implements MiiListener {
 	
 	@Test
 	public void testUnlock() throws InterruptedException{
-		client.sender().unlock(1, 1);
+		client.sender().unlock(IP,1, 1);
 	}
 	
 	@Override

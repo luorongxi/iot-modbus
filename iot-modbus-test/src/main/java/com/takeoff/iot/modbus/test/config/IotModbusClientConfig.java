@@ -35,9 +35,12 @@ public class IotModbusClientConfig implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         if(iotModbusClientProperties.getOpen()){
             miiClient = new MiiClient(iotModbusClientProperties.getDeviceGroup(), iotModbusClientProperties.getThread());
-            miiClient.connect(iotModbusClientProperties.getIp(), iotModbusClientProperties.getPort());
+            String[] ips = iotModbusClientProperties.getIps().split(",");
+            for(int i=0;i<ips.length;i++){
+                miiClient.connect(ips[i], iotModbusClientProperties.getPort());
+                log.info("IOT通讯协议链接服务端，占用IP： " + ips[i] + ",链接端口:" + iotModbusClientProperties.getPort());
+            }
             miiClient.addListener(MiiMessage.LOCK, lockListener);
-            log.info("IOT通讯协议链接服务端，占用IP： " + iotModbusClientProperties.getIp() + ",链接端口:" + iotModbusClientProperties.getPort());
         }
     }
 }

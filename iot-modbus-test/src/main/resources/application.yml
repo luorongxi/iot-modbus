@@ -11,12 +11,12 @@ server:
 iot:
   netty: # netty通讯
     server:
-      open: true
+      open: false
       port: 4000
       thread: 10
     client:
-      open: false
-      ip: 127.0.0.1
+      open: true
+      ips: 127.0.0.1,192.168.1.157 #设置读写器IP,多个使用英文逗号隔开
       port: 5000
       thread: 10
       device-group: 1
