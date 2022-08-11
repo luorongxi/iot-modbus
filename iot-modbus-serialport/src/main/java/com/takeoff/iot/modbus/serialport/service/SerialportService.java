@@ -13,8 +13,9 @@ public interface SerialportService {
      * @param baudrate
      * @param timeout
      * @param thread
+     * @param sleepTime
      */
-    void openComPort(String port, Integer baudrate, Integer timeout, Integer thread);
+    void openComPort(String port, Integer baudrate, Integer timeout, Integer thread, int sleepTime);
 
     /**
      * netty连接串口

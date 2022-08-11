@@ -30,7 +30,7 @@ public class IotModbusSerialportConfig implements ApplicationRunner {
             if(iotModbusSerialportProperties.getNetty()){
                 serialportService.openComPort(iotModbusSerialportProperties.getPort(), iotModbusSerialportProperties.getBaudrate(), iotModbusSerialportProperties.getThread());
             }else{
-                serialportService.openComPort(iotModbusSerialportProperties.getPort(), iotModbusSerialportProperties.getBaudrate(), iotModbusSerialportProperties.getTimeout(), iotModbusSerialportProperties.getThread());
+                serialportService.openComPort(iotModbusSerialportProperties.getPort(), iotModbusSerialportProperties.getBaudrate(), iotModbusSerialportProperties.getTimeout(), iotModbusSerialportProperties.getThread(), iotModbusSerialportProperties.getSleepTime());
             }
         }
     }

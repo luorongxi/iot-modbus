@@ -15,15 +15,16 @@ iot:
       port: 4000
       thread: 10
     client:
-      open: true
+      open: false
       ips: 127.0.0.1,192.168.1.157 #设置读写器IP,多个使用英文逗号隔开
       port: 5000
       thread: 10
       device-group: 1
   serialport: #串口通讯
-    open: false
+    open: true
     port: COM1
     netty: true #是否使用netty对数据进行拆包处理
     timeout: 5000 #链接超时时间，不使用netty对数据进行拆包处理时必填
     baudrate: 115200
     thread: 10
+    sleep-time: 2 #接收数据休眠时间(单位：毫秒)，串口方式必填

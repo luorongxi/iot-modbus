@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 类功能说明：串口通讯接口实现类<br/>
@@ -49,7 +50,7 @@ public class SerialportServiceImpl implements SerialportService {
      * @return
      */
     @Override
-    public void openComPort(String port, Integer baudrate, Integer timeout, Integer thread) {
+    public void openComPort(String port, Integer baudrate, Integer timeout, Integer thread, int sleepTime) {
         //确保串口已被关闭，未关闭会导致重新监听串口失败
         if (!JudgeEmptyUtils.isEmpty(serialPort)) {
             SerialPortUtil.closePort(serialPort);
@@ -68,11 +69,20 @@ public class SerialportServiceImpl implements SerialportService {
                             executorService.submit(new Runnable() {
                                 @Override
                                 public void run() {
-                                    //读取串口数据
-                                    byte[] bytes = SerialPortUtil.readFromPort(serialPort);
-                                    log.info("接收到的原始数据：" + BytesToHexUtil.bytesToHexString(bytes));
-                                    //数据拆包处理
-                                    unpackHandle(bytes);
+                                    //加入串口对象锁，同一个串口只能排队进行访问
+                                    synchronized (serialPort) {
+                                        try {
+                                            //设置休眠毫秒数
+                                            TimeUnit.MILLISECONDS.sleep(sleepTime);
+                                            //读取串口数据
+                                            byte[] bytes = SerialPortUtil.readFromPort(serialPort);
+                                            log.info("接收到的原始数据：" + BytesToHexUtil.bytesToHexString(bytes));
+                                            //数据拆包处理
+                                            unpackHandle(bytes);
+                                        } catch (InterruptedException e) {
+                                            log.error(e.getMessage());
+                                        }
+                                    }
                                 }
                             });
                             executorService.shutdown();

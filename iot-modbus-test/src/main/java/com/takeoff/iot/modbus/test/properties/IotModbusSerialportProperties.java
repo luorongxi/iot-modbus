@@ -43,4 +43,9 @@ public class IotModbusSerialportProperties {
      * 设置通讯服务执行线程数
      */
     private Integer thread;
+
+    /**
+     * 接收数据休眠时间，串口方式必填
+     */
+    private Integer sleepTime;
 }
