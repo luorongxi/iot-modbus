@@ -46,7 +46,7 @@ public class MiiClientMessageSender implements ClientMessageSender {
 	public MiiClientMessageSender(MiiChannel channel){
 		this.channelMap.put(channel.name(), channel);
 	}
-	
+
 	private <E> void sendMessage(MiiMessageFactory<E> factory, String ip, E... datas){
 		MiiChannel channel = (MiiChannel) channelMap.get(ip);
 		if(JudgeEmptyUtils.isEmpty(channel)){

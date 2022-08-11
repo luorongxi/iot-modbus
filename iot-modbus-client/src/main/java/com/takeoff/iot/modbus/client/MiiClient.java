@@ -1,6 +1,10 @@
 package com.takeoff.iot.modbus.client;
 
 import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import com.takeoff.iot.modbus.client.connect.MiiConnectManager;
@@ -8,6 +12,7 @@ import com.takeoff.iot.modbus.client.message.sender.ClientMessageSender;
 import com.takeoff.iot.modbus.client.message.sender.MiiClientMessageSender;
 import com.takeoff.iot.modbus.common.bytes.factory.MiiDataFactory;
 import com.takeoff.iot.modbus.common.message.MiiMessage;
+import com.takeoff.iot.modbus.common.utils.JudgeEmptyUtils;
 import com.takeoff.iot.modbus.netty.channel.MiiChannel;
 import com.takeoff.iot.modbus.netty.data.factory.MiiClientDataFactory;
 import com.takeoff.iot.modbus.netty.device.MiiDeviceChannel;
@@ -40,7 +45,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MiiClient extends ChannelInitializer<SocketChannel> {
 
 	private static final int IDLE_TIMEOUT = 60;
-	private EventLoopGroup workerGroup;
+
+	private Map<String, Object> workerGroupMap = new HashMap<String, Object>();
 
 	private String deviceGroup;
 	private int nThread;
@@ -48,11 +54,13 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 	private MiiDataFactory dataFactory;
 	private ClientMessageSender sender;
 
-	private ChannelFuture future;
-	
-	private InetSocketAddress address;
-	
-	private MiiConnectManager cm;
+	private Set<InetSocketAddress> addressSet = new HashSet<>();
+
+	private Map<String, Object> cmMap = new HashMap<String, Object>();
+
+	private Map<String, Object> futureMap = new HashMap<String, Object>();
+
+	private static Map<String, Object> channelMap = new HashMap<>();
 	
 	public MiiClient(String deviceGroup){
 		this(deviceGroup, 0);
@@ -68,35 +76,36 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 	/**
 	 * 连接服务端
 	 */
-	public ChannelFuture connect(String serverHost, int serverPort){
-		try {
-		    workerGroup = new NioEventLoopGroup(nThread);
-		    Bootstrap boot = new Bootstrap()
-		    		.group(workerGroup)
-		    		.channel(NioSocketChannel.class)
-		    		.handler(this);
-		    address = InetSocketAddress.createUnresolved(serverHost, serverPort);
-		    
-		    cm = new MiiConnectManager(boot, address){
-				@Override
-				public void afterSuccess() {
-					sender().registerGroup(serverHost, deviceGroup);
-				}
-		    };
-		    future = cm.connect();
-		    
-		} catch (Exception e) {
-			log.error(String.format("%s:%s连接失败!", serverHost, serverPort), e);
-		}
+	public ChannelFuture connect(String serverHost, int serverPort) throws InterruptedException {
+		EventLoopGroup workerGroup = new NioEventLoopGroup(nThread);
+		workerGroupMap.put(serverHost, workerGroup);
+		Bootstrap boot = new Bootstrap()
+				.group(workerGroup)
+				.channel(NioSocketChannel.class)
+				.handler(this);
+		InetSocketAddress address = InetSocketAddress.createUnresolved(serverHost, serverPort);
+		addressSet.add(address);
+		MiiConnectManager cm = new MiiConnectManager(boot, address){
+			@Override
+			public void afterSuccess() {
+				sender().registerGroup(serverHost, deviceGroup);
+			}
+		};
+		cmMap.put(serverHost, cm);
+		ChannelFuture future = cm.connect().sync();
+		futureMap.put(serverHost, future);
 		return future;
     }
 	
 	/**
 	 * 停止服务
 	 */
-	public ChannelFuture disconnect(){
+	public ChannelFuture disconnect(String serverHost){
+		MiiConnectManager cm = (MiiConnectManager) cmMap.get(serverHost);
 		cm.stop();
+		ChannelFuture future = (ChannelFuture) futureMap.get(serverHost);
 		ChannelFuture f = future.channel().closeFuture();
+		EventLoopGroup workerGroup = (EventLoopGroup) workerGroupMap.get(serverHost);
 		workerGroup.shutdownGracefully();
 		future = null;
 		return f;
@@ -105,26 +114,33 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
 		ChannelPipeline p = ch.pipeline();
-		MiiChannel channel = new MiiDeviceChannel(address, ch);
-		this.sender = new MiiClientMessageSender(channel);
-		p.addLast(cm);
-		p.addLast(new IdleStateHandler(0, 0, IDLE_TIMEOUT, TimeUnit.SECONDS));
-		p.addLast(new ChannelInboundHandlerAdapter(){
+		for(InetSocketAddress address : addressSet){
+			MiiChannel channel = new MiiDeviceChannel(address, ch);
+			MiiChannel isExist = (MiiChannel) channelMap.get(channel.name());
+			if(JudgeEmptyUtils.isEmpty(isExist)){
+				this.channelMap.put(channel.name(), channel);
+				this.sender = new MiiClientMessageSender(channel);
+				MiiConnectManager cm = (MiiConnectManager) cmMap.get(channel.name());
+				p.addLast(cm);
+				p.addLast(new IdleStateHandler(0, 0, IDLE_TIMEOUT, TimeUnit.SECONDS));
+				p.addLast(new ChannelInboundHandlerAdapter(){
 
-			@Override
-			public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-				if(evt instanceof IdleStateEvent){
-					sender().registerGroup(channel.name(), deviceGroup);
-				} else {
-					super.userEventTriggered(ctx, evt);
-				}
+					@Override
+					public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+						if(evt instanceof IdleStateEvent){
+							sender().registerGroup(channel.name(), deviceGroup);
+						} else {
+							super.userEventTriggered(ctx, evt);
+						}
+					}
+
+				});
+				p.addLast(new MiiMessageEncoder());
+				p.addLast(new MiiBasedFrameDecoder());
+				p.addLast(new MiiMessageDecoder(channel, dataFactory));
+				p.addLast(handler);
 			}
-			
-		});
-		p.addLast(new MiiMessageEncoder());
-		p.addLast(new MiiBasedFrameDecoder());
-		p.addLast(new MiiMessageDecoder(channel, dataFactory));
-		p.addLast(handler);
+		}
 	}
 		
 	public ClientMessageSender sender(){
