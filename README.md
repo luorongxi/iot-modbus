@@ -114,5 +114,7 @@
 
 #### 欢迎加入交流群
 
-- QQ群
+- 微信公众号 
+![输入图片说明](doc/picture/TF%EF%BC%88%E8%85%BE%E9%A3%9E%EF%BC%89%E5%BC%80%E6%BA%90%E5%85%AC%E4%BC%97%E5%8F%B7%E4%BA%8C%E7%BB%B4%E7%A0%81.png)
+- QQ技术交流群
 - ![输入图片说明](doc/picture/9%E7%89%A9%E8%81%94%E7%BD%91%E9%80%9A%E8%AE%AF%E5%8D%8F%E8%AE%AE%EF%BC%88iot-modbus%EF%BC%89%E4%BA%A4%E6%B5%81%E7%BE%A4%E7%BE%A4%E4%BA%8C%E7%BB%B4%E7%A0%81.png)
