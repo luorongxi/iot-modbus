@@ -16,10 +16,7 @@ import com.takeoff.iot.modbus.common.utils.JudgeEmptyUtils;
 import com.takeoff.iot.modbus.netty.channel.MiiChannel;
 import com.takeoff.iot.modbus.netty.data.factory.MiiClientDataFactory;
 import com.takeoff.iot.modbus.netty.device.MiiDeviceChannel;
-import com.takeoff.iot.modbus.netty.handle.MiiBasedFrameDecoder;
-import com.takeoff.iot.modbus.netty.handle.MiiListenerHandler;
-import com.takeoff.iot.modbus.netty.handle.MiiMessageDecoder;
-import com.takeoff.iot.modbus.netty.handle.MiiMessageEncoder;
+import com.takeoff.iot.modbus.netty.handle.*;
 import com.takeoff.iot.modbus.netty.listener.MiiListener;
 
 import io.netty.bootstrap.Bootstrap;
@@ -44,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MiiClient extends ChannelInitializer<SocketChannel> {
 
-	private static final int IDLE_TIMEOUT = 60;
+	private static final int IDLE_TIMEOUT = 30;
 
 	private Map<String, Object> workerGroupMap = new HashMap<String, Object>();
 
@@ -139,6 +136,7 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 				p.addLast(new MiiBasedFrameDecoder());
 				p.addLast(new MiiMessageDecoder(channel, dataFactory));
 				p.addLast(handler);
+				p.addLast(new MiiExceptionHandler());
 			}
 		}
 	}

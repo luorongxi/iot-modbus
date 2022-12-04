@@ -11,7 +11,7 @@ server:
 iot:
   netty: # netty通讯
     server:
-      open: false
+      open: true
       port: 4000
       thread: 10
     client:

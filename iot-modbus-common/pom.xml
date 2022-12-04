@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.takeoff.iot</groupId>
 		<artifactId>iot-modbus</artifactId>
-		<version>3.2.5-SNAPSHOT</version>
+		<version>3.2.6-SNAPSHOT</version>
 	</parent>
 	<artifactId>iot-modbus-common</artifactId>
 	<packaging>jar</packaging>
@@ -20,6 +20,10 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
         <dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>

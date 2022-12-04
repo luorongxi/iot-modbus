@@ -12,10 +12,7 @@ import com.takeoff.iot.modbus.common.message.MiiMessage;
 import com.takeoff.iot.modbus.netty.channel.MiiChannel;
 import com.takeoff.iot.modbus.netty.channel.MiiChannelGroup;
 import com.takeoff.iot.modbus.netty.data.factory.MiiServerDataFactory;
-import com.takeoff.iot.modbus.netty.handle.MiiBasedFrameDecoder;
-import com.takeoff.iot.modbus.netty.handle.MiiListenerHandler;
-import com.takeoff.iot.modbus.netty.handle.MiiMessageDecoder;
-import com.takeoff.iot.modbus.netty.handle.MiiMessageEncoder;
+import com.takeoff.iot.modbus.netty.handle.*;
 import com.takeoff.iot.modbus.netty.listener.MiiListener;
 import com.takeoff.iot.modbus.server.message.sender.MiiServerMessageSender;
 import com.takeoff.iot.modbus.server.message.sender.ServerMessageSender;
@@ -44,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MiiServer extends ChannelInitializer<SocketChannel> implements MiiControlCentre {
 	
-	private static final int IDLE_TIMEOUT = 60;
+	private static final int IDLE_TIMEOUT = 30;
 	
 	private EventLoopGroup bossGroup;
 	private EventLoopGroup workerGroup;
@@ -157,7 +154,7 @@ public class MiiServer extends ChannelInitializer<SocketChannel> implements MiiC
 		ChannelPipeline p = ch.pipeline();
 		MiiDeviceGroup group = new MiiDeviceChannel(ch);
 		add(group);
-		p.addLast(new IdleStateHandler(0, 0, IDLE_TIMEOUT * 3, TimeUnit.SECONDS));
+		p.addLast(new IdleStateHandler(0, 0, IDLE_TIMEOUT, TimeUnit.SECONDS));
 		p.addLast(new ChannelInboundHandlerAdapter(){
 			
 			@Override
@@ -173,6 +170,7 @@ public class MiiServer extends ChannelInitializer<SocketChannel> implements MiiC
 		p.addLast(new MiiBasedFrameDecoder());
 		p.addLast(new MiiMessageDecoder(group, dataFactory));
 		p.addLast(handler);
+		p.addLast(new MiiExceptionHandler());
 	}
 
 	@Override
