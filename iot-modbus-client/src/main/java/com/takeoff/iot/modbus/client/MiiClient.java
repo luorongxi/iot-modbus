@@ -12,6 +12,7 @@ import com.takeoff.iot.modbus.client.message.sender.ClientMessageSender;
 import com.takeoff.iot.modbus.client.message.sender.MiiClientMessageSender;
 import com.takeoff.iot.modbus.common.bytes.factory.MiiDataFactory;
 import com.takeoff.iot.modbus.common.message.MiiMessage;
+import com.takeoff.iot.modbus.common.utils.CacheUtils;
 import com.takeoff.iot.modbus.common.utils.JudgeEmptyUtils;
 import com.takeoff.iot.modbus.netty.channel.MiiChannel;
 import com.takeoff.iot.modbus.netty.data.factory.MiiClientDataFactory;
@@ -56,8 +57,6 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 	private Map<String, Object> cmMap = new HashMap<String, Object>();
 
 	private Map<String, Object> futureMap = new HashMap<String, Object>();
-
-	private static Map<String, Object> channelMap = new HashMap<>();
 	
 	public MiiClient(String deviceGroup){
 		this(deviceGroup, 0);
@@ -113,9 +112,8 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 		ChannelPipeline p = ch.pipeline();
 		for(InetSocketAddress address : addressSet){
 			MiiChannel channel = new MiiDeviceChannel(address, ch);
-			MiiChannel isExist = (MiiChannel) channelMap.get(channel.name());
+			MiiChannel isExist = (MiiChannel) CacheUtils.get(channel.name());
 			if(JudgeEmptyUtils.isEmpty(isExist)){
-				this.channelMap.put(channel.name(), channel);
 				this.sender = new MiiClientMessageSender(channel);
 				MiiConnectManager cm = (MiiConnectManager) cmMap.get(channel.name());
 				p.addLast(cm);

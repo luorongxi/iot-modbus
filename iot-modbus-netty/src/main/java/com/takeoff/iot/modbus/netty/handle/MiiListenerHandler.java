@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.takeoff.iot.modbus.common.entity.ChannelConnectData;
 import com.takeoff.iot.modbus.common.enums.DeviceConnectEnum;
+import com.takeoff.iot.modbus.common.utils.CacheUtils;
 import com.takeoff.iot.modbus.common.utils.JudgeEmptyUtils;
 import com.takeoff.iot.modbus.common.utils.SpringContextUtil;
 import com.takeoff.iot.modbus.netty.device.MiiControlCentre;
@@ -85,10 +86,13 @@ public class MiiListenerHandler extends SimpleChannelInboundHandler<MiiMessage> 
 			if(!JudgeEmptyUtils.isEmpty(connectServerData) && !JudgeEmptyUtils.isEmpty(getApplicationContext)){
 				getApplicationContext.publishEvent(connectServerData);
 			}
+			//删除缓存柜地址与通讯管道的绑定关系
+			String[] strArray = address.split(":");
+			CacheUtils.remove(strArray[0]);
 		}
 		//连接断开后的最后处理
-		ctx.pipeline().remove(this);
+		/*ctx.pipeline().remove(this);
 		ctx.deregister();
-		ctx.close();
+		ctx.close();*/
 	}
 }

@@ -1,5 +1,6 @@
 package com.takeoff.iot.modbus.client.message.sender;
 
+import com.takeoff.iot.modbus.common.utils.CacheUtils;
 import com.takeoff.iot.modbus.common.utils.JudgeEmptyUtils;
 import org.bouncycastle.util.encoders.Hex;
 
@@ -36,19 +37,17 @@ public class MiiClientMessageSender implements ClientMessageSender {
 					new MiiBytesFactorySubWrapper<Integer, Object>(BYTESFACTORY_SLOT, 0, 4)
 					,new MiiBytesFactorySubWrapper<String, Object>(new MiiStrings2BytesFactory(), 4, 5)
 			));
-
-	private static Map<String, Object> channelMap = new HashMap<>();
 	
 	public MiiClientMessageSender(){
 
 	}
 	
 	public MiiClientMessageSender(MiiChannel channel){
-		this.channelMap.put(channel.name(), channel);
+		CacheUtils.put(channel.name(), channel);
 	}
 
 	private <E> void sendMessage(MiiMessageFactory<E> factory, String ip, E... datas){
-		MiiChannel channel = (MiiChannel) channelMap.get(ip);
+		MiiChannel channel = (MiiChannel) CacheUtils.get(ip);
 		if(JudgeEmptyUtils.isEmpty(channel)){
 			log.info("未找到对应的通讯连接："+channel.name()+"，下发指令失败");
 		}else{
