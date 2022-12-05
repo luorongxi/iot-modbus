@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MiiServer extends ChannelInitializer<SocketChannel> implements MiiControlCentre {
 	
-	private static final int IDLE_TIMEOUT = 30;
+	private static final int IDLE_TIMEOUT = 60;
 	
 	private EventLoopGroup bossGroup;
 	private EventLoopGroup workerGroup;

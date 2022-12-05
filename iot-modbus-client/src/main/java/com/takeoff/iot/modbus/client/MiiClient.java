@@ -42,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MiiClient extends ChannelInitializer<SocketChannel> {
 
-	private static final int IDLE_TIMEOUT = 30;
+	private static final int IDLE_TIMEOUT = 60;
 
 	private Map<String, Object> workerGroupMap = new HashMap<String, Object>();
 
