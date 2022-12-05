@@ -42,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MiiClient extends ChannelInitializer<SocketChannel> {
 
-	private static final int IDLE_TIMEOUT = 60;
+	private static int IDLE_TIMEOUT = 60000;
 
 	private Map<String, Object> workerGroupMap = new HashMap<String, Object>();
 
@@ -59,12 +59,13 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 	private Map<String, Object> futureMap = new HashMap<String, Object>();
 	
 	public MiiClient(String deviceGroup){
-		this(deviceGroup, 0);
+		this(deviceGroup, 0, IDLE_TIMEOUT);
 	}
 	
-	public MiiClient(String deviceGroup,int nThread){
+	public MiiClient(String deviceGroup,int nThread, int heartBeatTime){
 		this.deviceGroup = deviceGroup;
 		this.nThread = nThread;
+		this.IDLE_TIMEOUT = heartBeatTime;
 		this.handler = new MiiListenerHandler();
 		this.dataFactory = new MiiClientDataFactory();
 	}
@@ -72,7 +73,7 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 	/**
 	 * 连接服务端
 	 */
-	public ChannelFuture connect(String serverHost, int serverPort) throws InterruptedException {
+	public ChannelFuture connect(String serverHost, int serverPort, int reconnectTime) throws InterruptedException {
 		EventLoopGroup workerGroup = new NioEventLoopGroup(nThread);
 		workerGroupMap.put(serverHost, workerGroup);
 		Bootstrap boot = new Bootstrap()
@@ -81,7 +82,7 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 				.handler(this);
 		InetSocketAddress address = InetSocketAddress.createUnresolved(serverHost, serverPort);
 		addressSet.add(address);
-		MiiConnectManager cm = new MiiConnectManager(boot, address){
+		MiiConnectManager cm = new MiiConnectManager(boot, address, reconnectTime){
 			@Override
 			public void afterSuccess() {
 				sender().registerGroup(serverHost, deviceGroup);
@@ -117,7 +118,7 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 				this.sender = new MiiClientMessageSender(channel);
 				MiiConnectManager cm = (MiiConnectManager) cmMap.get(channel.name());
 				p.addLast(cm);
-				p.addLast(new IdleStateHandler(0, 0, IDLE_TIMEOUT, TimeUnit.SECONDS));
+				p.addLast(new IdleStateHandler(0, 0, IDLE_TIMEOUT, TimeUnit.MILLISECONDS));
 				p.addLast(new ChannelInboundHandlerAdapter(){
 
 					@Override

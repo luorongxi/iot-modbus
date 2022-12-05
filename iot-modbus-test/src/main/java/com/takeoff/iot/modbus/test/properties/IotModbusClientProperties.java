@@ -38,4 +38,14 @@ public class IotModbusClientProperties {
      * 设备组编码
      */
     private String deviceGroup;
+
+    /**
+     * 心跳发送间隔时间(单位：毫秒)
+     */
+    private Integer heartBeatTime;
+
+    /**
+     * 断线重连间隔时间(单位：毫秒)
+     */
+    private Integer reconnectTime;
 }

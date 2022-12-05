@@ -14,12 +14,15 @@ iot:
       open: false
       port: 4000
       thread: 10
+      heart-beat-time: 30000 #心跳发送间隔时间(单位：毫秒)
     client:
       open: true
       ips: 127.0.0.1,192.168.1.198 #设置读写器IP,多个使用英文逗号隔开
       port: 5000
       thread: 10
       device-group: 1
+      heart-beat-time: 30000 #心跳发送间隔时间(单位：毫秒)
+      reconnect-time: 10000 #断线重连间隔时间(单位：毫秒)
   serialport: #串口通讯
     open: false
     port: COM1

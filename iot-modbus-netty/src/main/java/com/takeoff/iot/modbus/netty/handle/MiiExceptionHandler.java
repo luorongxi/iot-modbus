@@ -15,17 +15,23 @@ import lombok.extern.slf4j.Slf4j;
 public class MiiExceptionHandler extends ChannelDuplexHandler {
 	
 	private ApplicationContext getApplicationContext = SpringContextUtil.applicationContext;
+
+	/**
+	 * 处理业务异常次数
+	 */
+	private int exception;
 	
 	public MiiExceptionHandler(){
 		
 	}
 
 	@Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception { 
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		exception++;
     	Channel channel = ctx.channel();
     	if(!JudgeEmptyUtils.isEmpty(channel.remoteAddress())){
     		String address = channel.remoteAddress().toString().substring(1,channel.remoteAddress().toString().length());
-        	ChannelConnectData connectServerData = new ChannelConnectData(this, DeviceConnectEnum.ABNORMAL.getKey(), address);
+        	ChannelConnectData connectServerData = new ChannelConnectData(this, DeviceConnectEnum.ABNORMAL.getKey(), address, exception);
             if(!JudgeEmptyUtils.isEmpty(connectServerData) && !JudgeEmptyUtils.isEmpty(getApplicationContext)){
             	getApplicationContext.publishEvent(connectServerData);
             }

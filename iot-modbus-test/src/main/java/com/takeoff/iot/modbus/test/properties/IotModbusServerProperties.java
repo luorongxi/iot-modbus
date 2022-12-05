@@ -29,4 +29,10 @@ public class IotModbusServerProperties {
 	 * Socket服务执行线程数
 	 */
     private Integer thread;
+
+	/**
+	 * 心跳发送间隔时间(单位：毫秒)
+	 */
+	private Integer heartBeatTime;
+
 }

@@ -31,6 +31,16 @@ public class MiiListenerHandler extends SimpleChannelInboundHandler<MiiMessage> 
 	private Map<Integer, MiiListener> listeners = new ConcurrentHashMap<>();
 	private MiiControlCentre centre;
 	private ApplicationContext getApplicationContext = SpringContextUtil.applicationContext;
+
+	/**
+	 * 连接成功次数
+	 */
+	private int onLine;
+
+	/**
+	 * 连接断开次数
+	 */
+	private int breakOff;
 	
 	public MiiListenerHandler(){
 	}
@@ -67,10 +77,11 @@ public class MiiListenerHandler extends SimpleChannelInboundHandler<MiiMessage> 
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+		onLine++;
 		Channel channel = ctx.channel();
 		if(!JudgeEmptyUtils.isEmpty(channel.remoteAddress())){
 			String address = channel.remoteAddress().toString().substring(1,channel.remoteAddress().toString().length());
-			ChannelConnectData connectServerData = new ChannelConnectData(this, DeviceConnectEnum.ON_LINE.getKey(), address);
+			ChannelConnectData connectServerData = new ChannelConnectData(this, DeviceConnectEnum.ON_LINE.getKey(), address, onLine);
 			if(!JudgeEmptyUtils.isEmpty(connectServerData) && !JudgeEmptyUtils.isEmpty(getApplicationContext)){
 				getApplicationContext.publishEvent(connectServerData);
 			}
@@ -79,10 +90,11 @@ public class MiiListenerHandler extends SimpleChannelInboundHandler<MiiMessage> 
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+		breakOff++;
 		Channel channel = ctx.channel();
 		if(!JudgeEmptyUtils.isEmpty(channel.remoteAddress())){
 			String address = channel.remoteAddress().toString().substring(1,channel.remoteAddress().toString().length());
-			ChannelConnectData connectServerData = new ChannelConnectData(this, DeviceConnectEnum.BREAK_OFF.getKey(), address);
+			ChannelConnectData connectServerData = new ChannelConnectData(this, DeviceConnectEnum.BREAK_OFF.getKey(), address, breakOff);
 			if(!JudgeEmptyUtils.isEmpty(connectServerData) && !JudgeEmptyUtils.isEmpty(getApplicationContext)){
 				getApplicationContext.publishEvent(connectServerData);
 			}
@@ -91,8 +103,8 @@ public class MiiListenerHandler extends SimpleChannelInboundHandler<MiiMessage> 
 			CacheUtils.remove(strArray[0]);
 		}
 		//连接断开后的最后处理
-		/*ctx.pipeline().remove(this);
+		ctx.pipeline().remove(this);
 		ctx.deregister();
-		ctx.close();*/
+		ctx.close();
 	}
 }

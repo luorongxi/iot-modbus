@@ -48,7 +48,7 @@ public class IotModbusServerConfig implements ApplicationRunner {
 	@Override
     public void run(ApplicationArguments args) throws Exception {
 		if(iotModbusServerProperties.getOpen()){
-			miiServer = new MiiServer(iotModbusServerProperties.getPort(), iotModbusServerProperties.getThread());
+			miiServer = new MiiServer(iotModbusServerProperties.getPort(), iotModbusServerProperties.getThread(), iotModbusServerProperties.getHeartBeatTime());
 			miiServer.addListener(MiiMessage.BACKLIGHT, backLightListener);
 			miiServer.addListener(MiiMessage.LOCK, lockListener);
 			miiServer.addListener(MiiMessage.CARD, cardListener);

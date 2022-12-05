@@ -21,12 +21,12 @@ public class ChannelConnectData extends ApplicationEvent {
 	
 	private String connectMsg = null;
 	
-	public ChannelConnectData(Object source, Integer deviceConnect, String deviceAddress) {
+	public ChannelConnectData(Object source, Integer deviceConnect, String deviceAddress, int count) {
 		super(source);
 		if(!JudgeEmptyUtils.isEmpty(deviceAddress)){
 			this.deviceConnect = deviceConnect;
 			this.deviceAddress = deviceAddress;
-			this.connectMsg = "设备："+ deviceAddress + DeviceConnectEnum.getName(deviceConnect);
+			this.connectMsg = "设备："+ deviceAddress + DeviceConnectEnum.getName(deviceConnect) + "，累计："+ count + "次";
 		}
 	}
 

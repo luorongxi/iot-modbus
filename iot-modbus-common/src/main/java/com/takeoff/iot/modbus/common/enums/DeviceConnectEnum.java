@@ -5,6 +5,7 @@ public enum DeviceConnectEnum {
 	ON_LINE(0, "已连接"),
 	BREAK_OFF(1, "已断开"),
 	ABNORMAL(2, "处理业务异常"),
+	BREAK_RECONNECT(3, "断线重连"),
 	;
 	
 	// 成员变量

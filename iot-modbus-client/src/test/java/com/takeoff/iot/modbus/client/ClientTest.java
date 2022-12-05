@@ -21,7 +21,7 @@ public class ClientTest implements MiiListener {
 	@BeforeClass
 	public static void testStart() throws InterruptedException {
 		client = new MiiClient(GROUPNAME);
-		client.connect(IP, 5000);
+		client.connect(IP, 5000, 5000);
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {

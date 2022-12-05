@@ -40,8 +40,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class MiiServer extends ChannelInitializer<SocketChannel> implements MiiControlCentre {
-	
-	private static final int IDLE_TIMEOUT = 60;
+
+	private static int IDLE_TIMEOUT = 60000;
 	
 	private EventLoopGroup bossGroup;
 	private EventLoopGroup workerGroup;
@@ -58,7 +58,7 @@ public class MiiServer extends ChannelInitializer<SocketChannel> implements MiiC
 	 * @param port 服务端口
 	 */
 	public MiiServer(int port){
-		this(port, 0);
+		this(port, 0, IDLE_TIMEOUT);
 	}
 	
 	/**
@@ -66,7 +66,7 @@ public class MiiServer extends ChannelInitializer<SocketChannel> implements MiiC
 	 * @param port 服务端口
 	 * @param nThread 执行线程池线程数
 	 */
-	public MiiServer(int port, int nThread){
+	public MiiServer(int port, int nThread, int heartBeatTime){
 		this.port = port;
 		this.nThread = nThread;
 		this.groups = new MiiChannelGroup();
@@ -154,7 +154,7 @@ public class MiiServer extends ChannelInitializer<SocketChannel> implements MiiC
 		ChannelPipeline p = ch.pipeline();
 		MiiDeviceGroup group = new MiiDeviceChannel(ch);
 		add(group);
-		p.addLast(new IdleStateHandler(0, 0, IDLE_TIMEOUT, TimeUnit.SECONDS));
+		p.addLast(new IdleStateHandler(0, 0, IDLE_TIMEOUT, TimeUnit.MILLISECONDS));
 		p.addLast(new ChannelInboundHandlerAdapter(){
 			
 			@Override
