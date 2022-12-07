@@ -50,7 +50,6 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 	private int nThread;
 	private MiiListenerHandler handler;
 	private MiiDataFactory dataFactory;
-	private ClientMessageSender sender;
 
 	private Set<InetSocketAddress> addressSet = new HashSet<>();
 
@@ -73,7 +72,7 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 	/**
 	 * 连接服务端
 	 */
-	public ChannelFuture connect(String serverHost, int serverPort, int reconnectTime) throws InterruptedException {
+	public ChannelFuture connect(String serverHost, int serverPort, int reconnectTime) throws Exception {
 		EventLoopGroup workerGroup = new NioEventLoopGroup(nThread);
 		workerGroupMap.put(serverHost, workerGroup);
 		Bootstrap boot = new Bootstrap()
@@ -89,7 +88,7 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 			}
 		};
 		cmMap.put(serverHost, cm);
-		ChannelFuture future = cm.connect().sync();
+		ChannelFuture future = cm.connect();
 		futureMap.put(serverHost, future);
 		return future;
     }
@@ -99,7 +98,6 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 	 */
 	public ChannelFuture disconnect(String serverHost){
 		MiiConnectManager cm = (MiiConnectManager) cmMap.get(serverHost);
-		cm.stop();
 		ChannelFuture future = (ChannelFuture) futureMap.get(serverHost);
 		ChannelFuture f = future.channel().closeFuture();
 		EventLoopGroup workerGroup = (EventLoopGroup) workerGroupMap.get(serverHost);
@@ -115,7 +113,6 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 			MiiChannel channel = new MiiDeviceChannel(address, ch);
 			MiiChannel isExist = (MiiChannel) CacheUtils.get(channel.name());
 			if(JudgeEmptyUtils.isEmpty(isExist)){
-				this.sender = new MiiClientMessageSender(channel);
 				MiiConnectManager cm = (MiiConnectManager) cmMap.get(channel.name());
 				p.addLast(cm);
 				p.addLast(new IdleStateHandler(0, 0, IDLE_TIMEOUT, TimeUnit.MILLISECONDS));
@@ -141,7 +138,7 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 	}
 		
 	public ClientMessageSender sender(){
-		return sender;
+		return new MiiClientMessageSender();
 	}
 	
 	/**

@@ -21,8 +21,8 @@ iot:
       port: 5000
       thread: 10
       device-group: 1
-      heart-beat-time: 30000 #心跳发送间隔时间(单位：毫秒)
-      reconnect-time: 10000 #断线重连间隔时间(单位：毫秒)
+      heart-beat-time: 3000 #心跳发送间隔时间(单位：毫秒)
+      reconnect-time: 5000 #断线重连间隔时间(单位：毫秒)
   serialport: #串口通讯
     open: false
     port: COM1

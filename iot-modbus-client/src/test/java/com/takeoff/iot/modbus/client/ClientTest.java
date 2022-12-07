@@ -19,7 +19,7 @@ public class ClientTest implements MiiListener {
 	private static MiiClient client;
 	
 	@BeforeClass
-	public static void testStart() throws InterruptedException {
+	public static void testStart() throws Exception {
 		client = new MiiClient(GROUPNAME);
 		client.connect(IP, 5000, 5000);
 		try {

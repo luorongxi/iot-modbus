@@ -49,7 +49,7 @@ public class MiiClientMessageSender implements ClientMessageSender {
 	private <E> void sendMessage(MiiMessageFactory<E> factory, String ip, E... datas){
 		MiiChannel channel = (MiiChannel) CacheUtils.get(ip);
 		if(JudgeEmptyUtils.isEmpty(channel)){
-			log.info("未找到对应的通讯连接："+channel.name()+"，下发指令失败");
+			log.info("未找到对应的通讯连接："+ ip +"，下发指令失败");
 		}else{
 			MiiMessage message = factory.buildMessage(channel.name(), datas);
 			log.info("待上报指令数据："+ Hex.toHexString(message.toBytes()));

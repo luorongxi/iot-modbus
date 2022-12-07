@@ -1,12 +1,19 @@
 package com.takeoff.iot.modbus.client.connect;
 
+import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import com.takeoff.iot.modbus.client.message.sender.MiiClientMessageSender;
 import com.takeoff.iot.modbus.common.entity.ChannelConnectData;
 import com.takeoff.iot.modbus.common.enums.DeviceConnectEnum;
+import com.takeoff.iot.modbus.common.utils.CacheUtils;
 import com.takeoff.iot.modbus.common.utils.JudgeEmptyUtils;
 import com.takeoff.iot.modbus.common.utils.SpringContextUtil;
+import com.takeoff.iot.modbus.netty.channel.MiiChannel;
+import com.takeoff.iot.modbus.netty.device.MiiDeviceChannel;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -14,6 +21,8 @@ import io.netty.util.HashedWheelTimer;
 import io.netty.util.Timeout;
 import io.netty.util.Timer;
 import io.netty.util.TimerTask;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -21,6 +30,7 @@ import org.springframework.context.ApplicationContext;
  * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
+@Slf4j
 @Sharable
 public abstract class MiiConnectManager extends ChannelInboundHandlerAdapter implements TimerTask {
 
@@ -28,80 +38,118 @@ public abstract class MiiConnectManager extends ChannelInboundHandlerAdapter imp
 
 	private static int TIMEOUT = 5000;
 
-	private static final int STATE_START = 1,STATE_STOP = 0;
-
 	private final Bootstrap boot;
-	private final SocketAddress address;
-	private final Timer timer;
-		
-	private volatile int state = STATE_START;
+	private SocketAddress address;
+	private Timer timer;
+	private int state;
+
+	/**
+	 * 连接成功次数
+	 */
+	private Map<String, Integer> onLineMap = new HashMap<>();
+
+	/**
+	 * 连接断开次数
+	 */
+	private Map<String, Integer> breakOffMap = new HashMap<>();
 
 	/**
 	 * 重连失败次数
 	 */
-	private int retries;
+	private Map<String, Integer> retriesMap = new HashMap<>();
 	
-	public MiiConnectManager(Bootstrap boot,SocketAddress address, int reconnectTime){
+	public MiiConnectManager(Bootstrap boot, SocketAddress address, int reconnectTime){
 		this.boot = boot;
 		this.address = address;
 		this.TIMEOUT = reconnectTime;
 		this.timer = new HashedWheelTimer();
 	}
 	
-	public void start(){
-		state = STATE_START;
-	}
-	
-	public void stop(){
-		state = STATE_STOP;
-	}
-	
-	public ChannelFuture connect(){
-		ChannelFuture future;
-		
-		synchronized (boot) {		
-			future = boot.connect(address);
-		}
-		
-		//连接失败触发Channel失效事件
-		future.addListener((ChannelFutureListener) listener -> {
-			if(!listener.isSuccess()){
-				listener.channel().pipeline().fireChannelInactive();
-			} else {
-				afterSuccess();
+	public ChannelFuture connect() throws Exception {
+		ChannelFuture future = boot.connect(address);
+		future.addListener(new ChannelFutureListener() {
+			@Override
+			public void operationComplete(ChannelFuture future) throws Exception {
+				if (!future.isSuccess()) {
+					//连接失败，重连服务端，重连交给后端线程执行
+					future.channel().eventLoop().schedule(() -> {
+						Integer retries = (retriesMap.isEmpty() ? 0 : retriesMap.get(address.toString())) + 1;
+						retriesMap.put(address.toString(), retries);
+						if(!JudgeEmptyUtils.isEmpty(address)){
+							ChannelConnectData connectServerData = new ChannelConnectData(this, DeviceConnectEnum.BREAK_RECONNECT.getKey(), address.toString(), retries);
+							if(!JudgeEmptyUtils.isEmpty(connectServerData) && !JudgeEmptyUtils.isEmpty(getApplicationContext)){
+								getApplicationContext.publishEvent(connectServerData);
+							}
+						}
+						try {
+							connect();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}, TIMEOUT, TimeUnit.MILLISECONDS);
+				} else {
+					//服务端连接成功
+					Integer onLine = (onLineMap.isEmpty() ? 0 : onLineMap.get(address.toString())) + 1;
+					onLineMap.put(address.toString(), onLine);
+					if(!JudgeEmptyUtils.isEmpty(address)){
+						ChannelConnectData connectServerData = new ChannelConnectData(this, DeviceConnectEnum.ON_LINE.getKey(), address.toString(), onLine);
+						if(!JudgeEmptyUtils.isEmpty(connectServerData) && !JudgeEmptyUtils.isEmpty(getApplicationContext)){
+							getApplicationContext.publishEvent(connectServerData);
+						}
+					}
+				}
 			}
 		});
+		//对通道关闭进行监听
+		future.channel().closeFuture().sync();
 		return future;
 	}
-	
+
 	@Override
 	public void run(Timeout timeout) throws Exception {
-		connect();
+		ChannelFuture future = connect();
 	}
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		//成功后，重连失败次数清零
-		retries = 0;
+		Channel channel = ctx.channel();
 		ctx.fireChannelActive();
+		if(!JudgeEmptyUtils.isEmpty(channel.remoteAddress())){
+			String address = channel.remoteAddress().toString().substring(1,channel.remoteAddress().toString().length());
+			retriesMap.put(address.toString(), 0);
+			//将柜地址与通讯管道的绑定关系写入缓存
+			MiiChannel miiChannel = new MiiDeviceChannel(channel);
+			CacheUtils.put(miiChannel.name(), miiChannel);
+		}
 	}
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-		retries++;
+		ctx.fireChannelInactive();
 		Channel channel = ctx.channel();
-		if(!JudgeEmptyUtils.isEmpty(channel.remoteAddress())){
+		if(!JudgeEmptyUtils.isEmpty(channel) && !JudgeEmptyUtils.isEmpty(channel.remoteAddress())){
 			String address = channel.remoteAddress().toString().substring(1,channel.remoteAddress().toString().length());
-			ChannelConnectData connectServerData = new ChannelConnectData(this, DeviceConnectEnum.BREAK_RECONNECT.getKey(), address, retries);
+			Integer breakOff = (breakOffMap.isEmpty() || JudgeEmptyUtils.isEmpty(breakOffMap.get(address)) ? 0 : breakOffMap.get(address)) + 1;
+			breakOffMap.put(address, breakOff);
+			ChannelConnectData connectServerData = new ChannelConnectData(this, DeviceConnectEnum.BREAK_OFF.getKey(), address, breakOff);
 			if(!JudgeEmptyUtils.isEmpty(connectServerData) && !JudgeEmptyUtils.isEmpty(getApplicationContext)){
 				getApplicationContext.publishEvent(connectServerData);
 			}
+			//将通讯管道的绑定关系从缓存中删除
+			MiiChannel miiChannel = new MiiDeviceChannel(channel);
+			MiiChannel isExist = (MiiChannel) CacheUtils.get(miiChannel.name());
+			if(!JudgeEmptyUtils.isEmpty(isExist)){
+				CacheUtils.remove(miiChannel.name());
+				timer.newTimeout(this, TIMEOUT, TimeUnit.MILLISECONDS);
+			}
+			//连接断开后的最后处理
+			ctx.pipeline().remove(ctx.handler());
+			ctx.deregister();
+			ctx.close();
 		}
-		if(state == STATE_START){
-			timer.newTimeout(this, TIMEOUT, TimeUnit.MILLISECONDS);
-		}
-		ctx.fireChannelInactive();
+
 	}
-	
+
 	public abstract void afterSuccess();
 }
