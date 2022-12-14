@@ -11,7 +11,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8080/iot-modbus-test/test/openlock/1/1",
+					"raw": "http://127.0.0.1:8080/iot-modbus-test/test/openlock/192.168.1.198/1",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -24,7 +24,7 @@
 						"iot-modbus-test",
 						"test",
 						"openlock",
-						"1",
+						"192.168.1.198",
 						"1"
 					]
 				},
@@ -39,7 +39,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"deviceGroup\":\"1\",\r\n    \"device\":1,\r\n    \"lockNo1\":1,\r\n    \"lockStatus1\":0,\r\n    \"lockNo2\":2,\r\n    \"lockStatus2\":1\r\n}",
+					"raw": "{\r\n    \"deviceGroup\":\"192.168.1.198\",\r\n    \"device\":1,\r\n    \"lockNo1\":1,\r\n    \"lockStatus1\":0,\r\n    \"lockNo2\":2,\r\n    \"lockStatus2\":1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -127,7 +127,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n    {\r\n        \"taskId\": \"0f6dd8b322a6a94c8931b6d5c66fae4e\",\r\n        \"showType\": \"5\",\r\n        \"title\": \"2柜4层1槽\",\r\n        \"deviceGroup\": \"1\",\r\n        \"device\": \"2\",\r\n        \"shelf\": 4,\r\n        \"slot\": 1,\r\n        \"code\": \"NNSE0017006-8\",\r\n        \"name\": \"同种骨植入材料\",\r\n        \"factory\": \"山西奥瑞生物材料有限公司\",\r\n        \"spec\": \"松质骨块40*20*10\",\r\n        \"unit\": \"克\",\r\n        \"stock\": 4,\r\n        \"quantity\": 1\r\n    },\r\n    {\r\n        \"taskId\": \"7a73fc55b5c30872a34f2d33b5b51689\",\r\n        \"showType\": \"5\",\r\n        \"title\": \"2柜4层2槽\",\r\n        \"deviceGroup\": \"1\",\r\n        \"device\": \"2\",\r\n        \"shelf\": 4,\r\n        \"slot\": 2,\r\n        \"code\": \"NNSE0017006-7\",\r\n        \"name\": \"同种骨植入材料\",\r\n        \"factory\": \"山西奥瑞生物材料有限公司\",\r\n        \"spec\": \"骨关节附韧带 L260(11g)\",\r\n        \"unit\": \"克\",\r\n        \"stock\": 4,\r\n        \"quantity\": 5\r\n    },\r\n    {\r\n        \"taskId\": \"dbcaa8da2543b229372ea0dedd2ab678\",\r\n        \"showType\": \"6\",\r\n        \"title\": \"2柜4层3槽\",\r\n        \"deviceGroup\": \"1\",\r\n        \"device\": \"2\",\r\n        \"shelf\": 4,\r\n        \"slot\": 3,\r\n        \"code\": \"NNSE0035492\",\r\n        \"name\": \"外周自膨式支架系统\",\r\n        \"factory\": \"ev3, Inc.\",\r\n        \"spec\": \"PRP35-08-060-120（未报价）\",\r\n        \"unit\": \"套\",\r\n        \"stock\": 8,\r\n        \"quantity\": 10\r\n    }\r\n]",
+					"raw": "[\r\n    {\r\n        \"taskId\": \"0f6dd8b322a6a94c8931b6d5c66fae4e\",\r\n        \"showType\": \"5\",\r\n        \"title\": \"2柜4层1槽\",\r\n        \"deviceIp\": \"192.168.1.198\",\r\n        \"device\": \"2\",\r\n        \"shelf\": 4,\r\n        \"slot\": 1,\r\n        \"code\": \"NNSE0017006-8\",\r\n        \"name\": \"同种骨植入材料\",\r\n        \"factory\": \"山西奥瑞生物材料有限公司\",\r\n        \"spec\": \"松质骨块40*20*10\",\r\n        \"unit\": \"克\",\r\n        \"stock\": 4,\r\n        \"quantity\": 1\r\n    },\r\n    {\r\n        \"taskId\": \"7a73fc55b5c30872a34f2d33b5b51689\",\r\n        \"showType\": \"5\",\r\n        \"title\": \"2柜4层2槽\",\r\n        \"deviceIp\": \"192.168.1.198\",\r\n        \"device\": \"2\",\r\n        \"shelf\": 4,\r\n        \"slot\": 2,\r\n        \"code\": \"NNSE0017006-7\",\r\n        \"name\": \"同种骨植入材料\",\r\n        \"factory\": \"山西奥瑞生物材料有限公司\",\r\n        \"spec\": \"骨关节附韧带 L260(11g)\",\r\n        \"unit\": \"克\",\r\n        \"stock\": 4,\r\n        \"quantity\": 5\r\n    },\r\n    {\r\n        \"taskId\": \"dbcaa8da2543b229372ea0dedd2ab678\",\r\n        \"showType\": \"6\",\r\n        \"title\": \"2柜4层3槽\",\r\n        \"deviceIp\": \"192.168.1.198\",\r\n        \"device\": \"2\",\r\n        \"shelf\": 4,\r\n        \"slot\": 3,\r\n        \"code\": \"NNSE0035492\",\r\n        \"name\": \"外周自膨式支架系统\",\r\n        \"factory\": \"ev3, Inc.\",\r\n        \"spec\": \"PRP35-08-060-120（未报价）\",\r\n        \"unit\": \"套\",\r\n        \"stock\": 8,\r\n        \"quantity\": 10\r\n    }\r\n]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -161,7 +161,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"deviceGroup\": \"1\",\r\n    \"device\": \"2\",\r\n    \"shelf\": 4,\r\n    \"slot\": 1,\r\n    \"alarmTime\": 500,\r\n    \"lampColorDataList\": [\r\n        {\r\n            \"tyte\": 0,\r\n            \"onOff\": 1,\r\n            \"onTime\": 500,\r\n            \"offTime\": 500\r\n        },\r\n        {\r\n            \"tyte\": 1,\r\n            \"onOff\": 1,\r\n            \"onTime\": 500,\r\n            \"offTime\": 500\r\n        },\r\n        {\r\n            \"tyte\": 2,\r\n            \"onOff\": 1,\r\n            \"onTime\": 500,\r\n            \"offTime\": 500\r\n        },\r\n        {\r\n            \"tyte\": 3,\r\n            \"onOff\": 1,\r\n            \"onTime\": 500,\r\n            \"offTime\": 500\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"deviceIp\": \"192.168.1.198\",\r\n    \"device\": \"2\",\r\n    \"shelf\": 4,\r\n    \"slot\": 1,\r\n    \"alarmTime\": 500,\r\n    \"lampColorDataList\": [\r\n        {\r\n            \"tyte\": 0,\r\n            \"onOff\": 1,\r\n            \"onTime\": 500,\r\n            \"offTime\": 500\r\n        },\r\n        {\r\n            \"tyte\": 1,\r\n            \"onOff\": 1,\r\n            \"onTime\": 500,\r\n            \"offTime\": 500\r\n        },\r\n        {\r\n            \"tyte\": 2,\r\n            \"onOff\": 1,\r\n            \"onTime\": 500,\r\n            \"offTime\": 500\r\n        },\r\n        {\r\n            \"tyte\": 3,\r\n            \"onOff\": 1,\r\n            \"onTime\": 500,\r\n            \"offTime\": 500\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -195,7 +195,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n    {\r\n        \"ip\": \"127.0.0.1\",\r\n        \"device\": \"1\",\r\n        \"status\": \"0\"\r\n    },\r\n    {\r\n        \"ip\": \"192.168.1.157\",\r\n        \"device\": \"2\",\r\n        \"status\": \"1\"\r\n    }\r\n]",
+					"raw": "[\r\n    {\r\n        \"ip\": \"127.0.0.1\",\r\n        \"device\": \"1\",\r\n        \"status\": \"0\"\r\n    },\r\n    {\r\n        \"ip\": \"192.168.1.198\",\r\n        \"device\": \"2\",\r\n        \"status\": \"1\"\r\n    }\r\n]",
 					"options": {
 						"raw": {
 							"language": "json"

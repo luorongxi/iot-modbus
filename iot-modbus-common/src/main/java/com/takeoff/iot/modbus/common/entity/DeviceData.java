@@ -6,9 +6,9 @@ import lombok.Data;
 public class DeviceData {
 
     /**
-     * 设备组编码
+     * 设备IP
      */
-    private String deviceGroup;
+    private String deviceIp;
 
     /**
      * 设备号

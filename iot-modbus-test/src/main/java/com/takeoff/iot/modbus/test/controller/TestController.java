@@ -45,7 +45,7 @@ public class TestController {
 
     /**
      * 发送控制单锁指令
-     * @param deviceGroup
+     * @param deviceGroup（串口通信为：柜体组编码；网口通信为：设备IP）
      * @param device
      * @return
      */
@@ -61,7 +61,7 @@ public class TestController {
 
     /**
      * 发送控制多开锁指令
-     * @param map
+     * @param map （deviceGroup 串口通信为：柜体组编码；网口通信为：设备IP）
      * @return
      */
     @RequestMapping("/openmultilock")
@@ -82,7 +82,7 @@ public class TestController {
 
     /**
      * 发送设置扫码模式指令
-     * @param deviceGroup
+     * @param deviceGroup （串口通信为：柜体组编码；网口通信为：设备IP）
      * @param device
      * @return
      */
@@ -98,7 +98,7 @@ public class TestController {
 
     /**
      * 发送背光灯指令
-     * @param deviceGroup
+     * @param deviceGroup （串口通信为：柜体组编码；网口通信为：设备IP）
      * @param device
      * @return
      */
@@ -114,17 +114,17 @@ public class TestController {
 
     /**
      * 指静脉注册
-     * @param cabinetGroup
+     * @param deviceGroup （串口通信为：柜体组编码；网口通信为：设备IP）
      * @param cabinet
      * @param fingerId
      * @return
      */
-    @RequestMapping("/registerfinger/{cabinetGroup}/{cabinet}/{fingerId}")
-    public R registerfinger(@PathVariable("cabinetGroup") String cabinetGroup, @PathVariable("cabinet") Integer cabinet, @PathVariable("fingerId") Integer fingerId) {
+    @RequestMapping("/registerfinger/{deviceGroup}/{cabinet}/{fingerId}")
+    public R registerfinger(@PathVariable("deviceGroup") String deviceGroup, @PathVariable("cabinet") Integer cabinet, @PathVariable("fingerId") Integer fingerId) {
         if(iotModbusSerialportProperties.getOpen()){
-            serialportSendService.registerFinger(cabinetGroup, cabinet, fingerId);
+            serialportSendService.registerFinger(deviceGroup, cabinet, fingerId);
         }else{
-            iotModbusServerConfig.getMiiServer().sender().registerFinger(cabinetGroup, cabinet, fingerId);
+            iotModbusServerConfig.getMiiServer().sender().registerFinger(deviceGroup, cabinet, fingerId);
         }
         return R.ok();
     }

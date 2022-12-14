@@ -3,6 +3,7 @@ package com.takeoff.iot.modbus.server;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.takeoff.iot.modbus.common.utils.CacheUtils;
 import com.takeoff.iot.modbus.netty.device.MiiDeviceChannel;
 import com.takeoff.iot.modbus.netty.device.MiiDeviceGroup;
 import com.takeoff.iot.modbus.netty.device.MiiControlCentre;
@@ -14,6 +15,7 @@ import com.takeoff.iot.modbus.netty.channel.MiiChannelGroup;
 import com.takeoff.iot.modbus.netty.data.factory.MiiServerDataFactory;
 import com.takeoff.iot.modbus.netty.handle.*;
 import com.takeoff.iot.modbus.netty.listener.MiiListener;
+import com.takeoff.iot.modbus.server.connect.MiiServerConnect;
 import com.takeoff.iot.modbus.server.message.sender.MiiServerMessageSender;
 import com.takeoff.iot.modbus.server.message.sender.ServerMessageSender;
 import io.netty.bootstrap.ServerBootstrap;
@@ -49,6 +51,7 @@ public class MiiServer extends ChannelInitializer<SocketChannel> implements MiiC
 	private int port,nThread;
 	@Getter
 	private MiiChannelGroup groups;
+	private MiiServerConnect connect;
 	private ServerMessageSender sender;
 	private MiiListenerHandler handler;
 	private MiiDataFactory dataFactory;
@@ -65,21 +68,23 @@ public class MiiServer extends ChannelInitializer<SocketChannel> implements MiiC
 	 * 创建指定服务端口，指定线程数的服务端
 	 * @param port 服务端口
 	 * @param nThread 执行线程池线程数
+	 * @param heartBeatTime 心跳检测超时时间(单位：毫秒)
 	 */
 	public MiiServer(int port, int nThread, int heartBeatTime){
 		this.port = port;
 		this.nThread = nThread;
+		this.IDLE_TIMEOUT = heartBeatTime;
 		this.groups = new MiiChannelGroup();
-		this.sender = new MiiServerMessageSender(this.groups);
+		this.connect = new MiiServerConnect();
+		this.sender = new MiiServerMessageSender();
 		this.handler = new MiiListenerHandler(this.groups);
 		this.handler.addListener(MiiMessage.HEARTBEAT, new MiiListener() {
 			
 			@Override
 			public void receive(MiiChannel channel, MiiMessage message) {
-				MiiHeartBeatData data = (MiiHeartBeatData) message.data();
-				//通讯通道绑定设备组编码
-				groups.get(message.deviceGroup()).name(data.deviceGroup());
-				log.info("Netty通讯已绑定设备组编码："+data.deviceGroup());
+				//通讯通道绑定设备IP
+				groups.get(channel.name()).name(message.deviceGroup());
+				log.info("Netty通讯已绑定设备IP："+ message.deviceGroup());
 			}
 		});
 		this.dataFactory = new MiiServerDataFactory();
@@ -154,6 +159,7 @@ public class MiiServer extends ChannelInitializer<SocketChannel> implements MiiC
 		ChannelPipeline p = ch.pipeline();
 		MiiDeviceGroup group = new MiiDeviceChannel(ch);
 		add(group);
+		//服务端心跳检测超时时间，超时则主动断开链接
 		p.addLast(new IdleStateHandler(0, 0, IDLE_TIMEOUT, TimeUnit.MILLISECONDS));
 		p.addLast(new ChannelInboundHandlerAdapter(){
 			
@@ -168,7 +174,8 @@ public class MiiServer extends ChannelInitializer<SocketChannel> implements MiiC
 		});
 		p.addLast(new MiiMessageEncoder());
 		p.addLast(new MiiBasedFrameDecoder());
-		p.addLast(new MiiMessageDecoder(group, dataFactory));
+		p.addLast(new MiiMessageDecoder(dataFactory));
+		p.addLast(connect);
 		p.addLast(handler);
 		p.addLast(new MiiExceptionHandler());
 	}

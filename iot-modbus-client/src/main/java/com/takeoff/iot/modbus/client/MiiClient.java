@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import com.takeoff.iot.modbus.client.connect.MiiConnectManager;
+import com.takeoff.iot.modbus.client.connect.MiiClientConnect;
 import com.takeoff.iot.modbus.client.message.sender.ClientMessageSender;
 import com.takeoff.iot.modbus.client.message.sender.MiiClientMessageSender;
 import com.takeoff.iot.modbus.common.bytes.factory.MiiDataFactory;
@@ -81,7 +81,7 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 				.handler(this);
 		InetSocketAddress address = InetSocketAddress.createUnresolved(serverHost, serverPort);
 		addressSet.add(address);
-		MiiConnectManager cm = new MiiConnectManager(boot, address, reconnectTime){
+		MiiClientConnect cm = new MiiClientConnect(boot, address, reconnectTime){
 			@Override
 			public void afterSuccess() {
 				sender().registerGroup(serverHost, deviceGroup);
@@ -97,7 +97,7 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 	 * 停止服务
 	 */
 	public ChannelFuture disconnect(String serverHost){
-		MiiConnectManager cm = (MiiConnectManager) cmMap.get(serverHost);
+		MiiClientConnect cm = (MiiClientConnect) cmMap.get(serverHost);
 		ChannelFuture future = (ChannelFuture) futureMap.get(serverHost);
 		ChannelFuture f = future.channel().closeFuture();
 		EventLoopGroup workerGroup = (EventLoopGroup) workerGroupMap.get(serverHost);
@@ -113,7 +113,7 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 			MiiChannel channel = new MiiDeviceChannel(address, ch);
 			MiiChannel isExist = (MiiChannel) CacheUtils.get(channel.name());
 			if(JudgeEmptyUtils.isEmpty(isExist)){
-				MiiConnectManager cm = (MiiConnectManager) cmMap.get(channel.name());
+				MiiClientConnect cm = (MiiClientConnect) cmMap.get(channel.name());
 				p.addLast(cm);
 				p.addLast(new IdleStateHandler(0, 0, IDLE_TIMEOUT, TimeUnit.MILLISECONDS));
 				p.addLast(new ChannelInboundHandlerAdapter(){
@@ -130,7 +130,7 @@ public class MiiClient extends ChannelInitializer<SocketChannel> {
 				});
 				p.addLast(new MiiMessageEncoder());
 				p.addLast(new MiiBasedFrameDecoder());
-				p.addLast(new MiiMessageDecoder(channel, dataFactory));
+				p.addLast(new MiiMessageDecoder(dataFactory));
 				p.addLast(handler);
 				p.addLast(new MiiExceptionHandler());
 			}

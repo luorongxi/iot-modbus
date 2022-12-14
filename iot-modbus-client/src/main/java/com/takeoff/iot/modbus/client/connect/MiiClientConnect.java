@@ -24,6 +24,7 @@ import io.netty.util.TimerTask;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
+import org.springframework.util.ObjectUtils;
 
 /**
  * 类功能说明：客户端链接管理器<br/>
@@ -32,7 +33,7 @@ import org.springframework.context.ApplicationContext;
  */
 @Slf4j
 @Sharable
-public abstract class MiiConnectManager extends ChannelInboundHandlerAdapter implements TimerTask {
+public abstract class MiiClientConnect extends ChannelInboundHandlerAdapter implements TimerTask {
 
 	private ApplicationContext getApplicationContext = SpringContextUtil.applicationContext;
 
@@ -41,7 +42,6 @@ public abstract class MiiConnectManager extends ChannelInboundHandlerAdapter imp
 	private final Bootstrap boot;
 	private SocketAddress address;
 	private Timer timer;
-	private int state;
 
 	/**
 	 * 连接成功次数
@@ -58,7 +58,7 @@ public abstract class MiiConnectManager extends ChannelInboundHandlerAdapter imp
 	 */
 	private Map<String, Integer> retriesMap = new HashMap<>();
 	
-	public MiiConnectManager(Bootstrap boot, SocketAddress address, int reconnectTime){
+	public MiiClientConnect(Bootstrap boot, SocketAddress address, int reconnectTime){
 		this.boot = boot;
 		this.address = address;
 		this.TIMEOUT = reconnectTime;
@@ -73,7 +73,7 @@ public abstract class MiiConnectManager extends ChannelInboundHandlerAdapter imp
 				if (!future.isSuccess()) {
 					//连接失败，重连服务端，重连交给后端线程执行
 					future.channel().eventLoop().schedule(() -> {
-						Integer retries = (retriesMap.isEmpty() ? 0 : retriesMap.get(address.toString())) + 1;
+						Integer retries = (ObjectUtils.isEmpty(retriesMap.get(address.toString())) ? 0 : retriesMap.get(address.toString())) + 1;
 						retriesMap.put(address.toString(), retries);
 						if(!JudgeEmptyUtils.isEmpty(address)){
 							ChannelConnectData connectServerData = new ChannelConnectData(this, DeviceConnectEnum.BREAK_RECONNECT.getKey(), address.toString(), retries);
@@ -89,7 +89,8 @@ public abstract class MiiConnectManager extends ChannelInboundHandlerAdapter imp
 					}, TIMEOUT, TimeUnit.MILLISECONDS);
 				} else {
 					//服务端连接成功
-					Integer onLine = (onLineMap.isEmpty() ? 0 : onLineMap.get(address.toString())) + 1;
+					afterSuccess();
+					Integer onLine = (ObjectUtils.isEmpty(onLineMap.get(address.toString())) ? 0 : onLineMap.get(address.toString())) + 1;
 					onLineMap.put(address.toString(), onLine);
 					if(!JudgeEmptyUtils.isEmpty(address)){
 						ChannelConnectData connectServerData = new ChannelConnectData(this, DeviceConnectEnum.ON_LINE.getKey(), address.toString(), onLine);
@@ -107,7 +108,7 @@ public abstract class MiiConnectManager extends ChannelInboundHandlerAdapter imp
 
 	@Override
 	public void run(Timeout timeout) throws Exception {
-		ChannelFuture future = connect();
+		connect();
 	}
 
 	@Override
@@ -130,7 +131,7 @@ public abstract class MiiConnectManager extends ChannelInboundHandlerAdapter imp
 		Channel channel = ctx.channel();
 		if(!JudgeEmptyUtils.isEmpty(channel) && !JudgeEmptyUtils.isEmpty(channel.remoteAddress())){
 			String address = channel.remoteAddress().toString().substring(1,channel.remoteAddress().toString().length());
-			Integer breakOff = (breakOffMap.isEmpty() || JudgeEmptyUtils.isEmpty(breakOffMap.get(address)) ? 0 : breakOffMap.get(address)) + 1;
+			Integer breakOff = (ObjectUtils.isEmpty(breakOffMap.get(address)) ? 0 : breakOffMap.get(address)) + 1;
 			breakOffMap.put(address, breakOff);
 			ChannelConnectData connectServerData = new ChannelConnectData(this, DeviceConnectEnum.BREAK_OFF.getKey(), address, breakOff);
 			if(!JudgeEmptyUtils.isEmpty(connectServerData) && !JudgeEmptyUtils.isEmpty(getApplicationContext)){
@@ -148,7 +149,6 @@ public abstract class MiiConnectManager extends ChannelInboundHandlerAdapter imp
 			ctx.deregister();
 			ctx.close();
 		}
-
 	}
 
 	public abstract void afterSuccess();

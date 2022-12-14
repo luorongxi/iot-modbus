@@ -31,7 +31,7 @@ public class IotModbusServerProperties {
     private Integer thread;
 
 	/**
-	 * 心跳发送间隔时间(单位：毫秒)
+	 * 心跳检测超时时间(单位：毫秒)
 	 */
 	private Integer heartBeatTime;
 

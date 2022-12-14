@@ -15,15 +15,15 @@ import javax.annotation.Resource;
 @SpringBootTest
 public class AppTest extends TestCase {
 
-    private static final String CABINET_GROUP_CODE = "1";
+    private static final String DEVICE_IP = "192.168.1.198";
 
-    private static final Integer CABINET_CODE = 1;
+    private static final Integer DEVICE = 1;
 
     @Resource
     private IotModbusServerConfig iotModbusServerConfig;
 
     @Test
     public void openLockTest(){
-        iotModbusServerConfig.getMiiServer().sender().unlock(CABINET_GROUP_CODE, CABINET_CODE);
+        iotModbusServerConfig.getMiiServer().sender().unlock(DEVICE_IP, DEVICE);
     }
 }

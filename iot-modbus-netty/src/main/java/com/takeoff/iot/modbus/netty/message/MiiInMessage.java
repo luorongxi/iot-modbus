@@ -28,8 +28,8 @@ public class MiiInMessage implements MiiMessage {
 		this(null, msg, dataFactory);
 	}
 	
-	public MiiInMessage(String deviceGroup, byte[] msg, MiiDataFactory dataFactory){
-		this.deviceGroup = deviceGroup;
+	public MiiInMessage(String channelName, byte[] msg, MiiDataFactory dataFactory){
+		this.deviceGroup = channelName;
 		this.msg = msg;
 		byte[] headBytes = {msg[BEGIN_INDEX]};
 		if(!Arrays.equals(BEGIN_BYTES, headBytes)){

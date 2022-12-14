@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.takeoff.iot.modbus.common.bytes.factory.MiiDataFactory;
 import com.takeoff.iot.modbus.netty.channel.MiiChannel;
+import com.takeoff.iot.modbus.netty.device.MiiDeviceChannel;
 import com.takeoff.iot.modbus.netty.message.MiiInMessage;
+import io.netty.channel.Channel;
 import org.bouncycastle.util.encoders.Hex;
 
 import io.netty.buffer.ByteBuf;
@@ -19,12 +21,10 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class MiiMessageDecoder extends ByteToMessageDecoder {
-	
-	private MiiChannel channel;
+
 	private MiiDataFactory dataFactory;
 
-	public MiiMessageDecoder(MiiChannel channel, MiiDataFactory dataFactory) {
-		this.channel = channel;
+	public MiiMessageDecoder(MiiDataFactory dataFactory) {
 		this.dataFactory = dataFactory;
 	}
 
@@ -34,7 +34,8 @@ public class MiiMessageDecoder extends ByteToMessageDecoder {
 			byte[] array = new byte[in.readableBytes()];
 			in.readBytes(array);
 			log.info("接收到待处理指令："+Hex.toHexString(array));
-			MiiInMessage msg = new MiiInMessage(channel.name(),array,dataFactory);
+			MiiChannel miiChannel = new MiiDeviceChannel(ctx.channel());
+			MiiInMessage msg = new MiiInMessage(miiChannel.name(),array,dataFactory);
 			out.add(msg);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

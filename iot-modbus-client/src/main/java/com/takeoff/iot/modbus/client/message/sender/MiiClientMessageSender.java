@@ -41,16 +41,12 @@ public class MiiClientMessageSender implements ClientMessageSender {
 	public MiiClientMessageSender(){
 
 	}
-	
-	public MiiClientMessageSender(MiiChannel channel){
-		CacheUtils.put(channel.name(), channel);
-	}
 
 	private <E> void sendMessage(MiiMessageFactory<E> factory, String ip, E... datas){
-		MiiChannel channel = (MiiChannel) CacheUtils.get(ip);
-		if(JudgeEmptyUtils.isEmpty(channel)){
+		if(JudgeEmptyUtils.isEmpty(CacheUtils.get(ip))){
 			log.info("未找到对应的通讯连接："+ ip +"，下发指令失败");
 		}else{
+			MiiChannel channel = (MiiChannel) CacheUtils.get(ip);
 			MiiMessage message = factory.buildMessage(channel.name(), datas);
 			log.info("待上报指令数据："+ Hex.toHexString(message.toBytes()));
 			channel.send(message);

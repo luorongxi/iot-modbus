@@ -161,7 +161,7 @@ public class SerialportSendServiceImpl implements SerialportSendService {
             for(LcdData lcdData : lcdDataList){
                 MiiLcdDataBytesFactory lcdData2BytesFactory = new MiiLcdDataBytesFactory();
                 String lcdDataStr = Hex.toHexString(lcdData2BytesFactory.toBytes(lcdData));
-                sendMessage(LCD_BATCH, lcdData.getDeviceGroup(), MiiMessage.LCD, lcdData.getDevice(), lcdData.getShelf(), lcdData.getSlot(), lcdDataStr);
+                sendMessage(LCD_BATCH, lcdData.getDeviceIp(), MiiMessage.LCD, lcdData.getDevice(), lcdData.getShelf(), lcdData.getSlot(), lcdDataStr);
             }
         }
     }
@@ -171,7 +171,7 @@ public class SerialportSendServiceImpl implements SerialportSendService {
         if(!JudgeEmptyUtils.isEmpty(alarmLampData)){
             MiiLampColorDataBytesFactory alarmLampDataBytesFactory = new MiiLampColorDataBytesFactory();
             String alarmLampDataStr = Hex.toHexString(alarmLampDataBytesFactory.toBytes(alarmLampData));
-            sendMessage(ALARM_LAMP, alarmLampData.getDeviceGroup(), MiiMessage.WLED, alarmLampData.getDevice(), alarmLampData.getShelf(), alarmLampData.getSlot(), alarmLampDataStr);
+            sendMessage(ALARM_LAMP, alarmLampData.getDeviceIp(), MiiMessage.WLED, alarmLampData.getDevice(), alarmLampData.getShelf(), alarmLampData.getSlot(), alarmLampDataStr);
         }
     }
 }
