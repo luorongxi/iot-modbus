@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 类功能说明：客户端链接管理器<br/>
+ * 类功能说明：服务端链接管理器<br/>
  * 公司名称：TF（腾飞）开源 <br/>
  * 作者：luorongxi <br/>
  */
@@ -29,8 +29,6 @@ import java.util.concurrent.TimeUnit;
 public class MiiServerConnect extends ChannelInboundHandlerAdapter {
 
 	private ApplicationContext getApplicationContext = SpringContextUtil.applicationContext;
-
-	private static int TIMEOUT = 5000;
 
 	/**
 	 * 连接成功次数
