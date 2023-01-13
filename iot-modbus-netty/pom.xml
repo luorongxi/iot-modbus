@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.takeoff.iot</groupId>
 		<artifactId>iot-modbus</artifactId>
-		<version>3.2.8-SNAPSHOT</version>
+		<version>3.2.9-SNAPSHOT</version>
 	</parent>
 	<artifactId>iot-modbus-netty</artifactId>
 	<packaging>jar</packaging>
@@ -14,7 +14,7 @@
 	<description>netty通讯模块</description>
 	
 	<properties>
-	    <iot-modbus-common.version>3.2.8-SNAPSHOT</iot-modbus-common.version>
+	    <iot-modbus-common.version>3.2.9-SNAPSHOT</iot-modbus-common.version>
 		<netty.version>4.1.39.Final</netty.version>
 	</properties>
 	
