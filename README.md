@@ -3,6 +3,10 @@
 #### 介绍
 物联网通讯协议，基于netty框架，支持COM（串口）和TCP协议，支持服务端和客户端两种模式，实现Java控制智能设备，同时支持设备组多台设备高并发通讯。采用工厂设计模式，代码采用继承和重写的方式实现高度封装，可作为SDK提供封装的接口，让具体的业务开发人员无需关心通讯协议的底层实现，直接调用接口即可使用。实现了心跳、背光灯、扫码、刷卡、指静脉、温湿度和门锁（支持多锁）、LCD显示屏等指令控制、三色报警灯控制。代码注释丰富，包括上传和下发指令调用例子，非常容易上手。
 
+#### 视频教程
+
+[物联网通信协议（iot-modbus）视频教程，创作不易，别忘了点亮Star，你们的支持，是我源源不断的动力。（持续更新中。。。）](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzAxMjUzMDUxNw==&action=getalbum&album_id=2714994150789922817&scene=173&from_msgid=2247484129&from_itemidx=1&count=3&nolastread=1#wechat_redirect)
+
 #### 版本说明
 1.  V1.0.0版本仅支持TCP服务端通讯模式；
 2.  V2.0.0版本支持TCP服务端和客户端两种模式，客户端模式还增加了心跳重连机制。
@@ -23,7 +27,7 @@
 软件架构说明
 基础架构采用Spring Boot2.x + Netty4.X + Maven3.6.x，日志采用logback。
 
-#### 安装教程
+#### 安装环境
 
 1.  系统Windows7以上；
 2.  安装Jdk1.8以上；
@@ -42,6 +46,7 @@
 - ├── iot-modbus-server     //netty通讯服务端
 - ├── iot-modbus-test       //使用样例子工程
 - └── tools                 //通讯指令调试工具
+
 2.  配置文件查看iot-modbus-test子工程resources目录下的application.yml文件；
 3.  启动文件查看iot-modbus-test子工程App.java文件；
 4.  服务启动后，服务端端口默认为：8080，网口通讯端口默认为：4000，串口通讯默认串口为：COM1；
